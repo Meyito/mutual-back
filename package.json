@@ -36,11 +36,13 @@
     "run-sequence": "^1.2.2"
   },
   "devDependencies": {
-
   },
   "repository": {
     "type": "",
     "url": ""
+  },
+  "engines": {
+    "node": "4.6.2"
   },
   "description": "mutual-back"
 }
