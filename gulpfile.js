@@ -48,7 +48,7 @@ gulp.task('build', function (callback) {
 gulp.task('start-server', function () {
   nodemon({
     script: './dist/server/server',
-    env: {'NODE_ENV': 'development'}
+    env: process.env
   });
 });
 
