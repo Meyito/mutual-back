@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 /**
  * Created by garusis on 22/11/16.
  */
@@ -22,19 +22,19 @@ runSequence.use(gulp);
 gulp.task('clean', (cb) => del(['./dist'], cb));
 
 gulp.task('compile', function () {
-  return gulp.src('src/**/*.js')
+  return gulp.src('server/**/*.js')
     .pipe(sourcemaps.init())
     .pipe(babel({
       presets: ['es2015', 'stage-0'],
       plugins: ['transform-runtime']
     }))
     .pipe(sourcemaps.write('.', {sourceRoot: 'src/'}))
-    .pipe(gulp.dest('dist/'));
+    .pipe(gulp.dest('dist/server/'));
 });
 
 gulp.task('copy', function () {
   return merge([
-    gulp.src(['src/**/*', '!src/**/*.js']).pipe(gulp.dest('dist/'))]);
+    gulp.src(['server/**/*', '!server/**/*.js']).pipe(gulp.dest('dist/server/'))]);
 });
 
 gulp.task('build', function (callback) {
@@ -59,7 +59,6 @@ gulp.task('run', function (callback) {
     callback
   );
 });
-
 
 /**
  * Create all declared tables in DynamoDB.
