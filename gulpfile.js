@@ -48,7 +48,7 @@ gulp.task('build', function (callback) {
 gulp.task('start-server', function () {
   nodemon({
     script: './dist/server/server',
-    env: { 'NODE_ENV': 'development' }
+    env: {'NODE_ENV': 'development'}
   });
 });
 
@@ -59,6 +59,8 @@ gulp.task('run', function (callback) {
     callback
   );
 });
+
+gulp.task('heroku:development', ['build']);
 
 /**
  * Create all declared tables in DynamoDB.
