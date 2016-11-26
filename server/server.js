@@ -43,7 +43,7 @@ function startWorker() {
     if (err) throw err;
 
     // start the server if `$ node server.js`
-    if (require.main === module)
+    if (require.main === module || process.env.NODE_ENV === 'test')
       app.currentServer = app.start();
   });
 }
