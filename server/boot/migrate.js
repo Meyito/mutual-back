@@ -3,70 +3,63 @@
  * Created by garusis on 25/11/16.
  */
 module.exports = function (app) {
+  if (!process.env.MIGRATE) {
+    return;
+  }
+
   const fs = require('fs');
   const path = require('path');
   const _ = require('lodash');
   const async = require('async');
   const Promise = require('bluebird');
 
+  let models = app.models;
 
-  const Role = app.models.Role;
-  const RoleMapping = app.models.RoleMapping;
-  const AdminAccount = app.models.AdminAccount;
-  const Store = app.models.Store;
-  const Category = app.models.Category;
-  const ProductTemplate = app.models.ProductTemplate;
-  const UtilData = app.models.UtilData;
-  const memoryDataSource = app.dataSources.db;
+  let dataSources = [
+    {
+      ds: app.dataSources.db,
+      type: 'migrate'
+    },
+    {
+      ds: app.dataSources.database,
+      type: 'migrate'
+    }
+  ];
 
-  const loadSeedData = function (Model) {
+  function loadSeedData(Model) {
     const seederBasePath = './seeds';
-    return require(`${seederBasePath}/${Model.definition.name}`);
-  };
-  const seedModel = function (Model, data) {
-    let dataToSeed = data || loadSeedData(Model);
-    return new Promise(function (resolve, reject) {
-      Model.create(dataToSeed, function (err, data) {
-        if (err) {
-          return reject(err);
-        }
-        return resolve(data);
-      });
-    });
-  };
-
-  if (process.env.MIGRATE === 'true') {
-    memoryDataSource.automigrate(function (err) {
-      const mongodbDataSource = app.dataSources.database;
-      mongodbDataSource.automigrate(function (err) {
-        mongodbDataSource.autoupdate(function (err) {
-          const Accounts = app.models.Accounts;
-
-          seedModel(Role).then(function (roles) {
-            app.emit("loadedRoles");
-          });
-
-          seedModel(AdminAccount).then(function (adminAccounts) {
-          }).catch(function (err) {
-          });
-
-          seedModel(ProductTemplate).then(function (productTemplate) {
-          }).catch(function (err) {
-          });
-
-          seedModel(Store).then(function (stores) {
-          }).catch(function (err) {
-          });
-
-          seedModel(Category).then(function (stores) {
-          }).catch(function (err) {
-          });
-
-          seedModel(UtilData).then(function (utils) {
-          }).catch(function (err) {
-          });
-        });
-      });
-    });
+    try {
+      return require(`${seederBasePath}/${Model.definition.name}`);
+    }
+    catch (err) {
+      return [];
+    }
   }
+
+  async function seedModel(Model, data) {
+    let dataToSeed = data || loadSeedData(Model);
+    let createFunction = Promise.promisify(Model.create, {context: Model});
+    await createFunction(dataToSeed);
+  }
+
+  async function migrate(dsDescriptor) {
+    let migrateMethod = process.env.MIGRATE_METHOD === 'update' ? dsDescriptor.ds.autoupdate : dsDescriptor.ds.automigrate;
+    migrateMethod = Promise.promisify(migrateMethod, {context: dsDescriptor.ds});
+    console.log(dsDescriptor.ds.name);
+    await migrateMethod();
+
+    for (let modelName in models) {
+      let model = models[modelName];
+      if (model.dataSource.name === dsDescriptor.ds.name) {
+        await seedModel(model);
+      }
+    }
+    console.log('finish '+dsDescriptor.ds.name);
+  }
+
+  (async function () {
+    for (let i = 0, length = dataSources.length; i < length; i++) {
+      await migrate(dataSources[i]);
+    }
+  })();
 };
