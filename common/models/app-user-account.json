@@ -3,11 +3,11 @@
   "plural": "app-user-accounts",
   "base": "Account",
   "idInjection": true,
-  "postgresql": {
-    "table": "account"
-  },
   "options": {
     "validateUpsert": true
+  },
+  "postgresql": {
+    "table": "account"
   },
   "properties": {},
   "validations": [],

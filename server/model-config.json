@@ -4,7 +4,9 @@
       "loopback/common/models",
       "loopback/server/models",
       "../common/models",
-      "./models"
+      "./models",
+      "../../node_modules/loopback-component-passport/lib/models",
+      "../node_modules/loopback-component-passport/lib/models"
     ],
     "mixins": [
       "loopback/common/mixins",
@@ -44,5 +46,17 @@
   "AppUserAccount": {
     "dataSource": "database",
     "public": true
+  },
+  "AccountIdentity": {
+    "dataSource": "database",
+    "public": false
+  },
+  "AccessTokenAccount": {
+    "dataSource": "database",
+    "public": false
+  },
+  "AccountCredential": {
+    "dataSource": "database",
+    "public": false
   }
 }
