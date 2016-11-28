@@ -45,16 +45,17 @@ module.exports = function (app) {
   async function migrate(dsDescriptor) {
     let migrateMethod = process.env.MIGRATE_METHOD === 'update' ? dsDescriptor.ds.autoupdate : dsDescriptor.ds.automigrate;
     migrateMethod = Promise.promisify(migrateMethod, {context: dsDescriptor.ds});
-    let modelsToMigrate = _.chain(models)
-      .filter((Model) => Model.dataSource.name === dsDescriptor.ds.name && Model.definition.settings.__is_root__model__)
-      .map((Model)=>Model.definition.name)
-      .value();
+    let modelsInDS = _.filter(models, (Model) => Model.dataSource.name === dsDescriptor.ds.name);
+    let modelsToMigrate = _.filter(modelsInDS, function (Model) {
+      return !_.includes(modelsInDS, Model.base);
+    });
 
-    console.log(`Start migration of ${modelsToMigrate} datasource`);
+    console.log(_.map(modelsToMigrate, (Model)=>Model.definition.name));
+    console.log(`Start migration of ${dsDescriptor.ds.name} datasource`);
     try {
-      await migrateMethod(modelsToMigrate);
+      await migrateMethod(_.map(modelsToMigrate, (Model)=>Model.definition.name));
     } catch (err) {
-      console.error(err);
+      //console.error(err);
     }
     console.log(`Finish ${dsDescriptor.ds.name}`);
   }
