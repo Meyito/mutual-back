@@ -46,7 +46,11 @@ module.exports = function (app) {
     let migrateMethod = process.env.MIGRATE_METHOD === 'update' ? dsDescriptor.ds.autoupdate : dsDescriptor.ds.automigrate;
     migrateMethod = Promise.promisify(migrateMethod, {context: dsDescriptor.ds});
     console.log(dsDescriptor.ds.name);
-    await migrateMethod();
+    try {
+      await migrateMethod();
+    } catch (err) {
+      console.log(err.code);
+    }
 
     for (let modelName in models) {
       let model = models[modelName];
@@ -54,7 +58,7 @@ module.exports = function (app) {
         await seedModel(model);
       }
     }
-    console.log('finish '+dsDescriptor.ds.name);
+    console.log('finish ' + dsDescriptor.ds.name);
   }
 
   (async function () {

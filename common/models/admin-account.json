@@ -3,7 +3,7 @@
   "plural": "admin-accounts",
   "base": "Account",
   "idInjection": true,
-  "database": {
+  "postgresql": {
     "table": "account"
   },
   "options": {
