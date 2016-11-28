@@ -31,5 +31,17 @@
   "Role": {
     "dataSource": "db",
     "public": false
+  },
+  "Account": {
+    "dataSource": "database",
+    "public": false
+  },
+  "AdminAccount": {
+    "dataSource": "database",
+    "public": true
+  },
+  "AppUserAccount": {
+    "dataSource": "database",
+    "public": true
   }
 }
