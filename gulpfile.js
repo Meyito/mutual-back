@@ -22,7 +22,7 @@ runSequence.use(gulp);
 gulp.task('clean', (cb) => del(['./dist'], cb));
 
 gulp.task('compile', function () {
-  return gulp.src(['./**/*.js', '!./node_modules/**/*', '!./dist/**/*', '!./*'])
+  return gulp.src(['./**/*.js', '!./vendor/**/*', '!./node_modules/**/*', '!./dist/**/*', '!./*'])
     .pipe(sourcemaps.init())
     .pipe(babel({
       presets: ['es2015', 'stage-0'],
@@ -34,7 +34,7 @@ gulp.task('compile', function () {
 
 gulp.task('copy', function () {
   return merge([
-    gulp.src(['./**/*', '!./**/*.js', '!./node_modules/**/*', '!./dist/**/*', '!./*']).pipe(gulp.dest('dist/'))]);
+    gulp.src(['./**/*', '!./**/*.js', '!./vendor/**/*', '!./node_modules/**/*', '!./dist/**/*', '!./*']).pipe(gulp.dest('dist/'))]);
 });
 
 gulp.task('build', function (callback) {
