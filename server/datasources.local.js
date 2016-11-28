@@ -6,7 +6,7 @@ module.exports = {
     'password': 'pYNrYzKn89FZfuETUK_w4RIQGPdbQd2m',
     'username': 'ykbotoof',
     'database': 'ykbotoof',
-    'max': 3,
+    'max': 10,
     'name': 'database',
     'connector': 'postgresql'
   }
