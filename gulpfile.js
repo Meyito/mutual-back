@@ -22,19 +22,19 @@ runSequence.use(gulp);
 gulp.task('clean', (cb) => del(['./dist'], cb));
 
 gulp.task('compile', function () {
-  return gulp.src('server/**/*.js')
+  return gulp.src(['./**/*.js', '!./node_modules/**/*', '!./dist/**/*', '!./*'])
     .pipe(sourcemaps.init())
     .pipe(babel({
       presets: ['es2015', 'stage-0'],
       plugins: ['transform-runtime']
     }))
-    .pipe(sourcemaps.write('.', {sourceRoot: 'src/'}))
-    .pipe(gulp.dest('dist/server/'));
+    .pipe(sourcemaps.write('.', {sourceRoot: './'}))
+    .pipe(gulp.dest('dist/'));
 });
 
 gulp.task('copy', function () {
   return merge([
-    gulp.src(['server/**/*', '!server/**/*.js']).pipe(gulp.dest('dist/server/'))]);
+    gulp.src(['./**/*', '!./**/*.js', '!./node_modules/**/*', '!./dist/**/*', '!./*']).pipe(gulp.dest('dist/'))]);
 });
 
 gulp.task('build', function (callback) {

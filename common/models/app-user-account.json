@@ -3,6 +3,9 @@
   "plural": "app-user-accounts",
   "base": "Account",
   "idInjection": true,
+  "database": {
+    "table": "account"
+  },
   "options": {
     "validateUpsert": true
   },

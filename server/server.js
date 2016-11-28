@@ -23,6 +23,8 @@ function startWorker() {
   const loopback = require('loopback');
   const boot = require('loopback-boot');
 
+  require('./children-model-setup')(loopback);
+
   let app = module.exports = loopback();
 
   app.start = function () {
