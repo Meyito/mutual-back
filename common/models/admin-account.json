@@ -1,0 +1,14 @@
+{
+  "name": "AdminAccount",
+  "plural": "admin-accounts",
+  "base": "Account",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
