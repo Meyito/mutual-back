@@ -10,10 +10,12 @@ function persistedModelSetup(PersistedModel) {
   const oldSetup = PersistedModel.setup;
 
   function updateParent(ParentModel, newChildrenModelName) {
+    let base = ParentModel.base;
     if (ParentModel.definition.settings.__children_models__) {
       ParentModel.definition.settings.__children_models__.push(newChildrenModelName);
-      updateParent(ParentModel.base, newChildrenModelName);
+      updateParent(base, newChildrenModelName);
     }
+    ParentModel.definition.settings.__is_root__model__ = !base.definition.settings.__children_models__;
   }
 
   PersistedModel.setup = function () {

@@ -8,9 +8,7 @@ module.exports = function (app) {
   }
 
   const fs = require('fs');
-  const path = require('path');
   const _ = require('lodash');
-  const async = require('async');
   const Promise = require('bluebird');
 
   let models = app.models;
@@ -37,33 +35,37 @@ module.exports = function (app) {
   }
 
   async function seedModel(Model, data) {
+    console.log(`Seeding ${Model.definition.name} model.`);
     let dataToSeed = data || loadSeedData(Model);
     let createFunction = Promise.promisify(Model.create, {context: Model});
     await createFunction(dataToSeed);
+    console.log(`End seed of ${Model.definition.name} model.`);
   }
 
   async function migrate(dsDescriptor) {
     let migrateMethod = process.env.MIGRATE_METHOD === 'update' ? dsDescriptor.ds.autoupdate : dsDescriptor.ds.automigrate;
     migrateMethod = Promise.promisify(migrateMethod, {context: dsDescriptor.ds});
-    console.log(dsDescriptor.ds.name);
-    try {
-      await migrateMethod();
-    } catch (err) {
-      console.log(err.code);
-    }
+    let modelsToMigrate = _.chain(models)
+      .filter((Model) => Model.dataSource.name === dsDescriptor.ds.name && Model.definition.settings.__is_root__model__)
+      .map((Model)=>Model.definition.name)
+      .value();
 
-    for (let modelName in models) {
-      let model = models[modelName];
-      if (model.dataSource.name === dsDescriptor.ds.name) {
-        await seedModel(model);
-      }
+    console.log(`Start migration of ${modelsToMigrate} datasource`);
+    try {
+      await migrateMethod(modelsToMigrate);
+    } catch (err) {
+      console.error(err);
     }
-    console.log('finish ' + dsDescriptor.ds.name);
+    console.log(`Finish ${dsDescriptor.ds.name}`);
   }
 
   (async function () {
     for (let i = 0, length = dataSources.length; i < length; i++) {
       await migrate(dataSources[i]);
+    }
+
+    for (let modelName in models) {
+      await seedModel(models[modelName]);
     }
   })();
 };
