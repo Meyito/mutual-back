@@ -50,7 +50,6 @@ module.exports = function (app) {
       return !_.includes(modelsInDS, Model.base);
     });
 
-    console.log(_.map(modelsToMigrate, (Model)=>Model.definition.name));
     console.log(`Start migration of ${dsDescriptor.ds.name} datasource`);
     try {
       await migrateMethod(_.map(modelsToMigrate, (Model)=>Model.definition.name));

@@ -1,12 +1,11 @@
 'use strict';
 module.exports = {
   'database': {
-    'url': process.env.DATABASE_URL,
-    'host': 'elmer.db.elephantsql.com',
-    'password': 'pYNrYzKn89FZfuETUK_w4RIQGPdbQd2m',
-    'username': 'ykbotoof',
-    'database': 'ykbotoof',
-    'max': 10,
+    'host': process.env.DATABASE_HOST,
+    'database': process.env.DATABASE_NAME,
+    'username': process.env.DATABASE_USERNAME,
+    'password': process.env.DATABASE_PASSWORD,
+    'max': Number(process.env.DATABASE_POOL_MAX),
     'name': 'database',
     'connector': 'postgresql'
   }
