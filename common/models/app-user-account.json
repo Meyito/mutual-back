@@ -1,0 +1,14 @@
+{
+  "name": "AppUserAccount",
+  "plural": "app-user-accounts",
+  "base": "Account",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
