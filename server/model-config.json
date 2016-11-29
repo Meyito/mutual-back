@@ -24,15 +24,15 @@
     "public": false
   },
   "ACL": {
-    "dataSource": "db",
+    "dataSource": "database",
     "public": false
   },
   "RoleMapping": {
-    "dataSource": "db",
+    "dataSource": "database",
     "public": false
   },
   "Role": {
-    "dataSource": "db",
+    "dataSource": "database",
     "public": false
   },
   "Account": {

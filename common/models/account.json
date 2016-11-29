@@ -7,7 +7,31 @@
   },
   "properties": {},
   "validations": [],
-  "relations": {},
-  "acls": [],
+  "relations": {
+    "accessTokens": {
+      "type": "hasMany",
+      "model": "AccessTokenAccount",
+      "foreignKey": "userId"
+    },
+    "credentials": {
+      "type": "hasMany",
+      "model": "AccountCredential",
+      "foreignKey": "userId"
+    },
+    "identities": {
+      "type": "hasMany",
+      "model": "AccountIdentity",
+      "foreignKey": "userId"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY",
+      "property": "*"
+    }
+  ],
   "methods": {}
 }

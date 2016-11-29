@@ -48,6 +48,7 @@ gulp.task('build', function (callback) {
 gulp.task('start-server', function () {
   nodemon({
     script: './dist/server/server',
+    watch: 'dist',
     env: process.env
   });
 });
