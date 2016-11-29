@@ -2,10 +2,7 @@
 /**
  * Created by garusis on 25/11/16.
  */
-module.exports = function (app) {
-  if (!process.env.MIGRATE) {
-    return;
-  }
+module.exports = async function (app) {
 
   const fs = require('fs');
   const _ = require('lodash');
@@ -17,12 +14,15 @@ module.exports = function (app) {
     {
       ds: app.dataSources.db,
       type: 'migrate'
-    },
-    {
-      ds: app.dataSources.database,
-      type: 'migrate'
     }
   ];
+
+  if (process.env.MIGRATE_PERSISTENCE) {
+    dataSources.push({
+      ds: app.dataSources.database,
+      type: 'migrate'
+    });
+  }
 
   function loadSeedData(Model) {
     const seederBasePath = './seeds';
@@ -57,15 +57,12 @@ module.exports = function (app) {
       //console.error(err);
     }
     console.log(`Finish ${dsDescriptor.ds.name}`);
+    for (let i = 0, length = modelsInDS.length; i < length; i++) {
+      await seedModel(modelsInDS[i]);
+    }
   }
 
-  (async function () {
-    for (let i = 0, length = dataSources.length; i < length; i++) {
-      await migrate(dataSources[i]);
-    }
-
-    for (let modelName in models) {
-      await seedModel(models[modelName]);
-    }
-  })();
+  for (let i = 0, length = dataSources.length; i < length; i++) {
+    await migrate(dataSources[i]);
+  }
 };
