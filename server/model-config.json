@@ -70,5 +70,9 @@
   "AppConstant": {
     "dataSource": "database",
     "public": true
+  },
+  "ErrorHelper": {
+    "dataSource": null,
+    "public": false
   }
 }
