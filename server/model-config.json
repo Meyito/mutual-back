@@ -62,5 +62,13 @@
   "AppUserData": {
     "dataSource": "database",
     "public": false
+  },
+  "Level": {
+    "dataSource": null,
+    "public": false
+  },
+  "AppConstant": {
+    "dataSource": "database",
+    "public": true
   }
 }
