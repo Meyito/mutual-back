@@ -1,0 +1,25 @@
+{
+  "name": "AppUserData",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "experience": {
+      "type": "number",
+      "required": true,
+      "default": 0
+    }
+  },
+  "validations": [],
+  "relations": {
+    "appUserAccount": {
+      "type": "belongsTo",
+      "model": "AppUserAccount",
+      "foreignKey": "appuserid"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

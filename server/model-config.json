@@ -58,5 +58,9 @@
   "AccountCredential": {
     "dataSource": "database",
     "public": false
+  },
+  "AppUserData": {
+    "dataSource": "database",
+    "public": false
   }
 }

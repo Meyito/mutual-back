@@ -11,7 +11,13 @@
   },
   "properties": {},
   "validations": [],
-  "relations": {},
+  "relations": {
+    "data": {
+      "type": "hasOne",
+      "model": "AppUserData",
+      "foreignKey": "appuserid"
+    }
+  },
   "acls": [
     {
       "accessType": "*",
