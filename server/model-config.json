@@ -74,5 +74,9 @@
   "ErrorHelper": {
     "dataSource": null,
     "public": false
+  },
+  "BuildHelper": {
+    "dataSource": null,
+    "public": false
   }
 }
