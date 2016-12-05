@@ -52,11 +52,13 @@ module.exports = async function (app) {
 
     console.log(`Start migration of ${dsDescriptor.ds.name} datasource`);
     try {
-      await migrateMethod(_.map(modelsToMigrate, (Model)=>Model.definition.name));
+      await migrateMethod(_.map(modelsToMigrate, (Model) => Model.definition.name));
     } catch (err) {
       //console.error(err);
     }
     console.log(`Finish ${dsDescriptor.ds.name}`);
+
+    modelsInDS = _.sortBy(modelsInDS, (Model) => _.isNil(Model.definition.settings.migrateOrder) ? -1 : Model.definition.settings.migrateOrder);
     for (let i = 0, length = modelsInDS.length; i < length; i++) {
       await seedModel(modelsInDS[i]);
     }

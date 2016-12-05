@@ -2,6 +2,7 @@
   "name": "Account",
   "base": "User",
   "idInjection": true,
+  "migrateOrder": 0,
   "options": {
     "validateUpsert": true
   },
