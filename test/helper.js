@@ -10,3 +10,7 @@ global.expect = chai.expect;
 global.assert = chai.assert;
 global._ = _;
 global.app = app;
+
+app.on('migrated', function () {
+  run();
+});

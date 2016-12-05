@@ -65,4 +65,5 @@ module.exports = async function (app) {
   for (let i = 0, length = dataSources.length; i < length; i++) {
     await migrate(dataSources[i]);
   }
+  app.emit('migrated');
 };

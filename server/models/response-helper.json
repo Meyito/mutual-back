@@ -1,5 +1,5 @@
 {
-  "name": "BuildHelper",
+  "name": "ResponseHelper",
   "base": "Model",
   "idInjection": true,
   "options": {
