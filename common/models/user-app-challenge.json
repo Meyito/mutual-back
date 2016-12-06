@@ -1,0 +1,33 @@
+{
+  "name": "UserAppChallenge",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "createdAt": {
+      "type": "date",
+      "required": true
+    },
+    "isFinished": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "validations": [],
+  "relations": {
+    "challenge": {
+      "type": "hasOne",
+      "model": "Challenge",
+      "foreignKey": "challengeId"
+    },
+    "appUser": {
+      "type": "belongsTo",
+      "model": "AppUserAccount",
+      "foreignKey": "userId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

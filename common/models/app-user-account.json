@@ -21,6 +21,11 @@
       "type": "hasMany",
       "model": "UserCategoryScore",
       "foreignKey": "userId"
+    },
+    "challenges": {
+      "type": "hasMany",
+      "model": "UserAppChallenge",
+      "foreignKey": "userId"
     }
   },
   "acls": [
