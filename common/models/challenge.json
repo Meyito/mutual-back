@@ -1,0 +1,47 @@
+{
+  "name": "Challenge",
+  "plural": "challenges",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "minAge": {
+      "type": "number",
+      "required": true
+    },
+    "maxAge": {
+      "type": "number",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "string",
+      "required": true
+    },
+    "image": {
+      "type": "string",
+      "required": true
+    },
+    "expPoints": {
+      "type": "number",
+      "default": 0
+    },
+    "frequency": {
+      "type": "number"
+    },
+    "expireAt": {
+      "type": "number",
+      "required": true,
+      "default": 7
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

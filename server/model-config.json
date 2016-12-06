@@ -82,5 +82,13 @@
   "UserCategoryScore": {
     "dataSource": "database",
     "public": false
+  },
+  "Challenge": {
+    "dataSource": "database",
+    "public": true
+  },
+  "UserAppChallenge": {
+    "dataSource": "database",
+    "public": false
   }
 }
