@@ -43,6 +43,14 @@ describe('AppConstant', function () {
           publicConstants.should.be.instanceof(Array).with.length(1);
         });
     });
+
+    it('should get an specific AppConstant\'s value', function () {
+      return AppConstant
+        .findConstant(fixtures.explicitPrivate.name)
+        .then(function (constantValue) {
+          constantValue.should.be.equal(fixtures.explicitPrivate.value);
+        });
+    });
   });
 
 });

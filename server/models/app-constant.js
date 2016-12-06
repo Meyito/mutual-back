@@ -19,6 +19,8 @@ module.exports = function (_AppConstant) {
     });
 
   AppConstant.load = async function () {
+    if (!hasChanges) return;
+
     constants = await _AppConstant.find({});
     constants = _.keyBy(constants, 'name');
     hasChanges = false;
@@ -32,29 +34,35 @@ module.exports = function (_AppConstant) {
       ResponseHelper.errorHandler(err, cb);
     }
   };
-  //_AppConstant.
+  _AppConstant.remoteMethod('getPublic', {
+    accepts: [],
+    returns: {root: true, type: 'array'}
+  });
 
 
+  /**
+   *
+   * @param name
+   * @param [cb]
+   */
   AppConstant.findConstant = async function (name, cb) {
     try {
-      if (!constants) {
-        await AppConstant.load();
-      }
-      return constants[name].value;
+      await AppConstant.load();
+      return ResponseHelper.successHandler(constants[name].value, cb);
     } catch (err) {
       ResponseHelper.errorHandler(err, cb);
     }
   };
 
-  _AppConstant.observe('after save', function (ctx, next) {
+  _AppConstant.observe('persist', function (ctx, next) {
     hasChanges = true;
     next();
   });
 
-  setInterval(async function () {
-    if (!hasChanges) return;
-    AppConstant.load();
-  }, 60000);
+  _AppConstant.observe('after delete', function (ctx, next) {
+    hasChanges = true;
+    next();
+  });
 
   BuildHelper.assing(AppConstant, _AppConstant);
 

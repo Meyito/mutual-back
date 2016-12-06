@@ -1,0 +1,10 @@
+[
+  {
+    "value": "20",
+    "name": "max_level_increment"
+  },
+  {
+    "value": "500",
+    "name": "base_experience_by_lvl"
+  }
+]
