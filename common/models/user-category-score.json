@@ -1,0 +1,29 @@
+{
+  "name": "UserCategoryScore",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "expInCategory": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "validations": [],
+  "relations": {
+    "appUserAccount": {
+      "type": "belongsTo",
+      "model": "AppUserAccount",
+      "foreignKey": "userId"
+    },
+    "category": {
+      "type": "belongsTo",
+      "model": "Category",
+      "foreignKey": "categoryId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

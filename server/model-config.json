@@ -74,5 +74,13 @@
   "ResponseHelper": {
     "dataSource": "db",
     "public": false
+  },
+  "Category": {
+    "dataSource": "database",
+    "public": true
+  },
+  "UserCategoryScore": {
+    "dataSource": "database",
+    "public": false
   }
 }
