@@ -1,6 +1,6 @@
 {
-  "name": "Category",
-  "plural": "categories",
+  "name": "Goal",
+  "plural": "goals",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -11,21 +11,24 @@
       "type": "string",
       "required": true
     },
-    "slug": {
+    "image": {
       "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "string",
+      "required": true
+    },
+    "minCategoryExp": {
+      "type": "number",
       "required": true
     }
   },
   "validations": [],
   "relations": {
-    "challenges": {
-      "type": "hasMany",
-      "model": "Challenge",
-      "foreignKey": "categoryId"
-    },
-    "goals": {
-      "type": "hasMany",
-      "model": "Goal",
+    "category": {
+      "type": "belongsTo",
+      "model": "Category",
       "foreignKey": "categoryId"
     }
   },

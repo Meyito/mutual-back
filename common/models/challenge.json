@@ -50,6 +50,11 @@
       "type": "hasMany",
       "model": "ReviewQuestion",
       "foreignKey": "challengeId"
+    },
+    "category": {
+      "type": "belongsTo",
+      "model": "Category",
+      "foreignKey": "categoryId"
     }
   },
   "acls": [],

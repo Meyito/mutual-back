@@ -26,6 +26,11 @@
       "type": "hasMany",
       "model": "UserAppChallenge",
       "foreignKey": "userId"
+    },
+    "goals": {
+      "type": "hasMany",
+      "model": "AppUserGoal",
+      "foreignKey": "userId"
     }
   },
   "acls": [

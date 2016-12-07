@@ -114,5 +114,13 @@
   "Gender": {
     "dataSource": "db",
     "public": true
+  },
+  "Goal": {
+    "dataSource": "database",
+    "public": true
+  },
+  "AppUserGoal": {
+    "dataSource": "database",
+    "public": false
   }
 }
