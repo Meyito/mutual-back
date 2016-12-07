@@ -38,6 +38,10 @@
       "type": "number",
       "required": true,
       "default": 7
+    },
+    "weight": {
+      "type": "number",
+      "required": true
     }
   },
   "validations": [],

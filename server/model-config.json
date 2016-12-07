@@ -90,5 +90,17 @@
   "UserAppChallenge": {
     "dataSource": "database",
     "public": false
+  },
+  "Child": {
+    "dataSource": "database",
+    "public": false
+  },
+  "Characteristic": {
+    "dataSource": "database",
+    "public": true
+  },
+  "ChildCharacteristic": {
+    "dataSource": "database",
+    "public": false
   }
 }

@@ -1,0 +1,29 @@
+{
+  "name": "ChildCharacteristic",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "statusValue": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "validations": [],
+  "relations": {
+    "child": {
+      "type": "belongsTo",
+      "model": "Child",
+      "foreignKey": "childId"
+    },
+    "characteristic": {
+      "type": "belongsTo",
+      "model": "Characteristic",
+      "foreignKey": "characteristicId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
