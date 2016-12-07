@@ -45,7 +45,13 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "reviewQuestions": {
+      "type": "hasMany",
+      "model": "ReviewQuestion",
+      "foreignKey": "challengeId"
+    }
+  },
   "acls": [],
   "methods": {}
 }
