@@ -21,6 +21,11 @@
       "type": "hasMany",
       "model": "ChildCharacteristic",
       "foreignKey": "childId"
+    },
+    "gender": {
+      "type": "hasOne",
+      "model": "Gender",
+      "foreignKey": "genderId"
     }
   },
   "acls": [],

@@ -18,6 +18,11 @@
       "type": "belongsTo",
       "model": "AppUserAccount",
       "foreignKey": "appuserid"
+    },
+    "gender": {
+      "type": "hasOne",
+      "model": "Gender",
+      "foreignKey": "genderId"
     }
   },
   "acls": [],

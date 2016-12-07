@@ -110,5 +110,9 @@
   "ReviewAnswer": {
     "dataSource": "database",
     "public": false
+  },
+  "Gender": {
+    "dataSource": "db",
+    "public": true
   }
 }
