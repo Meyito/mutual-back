@@ -122,5 +122,9 @@
   "AppUserGoal": {
     "dataSource": "database",
     "public": false
+  },
+  "Municipality": {
+    "dataSource": "database",
+    "public": true
   }
 }

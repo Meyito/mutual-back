@@ -1,0 +1,29 @@
+{
+  "name": "Municipality",
+  "plural": "municipalities",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "code": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "users": {
+      "type": "hasMany",
+      "model": "AppUserAccount",
+      "foreignKey": "municipalityId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

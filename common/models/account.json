@@ -6,7 +6,20 @@
     "validateUpsert": true
   },
   "migrateOrder": 0,
-  "properties": {},
+  "properties": {
+    "createdAt": {
+      "type": "date",
+      "required": true
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "surname": {
+      "type": "string",
+      "required": true
+    }
+  },
   "validations": [],
   "relations": {
     "accessTokens": {

@@ -31,6 +31,11 @@
       "type": "hasMany",
       "model": "AppUserGoal",
       "foreignKey": "userId"
+    },
+    "municipality": {
+      "type": "belongsTo",
+      "model": "Municipality",
+      "foreignKey": "municipalityId"
     }
   },
   "acls": [
