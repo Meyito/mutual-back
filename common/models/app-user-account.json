@@ -15,7 +15,7 @@
     "data": {
       "type": "hasOne",
       "model": "AppUserData",
-      "foreignKey": "appuserid"
+      "foreignKey": "appuserId"
     },
     "scores": {
       "type": "hasMany",
@@ -31,11 +31,6 @@
       "type": "hasMany",
       "model": "AppUserGoal",
       "foreignKey": "userId"
-    },
-    "municipality": {
-      "type": "belongsTo",
-      "model": "Municipality",
-      "foreignKey": "municipalityId"
     }
   },
   "acls": [
@@ -54,10 +49,23 @@
       "property": "*"
     },
     {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW"
+    },
+    {
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "create"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "updateAttributes"
     }
   ],
   "methods": {}

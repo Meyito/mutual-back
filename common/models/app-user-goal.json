@@ -2,14 +2,13 @@
   "name": "AppUserGoal",
   "base": "PersistedModel",
   "idInjection": true,
+  "mixins": {
+    "Timestamp": {}
+  },
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "createdAt": {
-      "type": "date",
-      "required": true
-    }
   },
   "validations": [],
   "relations": {

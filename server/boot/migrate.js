@@ -37,8 +37,7 @@ module.exports = async function (app) {
   async function seedModel(Model, data) {
     console.log(`Seeding ${Model.definition.name} model.`);
     let dataToSeed = data || loadSeedData(Model);
-    let createFunction = Promise.promisify(Model.create, {context: Model});
-    await createFunction(dataToSeed);
+    await Model.create(dataToSeed);
     console.log(`End seed of ${Model.definition.name} model.`);
   }
 

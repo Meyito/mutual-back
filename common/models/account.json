@@ -5,12 +5,11 @@
   "options": {
     "validateUpsert": true
   },
+  "mixins": {
+    "Timestamp": {}
+  },
   "migrateOrder": 0,
   "properties": {
-    "createdAt": {
-      "type": "date",
-      "required": true
-    },
     "name": {
       "type": "string",
       "required": true

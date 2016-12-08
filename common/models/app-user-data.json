@@ -17,12 +17,17 @@
     "appUserAccount": {
       "type": "belongsTo",
       "model": "AppUserAccount",
-      "foreignKey": "appuserid"
+      "foreignKey": "appuserId"
     },
     "gender": {
       "type": "hasOne",
       "model": "Gender",
       "foreignKey": "genderId"
+    },
+    "municipality": {
+      "type": "belongsTo",
+      "model": "Municipality",
+      "foreignKey": "municipalityId"
     }
   },
   "acls": [],

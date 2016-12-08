@@ -5,11 +5,10 @@
   "options": {
     "validateUpsert": true
   },
+  "mixins": {
+    "Timestamp": {}
+  },
   "properties": {
-    "createdAt": {
-      "type": "date",
-      "required": true
-    },
     "isFinished": {
       "type": "boolean",
       "default": false

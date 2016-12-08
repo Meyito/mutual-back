@@ -18,9 +18,9 @@
   },
   "validations": [],
   "relations": {
-    "users": {
+    "usersData": {
       "type": "hasMany",
-      "model": "AppUserAccount",
+      "model": "AppUserData",
       "foreignKey": "municipalityId"
     }
   },
