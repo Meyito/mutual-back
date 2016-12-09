@@ -31,6 +31,18 @@
       "principalId": "$everyone",
       "permission": "DENY",
       "property": "*"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW",
+      "property": "*"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW"
     }
   ],
   "methods": {}
