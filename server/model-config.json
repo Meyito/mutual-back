@@ -132,5 +132,9 @@
   "Municipality": {
     "dataSource": "database",
     "public": true
+  },
+  "FAQ": {
+    "dataSource": "database",
+    "public": true
   }
 }
