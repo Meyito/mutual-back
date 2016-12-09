@@ -7,6 +7,6 @@ module.exports = {
     'surname': "Alvarez",
     'username': "garusis",
     'password':"123456",
-    'email': "garusis@gmail.com"
+    'email': "garusis@mutual.com"
   }
 };

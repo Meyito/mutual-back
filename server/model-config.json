@@ -15,6 +15,9 @@
       "./mixins"
     ]
   },
+  "Email": {
+    "dataSource": "mutualEmail"
+  },
   "User": {
     "dataSource": "db",
     "public": false
@@ -45,7 +48,10 @@
   },
   "AppUserAccount": {
     "dataSource": "database",
-    "public": true
+    "emailVerificationRequired": true,
+    "options": {
+      "emailVerificationRequired": true
+    }
   },
   "AccountIdentity": {
     "dataSource": "database",

@@ -35,6 +35,9 @@ module.exports = function (_AppConstant) {
     }
   };
   _AppConstant.remoteMethod('getPublic', {
+    http:{
+      verb: 'get'
+    },
     accepts: [],
     returns: {root: true, type: 'array'}
   });
