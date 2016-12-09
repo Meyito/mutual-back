@@ -1,5 +1,4 @@
 'use strict';
-
 /**
  *
  * @param {AppUserAccount} _AppUserAccount
@@ -48,6 +47,7 @@ module.exports = function (_AppUserAccount) {
 
         if (_.isNil(instance)) {
           instance = await _AppUserAccount.findOne({where: {email: email}});
+          if (!instance) return ResponseHelper.errorHandler({status: 404, message:'Email isn\'t registered for any user'}, cb);
         }
 
         let token = await generateVerificationToken();
@@ -67,11 +67,9 @@ module.exports = function (_AppUserAccount) {
           template: path.resolve(__dirname, '../../server/views/verify.ejs'),
           user: instance
         };
-
-        let verifyFn = Promise.promisify(instance.verify, {context: instance});
-        await verifyFn(options);
-        return ResponseHelper.successHandler({}, cb);
+        await instance.verify(options);
       }
+      return ResponseHelper.successHandler({}, cb);
     } catch (err) {
       ResponseHelper.errorHandler(err, cb);
     }
@@ -89,8 +87,7 @@ module.exports = function (_AppUserAccount) {
     try {
       if (ctx.isNewInstance) {
         let instance = ctx.instance;
-        let createDataFn = Promise.promisify(instance.data.create, {context: instance.data});
-        await createDataFn({});
+        await instance.data.create({});
 
         AppUserAccount.requestVerificationEmail(instance.email, instance);
       }
@@ -99,6 +96,7 @@ module.exports = function (_AppUserAccount) {
       next(err);
     }
   });
+
 
 
   function AppUserAccount() {

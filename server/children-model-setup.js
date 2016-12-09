@@ -6,6 +6,23 @@ module.exports = function (loopback) {
   persistedModelSetup(loopback.PersistedModel);
 };
 
+const DataAccessObject = require(`${process.cwd()}/node_modules/loopback-datasource-juggler/lib/dao`);
+const oldSave = DataAccessObject.prototype.save;
+DataAccessObject.prototype.save = function (options, cb) {
+  if (typeof options === 'function') {
+    cb = options;
+    options = {};
+  }
+
+  let callbackWasCalled = false;
+  return oldSave.call(this, options, function (err, res) {
+    if (callbackWasCalled) return;
+    callbackWasCalled = true;
+    return cb.call(this, err, res);
+  });
+};
+
+
 function persistedModelSetup(PersistedModel) {
   const oldSetup = PersistedModel.setup;
 
