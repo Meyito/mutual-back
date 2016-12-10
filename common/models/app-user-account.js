@@ -8,6 +8,8 @@ module.exports = function (_AppUserAccount) {
   const path = require('path');
   const crypto = require('crypto');
   const _ = require('lodash');
+  //TODO: fix utils
+  const utils = require('../../node_modules/loopback/lib/utils');
 
   const BuildHelper = require('../../server/build-helper');
   const app = require('../../server/server');
@@ -47,7 +49,10 @@ module.exports = function (_AppUserAccount) {
 
         if (_.isNil(instance)) {
           instance = await _AppUserAccount.findOne({where: {email: email}});
-          if (!instance) return ResponseHelper.errorHandler({status: 404, message:'Email isn\'t registered for any user'}, cb);
+          if (!instance) return ResponseHelper.errorHandler({
+            status: 404,
+            message: 'Email isn\'t registered for any user'
+          }, cb);
         }
 
         let token = await generateVerificationToken();
@@ -83,12 +88,37 @@ module.exports = function (_AppUserAccount) {
     ]
   });
 
+  let oldCreate = _AppUserAccount.create;
+  _AppUserAccount.create = function (data, callback) {
+    callback = callback || utils.createPromiseCallback();
+
+    let municipalityId = data.municipalityId;
+    delete data.municipalityId;
+
+    let cbErr;
+    if (callback) {
+      cbErr = function (err) {
+        if (err) callback
+      };
+    }
+
+    let createCreateData = function () {
+      return this.data.create({municipalityId: municipalityId});
+    };
+
+    let promise = oldCreate.call(this, data, cbErr);
+    if(callback){
+
+    }else{
+      return promise.then(() => createCreateData.call(this))
+    }
+    return callback.promise;
+  };
+
   _AppUserAccount.observe('after save', async function (ctx, next) {
     try {
+      let instance = ctx.instance || ctx.data;
       if (ctx.isNewInstance) {
-        let instance = ctx.instance;
-        await instance.data.create({});
-
         AppUserAccount.requestVerificationEmail(instance.email, instance);
       }
       next();
@@ -96,7 +126,6 @@ module.exports = function (_AppUserAccount) {
       next(err);
     }
   });
-
 
 
   function AppUserAccount() {

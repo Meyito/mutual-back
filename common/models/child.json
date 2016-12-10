@@ -1,5 +1,6 @@
 {
   "name": "Child",
+  "plural": "children",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -26,6 +27,11 @@
       "type": "hasOne",
       "model": "Gender",
       "foreignKey": "genderId"
+    },
+    "user": {
+      "type": "belongsTo",
+      "model": "AppUserAccount",
+      "foreignKey": "userId"
     }
   },
   "acls": [
@@ -35,6 +41,25 @@
       "principalId": "$everyone",
       "permission": "DENY",
       "property": "*"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW",
+      "property": "*"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW"
     }
   ],
   "methods": {}

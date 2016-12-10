@@ -99,7 +99,7 @@
   },
   "Child": {
     "dataSource": "database",
-    "public": false
+    "public": true
   },
   "Characteristic": {
     "dataSource": "database",
