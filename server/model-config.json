@@ -15,9 +15,6 @@
       "./mixins"
     ]
   },
-  "Email": {
-    "dataSource": "mutualEmail"
-  },
   "User": {
     "dataSource": "db",
     "public": false
@@ -140,5 +137,9 @@
   "RSSResource": {
     "dataSource": "database",
     "public": true
+  },
+  "Mailer": {
+    "dataSource": "db",
+    "public": false
   }
 }

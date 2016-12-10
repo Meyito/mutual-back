@@ -9,7 +9,7 @@ module.exports = function (_AppUserAccount) {
   const crypto = require('crypto');
   const _ = require('lodash');
   //TODO: fix utils
-  const utils = require('../../node_modules/loopback/lib/utils');
+  //const utils = require('../../node_modules/loopback/lib/utils');
 
   const BuildHelper = require('../../server/build-helper');
   const app = require('../../server/server');
@@ -70,7 +70,8 @@ module.exports = function (_AppUserAccount) {
           token: token,
           uid: instance.id,
           template: path.resolve(__dirname, '../../server/views/verify.ejs'),
-          user: instance
+          user: instance,
+          mailer: app.models.Mailer
         };
         await instance.verify(options);
       }
@@ -88,6 +89,7 @@ module.exports = function (_AppUserAccount) {
     ]
   });
 
+  /*
   let oldCreate = _AppUserAccount.create;
   _AppUserAccount.create = function (data, callback) {
     callback = callback || utils.createPromiseCallback();
@@ -114,6 +116,7 @@ module.exports = function (_AppUserAccount) {
     }
     return callback.promise;
   };
+  */
 
   _AppUserAccount.observe('after save', async function (ctx, next) {
     try {

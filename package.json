@@ -40,7 +40,8 @@
     "mocha": "^3.2.0",
     "run-sequence": "^1.2.2",
     "serve-favicon": "^2.0.1",
-    "strong-cluster-control": "^2.2.3"
+    "strong-cluster-control": "^2.2.3",
+    "xoauth2": "^1.2.0"
   },
   "devDependencies": {},
   "repository": {
