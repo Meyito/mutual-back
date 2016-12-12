@@ -6,22 +6,82 @@ module.exports = function (loopback) {
   persistedModelSetup(loopback.PersistedModel);
 };
 
+const _ = require('lodash');
+
 const DataAccessObject = require(`${process.cwd()}/node_modules/loopback-datasource-juggler/lib/dao`);
-const oldSave = DataAccessObject.prototype.save;
-DataAccessObject.prototype.save = function (options, cb) {
-  if (typeof options === 'function') {
-    cb = options;
-    options = {};
-  }
+const utils = require(`${process.cwd()}/node_modules/loopback/lib/utils`);
 
-  let callbackWasCalled = false;
-  return oldSave.call(this, options, function (err, res) {
-    if (callbackWasCalled) return;
-    callbackWasCalled = true;
-    return cb.call(this, err, res);
-  });
-};
+let functionList = [
+  'create',
+  'upsert',
+  'patchOrCreate',
+  'updateOrCreate',
+  'upsertWithWhere',
+  'patchOrCreateWithWhere',
+  'replaceOrCreate',
+  'findOrCreate',
+  'exists',
+  'findById',
+  'findByIds',
+  'find',
+  'findOne',
+  'destroyAll',
+  'deleteAll',
+  'remove',
+  'deleteById',
+  'destroyById',
+  'removeById',
+  'count',
+  'updateAll',
+  'update',
+  'replaceById'
+];
 
+let prototypeFunctionList = [
+  'save',
+  'destroy',
+  'delete',
+  'remove',
+  'updateAttribute',
+  'replaceAttributes',
+  'patchAttributes',
+  'updateAttributes',
+  'reload'
+];
+
+function generateSecureFunction(object, functionName) {
+  let originalFunction = object[functionName];
+  object[functionName] = function () {
+    let args = Array.prototype.slice.call(arguments);
+    let cb = arguments[args.length - 1];
+
+    let callbackWasCalled = false;
+    let secureFunction = function () {
+      if (callbackWasCalled) return;
+      callbackWasCalled = true;
+      return cb.apply(this, arguments);
+    };
+
+
+    if (typeof cb === 'function') {
+      args[args.length - 1] = secureFunction;
+    } else {
+      cb = utils.createPromiseCallback();
+      args.push(secureFunction);
+    }
+
+    originalFunction.apply(this, args);
+    return cb.promise;
+  };
+}
+
+_.forEach(functionList, function (functionName) {
+  generateSecureFunction(DataAccessObject, functionName);
+});
+
+_.forEach(prototypeFunctionList, function (functionName) {
+  generateSecureFunction(DataAccessObject.prototype, functionName);
+});
 
 function persistedModelSetup(PersistedModel) {
   const oldSetup = PersistedModel.setup;

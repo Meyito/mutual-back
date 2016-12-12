@@ -141,5 +141,9 @@
   "Mailer": {
     "dataSource": "db",
     "public": false
+  },
+  "ValidationHelper": {
+    "dataSource": "db",
+    "public": false
   }
 }

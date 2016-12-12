@@ -16,28 +16,37 @@ module.exports = function (_AppUserAccount) {
 
   let AppConstant;
   let ResponseHelper;
+  let ValidationHelper;
 
   BuildHelper
     .build(AppUserAccount, _AppUserAccount)
     .then(function () {
       AppConstant = app.models.AppConstant;
       ResponseHelper = app.models.ResponseHelper;
-
-      _AppUserAccount.validatesPresenceOf('municipalityId');
+      ValidationHelper = app.models.ValidationHelper;
 
       let oldCreate = _AppUserAccount.create;
       _AppUserAccount.create = function (data, callback) {
         callback = callback || utils.createPromiseCallback();
 
-        let municipalityId = data.municipalityId;
-        delete data.municipalityId;
+        ValidationHelper
+          .validatesPresenceOf('municipalityId', data, _AppUserAccount)
+          .then(() => {
+            let municipalityId = data.municipalityId;
+            delete data.municipalityId;
 
-        oldCreate.call(this, data, function (err, newInstance) {
-          if (err) return callback(err);
-          newInstance.data.create({municipalityId: municipalityId}, function (err, data) {
-            callback(err, newInstance);
+            oldCreate.call(this, data, function (err, newInstance) {
+              if (err) return callback(err);
+              newInstance.data.create({municipalityId: municipalityId}, function (err, data) {
+                callback(err, newInstance);
+              });
+            });
+          })
+          .catch(function (err) {
+            callback(err);
           });
-        });
+
+
         return callback.promise;
       };
 
