@@ -9,7 +9,7 @@ module.exports = function (_AppUserAccount) {
   const crypto = require('crypto');
   const _ = require('lodash');
   //TODO: fix utils
-  //const utils = require('../../node_modules/loopback/lib/utils');
+  const utils = require(`${process.cwd()}/node_modules/loopback/lib/utils`);
 
   const BuildHelper = require('../../server/build-helper');
   const app = require('../../server/server');
@@ -22,6 +22,37 @@ module.exports = function (_AppUserAccount) {
     .then(function () {
       AppConstant = app.models.AppConstant;
       ResponseHelper = app.models.ResponseHelper;
+
+      _AppUserAccount.validatesPresenceOf('municipalityId');
+
+      let oldCreate = _AppUserAccount.create;
+      _AppUserAccount.create = function (data, callback) {
+        callback = callback || utils.createPromiseCallback();
+
+        let municipalityId = data.municipalityId;
+        delete data.municipalityId;
+
+        oldCreate.call(this, data, function (err, newInstance) {
+          if (err) return callback(err);
+          newInstance.data.create({municipalityId: municipalityId}, function (err, data) {
+            callback(err, newInstance);
+          });
+        });
+        return callback.promise;
+      };
+
+      _AppUserAccount.observe('after save', async function (ctx, next) {
+        try {
+          let instance = ctx.instance || ctx.data;
+          if (ctx.isNewInstance) {
+            AppUserAccount.requestVerificationEmail(instance.email, instance);
+          }
+          next();
+        } catch (err) {
+          next(err);
+        }
+      });
+
     });
 
 
@@ -87,47 +118,6 @@ module.exports = function (_AppUserAccount) {
     accepts: [
       {arg: 'email', type: 'string'}
     ]
-  });
-
-  /*
-  let oldCreate = _AppUserAccount.create;
-  _AppUserAccount.create = function (data, callback) {
-    callback = callback || utils.createPromiseCallback();
-
-    let municipalityId = data.municipalityId;
-    delete data.municipalityId;
-
-    let cbErr;
-    if (callback) {
-      cbErr = function (err) {
-        if (err) callback
-      };
-    }
-
-    let createCreateData = function () {
-      return this.data.create({municipalityId: municipalityId});
-    };
-
-    let promise = oldCreate.call(this, data, cbErr);
-    if(callback){
-
-    }else{
-      return promise.then(() => createCreateData.call(this))
-    }
-    return callback.promise;
-  };
-  */
-
-  _AppUserAccount.observe('after save', async function (ctx, next) {
-    try {
-      let instance = ctx.instance || ctx.data;
-      if (ctx.isNewInstance) {
-        AppUserAccount.requestVerificationEmail(instance.email, instance);
-      }
-      next();
-    } catch (err) {
-      next(err);
-    }
   });
 
 
