@@ -78,6 +78,18 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "requestVerificationEmail"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__create__children"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__get__children"
     }
   ],
   "methods": {}

@@ -3,6 +3,7 @@
 module.exports = function (_Child) {
 
   const Promise = require('bluebird');
+  const _ = require('lodash');
 
   const BuildHelper = require('../../server/build-helper');
   const app = require('../../server/server');
@@ -21,8 +22,10 @@ module.exports = function (_Child) {
       Characteristic = app.models.Characteristic;
 
       let oldCreate = _Child.create;
-      _Child.create = function (data, callback) {
-        callback = callback || utils.createPromiseCallback();
+      _Child.create = function (data) {
+        let callback = arguments[arguments.length - 1];
+        callback = _.isFunction(callback) ? callback : utils.createPromiseCallback();
+
         oldCreate
           .call(this, data)
           .then(function (child) {
