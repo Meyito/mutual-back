@@ -9,7 +9,7 @@ const app = require('../dist/server/server');
 global.should = chai.should();
 global.expect = chai.expect;
 global.assert = chai.assert;
-global.Promise = Promise;
+global.BPromise = Promise;
 global._ = _;
 global.app = app;
 

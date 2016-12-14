@@ -53,4 +53,7 @@ describe('AppConstant', function () {
     });
   });
 
+  after(function () {
+    return AppConstant.destroyAll({inq: _.map(fixtures, 'name')});
+  });
 });

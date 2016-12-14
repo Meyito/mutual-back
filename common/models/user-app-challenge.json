@@ -12,12 +12,16 @@
     "isFinished": {
       "type": "boolean",
       "default": false
+    },
+    "expirationDate": {
+      "type": "date",
+      "required": true
     }
   },
   "validations": [],
   "relations": {
     "challenge": {
-      "type": "hasOne",
+      "type": "belongsTo",
       "model": "Challenge",
       "foreignKey": "challengeId"
     },

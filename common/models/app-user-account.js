@@ -8,7 +8,7 @@ module.exports = function (_AppUserAccount) {
   const path = require('path');
   const crypto = require('crypto');
   const _ = require('lodash');
-  //TODO: fix utils
+
   const utils = require(`${process.cwd()}/node_modules/loopback/lib/utils`);
 
   const BuildHelper = require('../../server/build-helper');

@@ -24,7 +24,7 @@
       "foreignKey": "childId"
     },
     "gender": {
-      "type": "hasOne",
+      "type": "belongsTo",
       "model": "Gender",
       "foreignKey": "genderId"
     },

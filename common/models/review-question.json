@@ -19,7 +19,7 @@
       "foreignKey": "challengeId"
     },
     "characteristic": {
-      "type": "hasOne",
+      "type": "belongsTo",
       "model": "Characteristic",
       "foreignKey": "characteristicId"
     },

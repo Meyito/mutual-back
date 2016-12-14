@@ -10,6 +10,14 @@
     "name": {
       "type": "string",
       "required": true
+    },
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "weight": {
+      "type": "number",
+      "required": true
     }
   },
   "validations": [],
