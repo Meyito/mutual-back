@@ -8,6 +8,9 @@ module.exports = {
     'username': "garusis",
     'password': "123456",
     'email': "garusis@mutual.com",
-    'municipalityId': '4'
+    'id': 5,
+    'data': {
+      'municipalityId': 4
+    }
   }
 };

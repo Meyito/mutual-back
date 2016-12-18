@@ -15,6 +15,8 @@ module.exports = function (_AppUserAccount) {
   const app = require('../../server/server');
 
   let AppConstant;
+  let AppUserData;
+  let Level;
   let ResponseHelper;
   let ValidationHelper;
 
@@ -22,22 +24,26 @@ module.exports = function (_AppUserAccount) {
     .build(AppUserAccount, _AppUserAccount)
     .then(function () {
       AppConstant = app.models.AppConstant;
+      AppUserData = app.models.AppUserData;
       ResponseHelper = app.models.ResponseHelper;
       ValidationHelper = app.models.ValidationHelper;
+      Level = app.models.Level;
 
       let oldCreate = _AppUserAccount.create;
-      _AppUserAccount.create = function (data, callback) {
-        callback = callback || utils.createPromiseCallback();
+      _AppUserAccount.create = function (data) {
+        let callback = arguments[arguments.length - 1];
+        callback = _.isFunction(callback) ? callback : utils.createPromiseCallback();
 
+        let modifiableData = AppUserData.getModifiableFiels();
         ValidationHelper
-          .validatesPresenceOf('municipalityId', data, _AppUserAccount)
+          .validatesPresenceOf('municipalityId', data.data, _AppUserAccount)
           .then(() => {
-            let municipalityId = data.municipalityId;
-            delete data.municipalityId;
+            let userData = _.pick(data.data, modifiableData);
+            delete data.data;
 
             oldCreate.call(this, data, function (err, newInstance) {
               if (err) return callback(err);
-              newInstance.data.create({municipalityId: municipalityId}, function (err, data) {
+              newInstance.data.create(userData, function (err, data) {
                 callback(err, newInstance);
               });
             });
@@ -50,6 +56,73 @@ module.exports = function (_AppUserAccount) {
         return callback.promise;
       };
 
+      let oldFindById = _AppUserAccount.findById;
+      _AppUserAccount.findById = function (id, filter, callback) {
+        if (!callback) {
+          if (_.isFunction(filter)) {
+            callback = filter;
+            filter = null;
+          } else {
+            callback = callback || utils.createPromiseCallback();
+          }
+        }
+
+        if (!filter) {
+          filter = {};
+        }
+
+        if (!filter.include) {
+          filter.include = [];
+        } else if (!_.isArray(filter.include)) {
+          filter.include = [filter.include];
+        }
+        filter.include.push('data');
+
+        oldFindById
+          .call(this, id, filter)
+          .then(function (newInstance) {
+            return Level
+              .calculate(newInstance.__data.data.experience)
+              .then(function (levelData) {
+                newInstance.__data.levelData = levelData;
+                callback(null, newInstance);
+              });
+          })
+          .catch(callback);
+
+        return callback.promise;
+      };
+
+      let oldUpdateAttributes = _AppUserAccount.prototype.updateAttributes;
+      _AppUserAccount.prototype.updateAttributes = _AppUserAccount.prototype.patchAttributes = function (data, callback) {
+        callback = callback || utils.createPromiseCallback();
+
+        let modifiableData = AppUserData.getModifiableFiels();
+        data.data = data.data || {};
+
+        ValidationHelper
+          .validatesDifference('municipalityId', null, data.data, _AppUserAccount)
+          .then(() => {
+            let userData = _.pick(data.data, modifiableData);
+            delete data.data;
+            delete data.levelData;
+            console.log(userData);
+
+            oldUpdateAttributes.call(this, data, (err, newAttrib) => {
+              if (err) return callback(err);
+              this.data.update(userData, function (err, data) {
+                callback(err, newAttrib);
+              });
+            });
+          })
+          .catch(function (err) {
+            callback(err);
+          });
+
+        return callback.promise;
+      };
+
+
       _AppUserAccount.observe('after save', async function (ctx, next) {
         try {
           let instance = ctx.instance || ctx.data;
@@ -61,7 +134,6 @@ module.exports = function (_AppUserAccount) {
           next(err);
         }
       });
-
     });
 
 

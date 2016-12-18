@@ -23,11 +23,16 @@ module.exports = function (_Child) {
 
       let oldCreate = _Child.create;
       _Child.create = function (data) {
-        let callback = arguments[arguments.length - 1];
-        callback = _.isFunction(callback) ? callback : utils.createPromiseCallback();
+        let args = _.slice(data);
+        let callback = args[args.length - 1];
+        if (_.isFunction(callback)) {
+          args.pop();
+        } else {
+          callback = utils.createPromiseCallback();
+        }
 
         oldCreate
-          .call(this, data)
+          .apply(this, args)
           .then(function (child) {
             return Characteristic
               .find({fields: ['id']})

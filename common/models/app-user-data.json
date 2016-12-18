@@ -6,6 +6,10 @@
     "validateUpsert": true
   },
   "properties": {
+    "avatar": {
+      "type": "string",
+      "default": ""
+    },
     "experience": {
       "type": "number",
       "required": true,

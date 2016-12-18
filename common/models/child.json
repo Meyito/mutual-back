@@ -32,6 +32,11 @@
       "type": "belongsTo",
       "model": "AppUserAccount",
       "foreignKey": "userId"
+    },
+    "challenges": {
+      "type": "hasMany",
+      "model": "UserAppChallenge",
+      "foreignKey": "childId"
     }
   },
   "acls": [

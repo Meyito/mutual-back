@@ -1,5 +1,10 @@
 'use strict';
 
-module.exports = function(Appuserdata) {
+module.exports = function(AppUserData) {
+
+
+  AppUserData.getModifiableFiels = function () {
+    return ['avatar','municipalityId','genderId'];
+  };
 
 };

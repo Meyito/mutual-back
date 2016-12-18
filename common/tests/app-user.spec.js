@@ -16,6 +16,7 @@ describe('AppUserAccount', function () {
   const Characteristic = app.models.Characteristic;
 
   before(function () {
+    this.timeout(100000);
     return BPromise
       .all([
         AppUserAccount.create(fixtures.appUser.normalUser),
@@ -37,19 +38,31 @@ describe('AppUserAccount', function () {
             categories,
             characteristics,
             Challenge.create(_.toArray(challenges)),
-            normalUser.children.create(_.toArray(fixtures.child))
+            //BPromise.promisify(normalUser.children.create)(_.toArray(fixtures.child))
           ])
       })
-      .spread(function (normalUser, categories, characteristics, challenges) {
-
-
+      .spread(function (normalUser, categories, characteristics, challenges, childs) {
         return [];
       });
 
   });
-  describe('#calculate', function () {
-    it(`should make something`, function () {
 
+  describe('#findById', function () {
+    it(`should get an user, its relations and its level info by id`, function () {
+      return AppUserAccount.findById(fixtures.appUser.normalUser.id)
+        .then(function (user) {
+        });
+    });
+  });
+
+  describe('#prototype.updateAttributes', function () {
+    it(`should get an user, and update its attributes`, function () {
+      return AppUserAccount.findById(fixtures.appUser.normalUser.id)
+        .then(function (user) {
+          return user.updateAttributes({name: 'updatedName', data: {municipalityId: 11}});
+        })
+        .then(function (user) {
+        });
     });
   });
 });

@@ -29,6 +29,11 @@
       "type": "belongsTo",
       "model": "AppUserAccount",
       "foreignKey": "userId"
+    },
+    "child": {
+      "type": "belongsTo",
+      "model": "Child",
+      "foreignKey": "childId"
     }
   },
   "acls": [
