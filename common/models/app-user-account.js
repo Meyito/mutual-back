@@ -106,13 +106,13 @@ module.exports = function (_AppUserAccount) {
             let userData = _.pick(data.data, modifiableData);
             delete data.data;
             delete data.levelData;
-            console.log(userData);
 
             oldUpdateAttributes.call(this, data, (err, newAttrib) => {
               if (err) return callback(err);
-              this.data.update(userData, function (err, data) {
-                callback(err, newAttrib);
-              });
+              if (_.isEmpty(userData)) {
+                return callback(null, newAttrib);
+              }
+              this.data.update(userData, callback);
             });
           })
           .catch(function (err) {
