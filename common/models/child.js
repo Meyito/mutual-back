@@ -22,8 +22,8 @@ module.exports = function (_Child) {
       Characteristic = app.models.Characteristic;
 
       let oldCreate = _Child.create;
-      _Child.create = function (data) {
-        let args = _.slice(data);
+      _Child.create = function () {
+        let args = _.slice(arguments);
         let callback = args[args.length - 1];
         if (_.isFunction(callback)) {
           args.pop();
@@ -33,19 +33,28 @@ module.exports = function (_Child) {
 
         oldCreate
           .apply(this, args)
-          .then(function (child) {
+          .then(function (children) {
             return Characteristic
               .find({fields: ['id']})
               .then(function (characteristics) {
+                if (characteristics.length === 0) {
+                  return Promise.resolve();
+                }
+
                 let childCharacteristics = _.map(characteristics, function (characteristic) {
                   return {
                     characteristicId: characteristic.id
                   };
                 });
-                return child.characteristics.create(childCharacteristics);
+
+                if (_.isArray(children)) {
+                  return Promise.all(_.map(children, (child) => child.characteristics.create(childCharacteristics)));
+                }
+
+                return children.characteristics.create(childCharacteristics);
               })
               .then(function () {
-                callback(null, child);
+                callback(null, children);
               });
           })
           .catch(callback);

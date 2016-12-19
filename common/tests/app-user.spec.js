@@ -38,13 +38,13 @@ describe('AppUserAccount', function () {
             categories,
             characteristics,
             Challenge.create(_.toArray(challenges)),
-            //BPromise.promisify(normalUser.children.create)(_.toArray(fixtures.child))
+            normalUser.children.create(_.toArray(fixtures.child))
           ])
       })
       .spread(function (normalUser, categories, characteristics, challenges, childs) {
+        console.log('promisify');
         return [];
       });
-
   });
 
   describe('#findById', function () {
