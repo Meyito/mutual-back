@@ -7,6 +7,10 @@
     "validateUpsert": true
   },
   "properties": {
+    "avatar": {
+      "type": "string",
+      "default": ""
+    },
     "name": {
       "type": "string",
       "required": true
