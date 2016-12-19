@@ -16,14 +16,12 @@ describe('AppUserAccount', function () {
   const Characteristic = app.models.Characteristic;
 
   before(function () {
-    this.timeout(100000);
     return BPromise
       .all([
-        AppUserAccount.create(fixtures.appUser.normalUser),
         Category.create(_.toArray(fixtures.category)),
         Characteristic.create(fixtures.characteristic)
       ])
-      .spread(function (normalUser, categories, characteristics) {
+      .spread(function (categories, characteristics) {
         let challenges = fixtures.challenge;
         categories = _.keyBy(categories, 'slug');
         characteristics = _.keyBy(characteristics, 'name');
@@ -34,17 +32,23 @@ describe('AppUserAccount', function () {
 
         return BPromise
           .all([
-            normalUser,
             categories,
             characteristics,
-            Challenge.create(_.toArray(challenges)),
-            normalUser.children.create(_.toArray(fixtures.child))
+            Challenge.create(_.toArray(challenges))
           ])
       })
-      .spread(function (normalUser, categories, characteristics, challenges, childs) {
-        console.log('promisify');
+      .spread(function (categories, characteristics, challenges) {
         return [];
       });
+  });
+
+  describe('#create', function () {
+    it(`should create an new user and its related userData`, function () {
+      return AppUserAccount.create(fixtures.appUser.normalUser)
+        .then(function (user) {
+
+        });
+    });
   });
 
   describe('#findById', function () {
@@ -65,4 +69,16 @@ describe('AppUserAccount', function () {
         });
     });
   });
+
+  describe('#create', function () {
+    it(`should create the user's children and relate them with the current characteristcs`, function () {
+      return AppUserAccount.findById(fixtures.appUser.normalUser.id)
+        .then(function (user) {
+          return user.children.create(_.toArray(fixtures.child));
+        })
+        .then(function (user) {
+        });
+    });
+  });
+
 });
