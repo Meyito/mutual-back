@@ -6,13 +6,16 @@ const fixtures = {
   category: require('./fixtures/category'),
   challenge: require('./fixtures/challenge'),
   child: require('./fixtures/child'),
-  characteristic: require('./fixtures/characteristic')
+  characteristic: require('./fixtures/characteristic'),
+  questions : require('./fixtures/review-question')
 };
 
 describe('AppUserAccount', function () {
   const AppUserAccount = app.models.AppUserAccount;
   const Category = app.models.Category;
   const Challenge = app.models.Challenge;
+  const ReviewQuestion = app.models.ReviewQuestion;
+  const ReviewAnswer = app.models.ReviewAnswer;
   const Characteristic = app.models.Characteristic;
 
   before(function () {
@@ -38,15 +41,43 @@ describe('AppUserAccount', function () {
           ])
       })
       .spread(function (categories, characteristics, challenges) {
-        return [];
+        characteristics = _.keyBy(characteristics,'name');
+        challenges = _.keyBy(challenges, 'id');
+
+        let promises = _.map(fixtures.questions, function (question) {
+          let answers = question.answers;
+          let challengeId = question.challengeId;
+
+          question.characteristicId = characteristics[question.char].id;
+
+          delete question.answers;
+          delete question.char;
+          delete question.challengeId;
+
+          return challenges[challengeId].reviewQuestions.create(question)
+            .then(function (question) {
+              return question.answers.create(answers);
+            });
+        });
+        return BPromise.all(promises);
       });
+  });
+
+  after(function () {
+    return BPromise
+      .all([
+        Category.destroyAll({}),
+        Characteristic.destroyAll({}),
+        Challenge.destroyAll({}),
+        ReviewQuestion.destroyAll({}),
+        ReviewAnswer.destroyAll({})
+      ])
   });
 
   describe('#create', function () {
     it(`should create an new user and its related userData`, function () {
       return AppUserAccount.create(fixtures.appUser.normalUser)
         .then(function (user) {
-
         });
     });
   });
@@ -70,7 +101,7 @@ describe('AppUserAccount', function () {
     });
   });
 
-  describe('#create', function () {
+  describe('#prototype.children.create', function () {
     it(`should create the user's children and relate them with the current characteristcs`, function () {
       return AppUserAccount.findById(fixtures.appUser.normalUser.id)
         .then(function (user) {

@@ -10,7 +10,8 @@ module.exports = {
     "image": "http://fake.url/image.png",
     "expPoints": 100,
     "frequency": 15,
-    "expireAt": 7
+    "expireAt": 7,
+    "id":1
   },
   challenge2: {
     "minAge": 4,
@@ -19,7 +20,8 @@ module.exports = {
     "description": "Sal con tu hijo a una heladeria y permitele elegir un helado.",
     "image": "http://fake.url/image2.png",
     "expPoints": 150,
-    "expireAt": 3
+    "expireAt": 3,
+    "id":2
   },
   challenge3: {
     "minAge": 6,
@@ -29,6 +31,7 @@ module.exports = {
     "image": "http://fake.url/image3.png",
     "expPoints": 200,
     "frequency": 15,
-    "expireAt": 3
+    "expireAt": 3,
+    "id":3
   }
 };
