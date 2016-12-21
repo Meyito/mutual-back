@@ -81,6 +81,8 @@ module.exports = function (_AppUserAccount) {
         oldFindById
           .call(this, id, filter)
           .then(function (newInstance) {
+            if (!newInstance) return callback(null, newInstance);
+
             return Level
               .calculate(newInstance.__data.data.experience)
               .then(function (levelData) {
@@ -201,6 +203,84 @@ module.exports = function (_AppUserAccount) {
     ]
   });
 
+
+  /**
+   *
+   * @param {Number} challengeId
+   * @param {Object} responses
+   * @param [cb]
+   *
+   * @return {Promise}
+   */
+  AppUserAccount.prototype.completeChallenge = async function (challengeId, responses, cb) {
+    try {
+
+      /**
+       *
+       * @type {UserAppChallenge}
+       */
+      let userChallenge = await this.challenges.findById(challengeId, {
+        include: [
+          {
+            relation: 'challenge',
+            scope: {
+              include: [
+                'category',
+                {
+                  relation: 'reviewQuestions',
+                  scope: {
+                    include: [
+                      'characteristic',
+                      'answers'
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            relation: 'child',
+            scope: {
+              include: ['characteristics']
+            }
+          }
+        ]
+      });
+      if (!userChallenge) {
+        return ResponseHelper.errorHandler({
+          status: 404,
+          message: 'Challenge doesn\'t exists'
+        }, cb);
+      }
+
+      await userChallenge.complete(responses);
+      return ResponseHelper.successHandler({}, cb);
+    } catch (err) {
+      ResponseHelper.errorHandler(err, cb);
+    }
+  };
+  _AppUserAccount.remoteMethod('completeChallenge', {
+    isStatic: false,
+    http: {
+      verb: 'put',
+      path: '/completeChallenge/:challengeId'
+    },
+    accepts: [
+      {arg: 'challengeId', type: 'number', required: true},
+      {
+        arg: 'responses',
+        type: 'object',
+        description: [
+          'An object in the form: ',
+          '  { ',
+          '      "idQ1": "idSelecAns1",',
+          '      "idQ2": "idSelecAns2"',
+          '  }'
+        ],
+        required: true
+      }
+    ]
+  });
 
   function AppUserAccount() {
   }

@@ -80,6 +80,13 @@
       "property": "requestVerificationEmail"
     },
     {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "completeChallenge"
+    },
+    {
       "principalType": "ROLE",
       "principalId": "$owner",
       "permission": "ALLOW",
