@@ -49,7 +49,7 @@ module.exports = [
     ]
   },
   {
-    id: 2,
+    id: 3,
     challengeId: 2,
     content: 'Pregunta autoconfianza',
     char: 'autoconfianza',
@@ -72,7 +72,7 @@ module.exports = [
     ]
   },
   {
-    id: 3,
+    id: 4,
     challengeId: 2,
     content: 'Pregunta conffamiliar',
     char: 'conffamiliar',
@@ -95,7 +95,7 @@ module.exports = [
     ]
   },
   {
-    id: 4,
+    id: 5,
     challengeId: 2,
     content: 'Pregunta comunicacion',
     char: 'comunicacion',
@@ -118,7 +118,7 @@ module.exports = [
     ]
   },
   {
-    id: 5,
+    id: 6,
     challengeId: 3,
     content: 'Pregunta conffamiliar',
     char: 'conffamiliar',
@@ -141,7 +141,7 @@ module.exports = [
     ]
   },
   {
-    id: 6,
+    id: 7,
     challengeId: 3,
     content: 'Pregunta comunicacion',
     char: 'comunicacion',

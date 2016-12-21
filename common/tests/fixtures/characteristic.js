@@ -5,16 +5,16 @@ module.exports = [
   {
     name: 'autoconfianza',
     label: 'Autoconfianza',
-    weight: 1
+    weight: 5
   },
   {
     name: 'conffamiliar',
     label: 'Confianza Familiar',
-    weight: 1
+    weight: 3
   },
   {
     name: 'comunicacion',
     label: 'Comunicación',
-    weight: 1
+    weight: 4
   }
 ];

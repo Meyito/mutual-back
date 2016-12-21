@@ -46,7 +46,7 @@ module.exports = async function (app) {
   async function migrate(dsDescriptor) {
     let migrateMethod = process.env.MIGRATE_METHOD === 'update' ? dsDescriptor.ds.autoupdate : dsDescriptor.ds.automigrate;
     migrateMethod = Promise.promisify(migrateMethod, {context: dsDescriptor.ds});
-    let modelsInDS = _.filter(models, (Model) => Model.dataSource.name === dsDescriptor.ds.name);
+    let modelsInDS = _.filter(models, (Model) => Model.dataSource && Model.dataSource.name === dsDescriptor.ds.name);
     let modelsToMigrate = _.filter(modelsInDS, function (Model) {
       return !_.includes(modelsInDS, Model.base);
     });

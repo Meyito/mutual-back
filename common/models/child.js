@@ -12,6 +12,7 @@ module.exports = function (_Child) {
 
   let AppConstant;
   let Characteristic;
+  let Alertmeter;
   let ResponseHelper;
   let ValidationHelper;
 
@@ -20,6 +21,7 @@ module.exports = function (_Child) {
     .then(function () {
 
       Characteristic = app.models.Characteristic;
+      Alertmeter = app.models.Alertmeter;
 
       let oldCreate = _Child.create;
       _Child.create = function () {
@@ -59,6 +61,55 @@ module.exports = function (_Child) {
           })
           .catch(callback);
         return callback.promise;
+      };
+
+
+      let oldFindOne = _Child.findOne;
+      _Child.findOne = function (query, options, cb) {
+        if (options === undefined && cb === undefined) {
+          if (typeof query === 'function') {
+            cb = query;
+            query = {};
+          }
+        } else if (cb === undefined) {
+          if (typeof options === 'function') {
+            cb = options;
+            options = {};
+          }
+        }
+
+        cb = cb || utils.createPromiseCallback();
+        query = query || {};
+        options = options || {};
+
+        if (!query.include) {
+          query.include = [];
+        } else if (!_.isArray(query.include)) {
+          query.include = [query.include];
+        }
+
+        query.include.push({
+          relation: 'characteristics',
+          scope: {
+            include: {
+              relation: 'characteristic'
+            }
+          }
+        });
+
+        oldFindOne
+          .call(this, query, options)
+          .then(function (instance) {
+            return Alertmeter
+              .calculate(instance.__data.characteristics)
+              .then(function (value) {
+                instance.__data.alertmeterValue = value;
+                cb(null, instance);
+              });
+          })
+          .catch(cb);
+
+        return cb.promise;
       };
 
     });

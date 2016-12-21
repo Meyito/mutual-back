@@ -145,5 +145,9 @@
   "ValidationHelper": {
     "dataSource": "db",
     "public": false
+  },
+  "Alertmeter": {
+    "dataSource": null,
+    "public": false
   }
 }

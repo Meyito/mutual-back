@@ -7,7 +7,7 @@ const fixtures = {
   challenge: require('./fixtures/challenge'),
   child: require('./fixtures/child'),
   characteristic: require('./fixtures/characteristic'),
-  questions : require('./fixtures/review-question')
+  questions: require('./fixtures/review-question')
 };
 
 describe('AppUserAccount', function () {
@@ -41,7 +41,7 @@ describe('AppUserAccount', function () {
           ])
       })
       .spread(function (categories, characteristics, challenges) {
-        characteristics = _.keyBy(characteristics,'name');
+        characteristics = _.keyBy(characteristics, 'name');
         challenges = _.keyBy(challenges, 'id');
 
         let promises = _.map(fixtures.questions, function (question) {
@@ -71,7 +71,7 @@ describe('AppUserAccount', function () {
         Challenge.destroyAll({}),
         ReviewQuestion.destroyAll({}),
         ReviewAnswer.destroyAll({})
-      ])
+      ]);
   });
 
   describe('#create', function () {
@@ -108,6 +108,18 @@ describe('AppUserAccount', function () {
           return user.children.create(_.toArray(fixtures.child));
         })
         .then(function (user) {
+        });
+    });
+  });
+
+  describe('#prototype.children.findById', function () {
+    it(`should get a user's children and its levelmeter number`, function () {
+      return AppUserAccount.findById(fixtures.appUser.normalUser.id)
+        .then(function (user) {
+          return user.children.findById(fixtures.child.child1.id);
+        })
+        .then(function (children) {
+          console.log('alertmeterValue: ', children.toJSON().alertmeterValue);
         });
     });
   });
