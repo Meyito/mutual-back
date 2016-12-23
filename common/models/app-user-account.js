@@ -266,7 +266,7 @@ module.exports = function (_AppUserAccount) {
     isStatic: false,
     http: {
       verb: 'put',
-      path: '/completeChallenge/:challengeId'
+      path: '/complete-challenge/:challengeId'
     },
     accepts: [
       {arg: 'challengeId', type: 'number', required: true},

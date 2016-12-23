@@ -38,7 +38,7 @@ module.exports = function (_Child) {
         oldCreate
           .apply(this, args)
           .then(function (children) {
-            if(_.isArray(children)){
+            if (_.isArray(children)) {
               return callback(null, children);
             }
             return Characteristic
@@ -117,6 +117,32 @@ module.exports = function (_Child) {
       };
 
     });
+
+
+  /**
+   *
+   * @param [cb]
+   *
+   * @return {Promise}
+   */
+  Child.prototype.assignChallenge = function (cb) {
+    cb = cb || utils.createPromiseCallback();
+
+    Challenge.assingOneTo(this)
+      .then(function (resp) {
+        cb(null, resp);
+      })
+      .catch(cb);
+
+    return cb.promise;
+  };
+  _Child.remoteMethod('assignChallenge', {
+    isStatic: false,
+    http: {
+      verb: 'post',
+      path: '/assign-challenge'
+    }
+  });
 
   function Child() {
   }
