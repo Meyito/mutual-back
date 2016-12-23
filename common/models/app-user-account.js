@@ -43,6 +43,9 @@ module.exports = function (_AppUserAccount) {
 
             oldCreate.call(this, data, function (err, newInstance) {
               if (err) return callback(err);
+              if(_.isArray(newInstance)){
+                return callback(null, newInstance);
+              }
               newInstance.data.create(userData, function (err, data) {
                 callback(err, newInstance);
               });
