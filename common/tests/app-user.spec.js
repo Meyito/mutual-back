@@ -103,11 +103,18 @@ describe('AppUserAccount', function () {
 
   describe('#prototype.children.create', function () {
     it(`should create the user's children and relate them with the current characteristcs`, function () {
-      return AppUserAccount.findById(fixtures.appUser.normalUser.id)
+      return BPromise.resolve(AppUserAccount.findById(fixtures.appUser.normalUser.id))
         .then(function (user) {
-          return user.children.create(_.toArray(fixtures.child));
+          return BPromise.all([
+            user,
+            user.children.create(_.toArray(fixtures.child))
+          ]);
         })
-        .then(function (user) {
+        .spread(function (user, children) {
+          return BPromise.all(_.map(children, (child) => child.challenges()));
+        })
+        .then(function (challenges) {
+          console.log(challenges);
         });
     });
   });

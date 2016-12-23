@@ -15,6 +15,7 @@ module.exports = function (_Child) {
   let Alertmeter;
   let ResponseHelper;
   let ValidationHelper;
+  let Challenge
 
   BuildHelper
     .build(Child, _Child)
@@ -22,6 +23,7 @@ module.exports = function (_Child) {
 
       Characteristic = app.models.Characteristic;
       Alertmeter = app.models.Alertmeter;
+      Challenge = app.models.Challenge;
 
       let oldCreate = _Child.create;
       _Child.create = function () {
@@ -36,6 +38,9 @@ module.exports = function (_Child) {
         oldCreate
           .apply(this, args)
           .then(function (children) {
+            if(_.isArray(children)){
+              return callback(null, children);
+            }
             return Characteristic
               .find({fields: ['id']})
               .then(function (characteristics) {
@@ -49,11 +54,10 @@ module.exports = function (_Child) {
                   };
                 });
 
-                if (_.isArray(children)) {
-                  return Promise.all(_.map(children, (child) => child.characteristics.create(childCharacteristics)));
-                }
-
-                return children.characteristics.create(childCharacteristics);
+                return Promise.all([
+                  children.characteristics.create(childCharacteristics),
+                  Challenge.assingOneTo(children)
+                ]);
               })
               .then(function () {
                 callback(null, children);
