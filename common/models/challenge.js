@@ -25,16 +25,17 @@ module.exports = function (_Challenge) {
 
   Challenge.assingOneTo = async function (child) {
     let count = await _Challenge.count();
-    if(count === 0) return Promise.resolve();
+    if (count === 0) return Promise.resolve();
 
     let indexTarget = Math.ceil(Math.random() * count);
     let challengeToAssing = await _Challenge.findById(indexTarget);
 
-    await child.challenges.create({
+    let challenge = await child.challenges.create({
       expirationDate: moment().add(3, 'days').toDate(),
-      challengeId:challengeToAssing.id,
+      challengeId: challengeToAssing.id,
       userId: child.userId
     });
+    return challenge;
   };
 
   function Challenge() {

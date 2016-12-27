@@ -22,12 +22,11 @@ describe('AppUserAccount', function () {
     return BPromise
       .all([
         Category.create(_.toArray(fixtures.category)),
-        Characteristic.create(fixtures.characteristic)
+        Characteristic.create(fixtures.characteristic.slice(0, fixtures.length - 1))
       ])
       .spread(function (categories, characteristics) {
         let challenges = fixtures.challenge;
         categories = _.keyBy(categories, 'slug');
-        characteristics = _.keyBy(characteristics, 'name');
 
         challenges.challenge1.categoryId = categories.confianza.id;
         challenges.challenge2.categoryId = categories.afecto.id;
@@ -41,17 +40,13 @@ describe('AppUserAccount', function () {
           ])
       })
       .spread(function (categories, characteristics, challenges) {
-        characteristics = _.keyBy(characteristics, 'name');
         challenges = _.keyBy(challenges, 'id');
 
         let promises = _.map(fixtures.questions, function (question) {
           let answers = question.answers;
           let challengeId = question.challengeId;
 
-          question.characteristicId = characteristics[question.char].id;
-
           delete question.answers;
-          delete question.char;
           delete question.challengeId;
 
           return challenges[challengeId].reviewQuestions.create(question)
@@ -114,7 +109,6 @@ describe('AppUserAccount', function () {
           return BPromise.all(_.map(children, (child) => child.challenges()));
         })
         .then(function (challenges) {
-          console.log(challenges);
         });
     });
   });
@@ -128,6 +122,41 @@ describe('AppUserAccount', function () {
         .then(function (children) {
           console.log('alertmeterValue: ', children.toJSON().alertmeterValue);
         });
+    });
+  });
+
+  describe('#Child.prototype.assignChallenge', function () {
+    it(`should assignChallenges to each child`, function () {
+      return AppUserAccount.findById(fixtures.appUser.normalUser.id)
+        .then(function (user) {
+          return BPromise.promisify(user.children)();
+        })
+        .then(function (children) {
+          let promises = _.map(children, function (child) {
+            return BPromise.promisify(child.challenges)()
+              .then(function () {
+                return BPromise.all([child.assignChallenge(), child.assignChallenge(), child.assignChallenge()])
+                  .then(function () {
+                    return BPromise.resolve(child);
+                  });
+              });
+          });
+          return BPromise.all(promises);
+        })
+        .then(function (children) {
+          console.log(_.map(children, (child) => child.challenges()));
+        });
+    });
+  });
+
+  describe('#prototype.completeChallenge', function () {
+    before(function () {
+      let characteristcs = fixtures.characteristic;
+      return Characteristic.create(characteristcs[characteristcs.length - 1]);
+    });
+
+    it('should mark a challenge as complete and modify the child-characteristic values', function () {
+
     });
   });
 
