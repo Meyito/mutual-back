@@ -31,7 +31,7 @@ module.exports = function (_Challenge) {
     let challengeToAssing = await _Challenge.findById(indexTarget);
 
     let challenge = await child.challenges.create({
-      expirationDate: moment().add(3, 'days').toDate(),
+      expirationDate: moment().add(challengeToAssing.expireAt, 'days').toDate(),
       challengeId: challengeToAssing.id,
       userId: child.userId
     });

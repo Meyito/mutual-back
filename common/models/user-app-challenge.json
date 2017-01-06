@@ -1,6 +1,7 @@
 {
   "name": "UserAppChallenge",
   "base": "PersistedModel",
+  "plural": "userChallenges",
   "idInjection": true,
   "options": {
     "validateUpsert": true
@@ -43,6 +44,12 @@
       "principalId": "$everyone",
       "permission": "DENY",
       "property": "*"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "findById"
     }
   ],
   "methods": {}

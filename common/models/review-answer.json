@@ -2,6 +2,7 @@
   "name": "ReviewAnswer",
   "base": "PersistedModel",
   "idInjection": true,
+  "migrateOrder": 2,
   "options": {
     "validateUpsert": true
   },

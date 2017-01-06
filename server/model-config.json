@@ -92,7 +92,7 @@
   },
   "UserAppChallenge": {
     "dataSource": "database",
-    "public": false
+    "public": true
   },
   "Child": {
     "dataSource": "database",

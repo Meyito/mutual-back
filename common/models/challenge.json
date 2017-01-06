@@ -3,6 +3,7 @@
   "plural": "challenges",
   "base": "PersistedModel",
   "idInjection": true,
+  "migrateOrder": 0,
   "options": {
     "validateUpsert": true
   },
@@ -24,6 +25,10 @@
       "required": true
     },
     "image": {
+      "type": "string",
+      "required": true
+    },
+    "icon": {
       "type": "string",
       "required": true
     },
