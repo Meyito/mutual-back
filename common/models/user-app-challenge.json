@@ -1,7 +1,7 @@
 {
   "name": "UserAppChallenge",
   "base": "PersistedModel",
-  "plural": "userChallenges",
+  "plural": "user-challenges",
   "idInjection": true,
   "options": {
     "validateUpsert": true
