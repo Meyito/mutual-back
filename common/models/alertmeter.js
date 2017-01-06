@@ -3,6 +3,7 @@
 module.exports = function (_Alertmeter) {
   const BuildHelper = require('../../server/build-helper');
   const app = require('../../server/server');
+  const _ = require('lodash');
 
   let AppConstant;
 

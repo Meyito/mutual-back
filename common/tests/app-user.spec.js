@@ -156,7 +156,10 @@ describe('AppUserAccount', function () {
     });
 
     it('should mark a challenge as complete and modify the child-characteristic values', function () {
+      return AppUserAccount.findById(fixtures.appUser.normalUser.id)
+        .then(function (user) {
 
+        });
     });
   });
 
