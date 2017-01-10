@@ -155,7 +155,6 @@ module.exports = function (_Child) {
     if (missingCharacteristicsIds.length === 0) {
       return [];
     }
-    console.log(missingCharacteristicsIds.length);
 
     let missingCharacteristics = _.map(missingCharacteristicsIds, function (characteristicId) {
       return {characteristicId, statusValue};

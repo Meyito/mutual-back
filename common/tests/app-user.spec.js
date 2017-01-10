@@ -18,6 +18,7 @@ describe('AppUserAccount', function () {
   const ReviewQuestion = app.models.ReviewQuestion;
   const ReviewAnswer = app.models.ReviewAnswer;
   const Characteristic = app.models.Characteristic;
+  const ChildCharacteristic = app.models.ChildCharacteristic;
 
   before(function () {
 
@@ -165,6 +166,7 @@ describe('AppUserAccount', function () {
     });
 
     it('should mark a challenge as complete and modify the child-characteristic values', function () {
+      this.timeout(50000);
       return AppUserAccount.findById(fixtures.appUser.normalUser.id, {include: 'challenges'})
         .then(function (user) {
           let promise = BPromise.resolve();
@@ -172,6 +174,15 @@ describe('AppUserAccount', function () {
             promise = promise.then(() => user.completeChallenge(challenge.id, fixtures.challengesResponses[challenge.challengeId]));
           });
           return promise;
+        })
+        .then(function () {
+          return ChildCharacteristic.find();
+        })
+        .then(function (characteristics) {
+          console.log(_.groupBy(characteristics,'childId'));
+        })
+        .catch(function (err) {
+          console.error(err.stack);
         });
     });
   });

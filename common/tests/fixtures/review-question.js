@@ -11,17 +11,17 @@ module.exports = [
       {
         id: 1,
         content: "aumenta +",
-        characteristicIdacteristicValue: 10
+        characteristicValue: 10
       },
       {
         id: 2,
         content: "aumenta",
-        characteristicIdacteristicValue: 5
+        characteristicValue: 5
       },
       {
         id: 3,
         content: "disminuye",
-        characteristicIdacteristicValue: -5
+        characteristicValue: -5
       }
     ]
   },
@@ -34,17 +34,17 @@ module.exports = [
       {
         id: 4,
         content: "aumenta +",
-        characteristicIdacteristicValue: 10
+        characteristicValue: 10
       },
       {
         id: 5,
         content: "aumenta",
-        characteristicIdacteristicValue: 5
+        characteristicValue: 5
       },
       {
         id: 6,
         content: "disminuye",
-        characteristicIdacteristicValue: -5
+        characteristicValue: -5
       }
     ]
   },
@@ -57,17 +57,17 @@ module.exports = [
       {
         id: 7,
         content: "aumenta +",
-        characteristicIdacteristicValue: 10
+        characteristicValue: 10
       },
       {
         id: 8,
         content: "aumenta",
-        characteristicIdacteristicValue: 5
+        characteristicValue: 5
       },
       {
         id: 9,
         content: "disminuye",
-        characteristicIdacteristicValue: -5
+        characteristicValue: -5
       }
     ]
   },
@@ -80,17 +80,17 @@ module.exports = [
       {
         id: 10,
         content: "aumenta +",
-        characteristicIdacteristicValue: 10
+        characteristicValue: 10
       },
       {
         id: 11,
         content: "aumenta",
-        characteristicIdacteristicValue: 5
+        characteristicValue: 5
       },
       {
         id: 12,
         content: "disminuye",
-        characteristicIdacteristicValue: -5
+        characteristicValue: -5
       }
     ]
   },
@@ -103,17 +103,17 @@ module.exports = [
       {
         id: 13,
         content: "aumenta +",
-        characteristicIdacteristicValue: 10
+        characteristicValue: 10
       },
       {
         id: 14,
         content: "aumenta",
-        characteristicIdacteristicValue: 5
+        characteristicValue: 5
       },
       {
         id: 15,
         content: "disminuye",
-        characteristicIdacteristicValue: -5
+        characteristicValue: -5
       }
     ]
   },
@@ -126,17 +126,17 @@ module.exports = [
       {
         id: 16,
         content: "aumenta +",
-        characteristicIdacteristicValue: 10
+        characteristicValue: 10
       },
       {
         id: 17,
         content: "aumenta",
-        characteristicIdacteristicValue: 5
+        characteristicValue: 5
       },
       {
         id: 18,
         content: "disminuye",
-        characteristicIdacteristicValue: -5
+        characteristicValue: -5
       }
     ]
   },
@@ -149,17 +149,17 @@ module.exports = [
       {
         id: 19,
         content: "aumenta +",
-        characteristicIdacteristicValue: 10
+        characteristicValue: 10
       },
       {
         id: 20,
         content: "aumenta",
-        characteristicIdacteristicValue: 5
+        characteristicValue: 5
       },
       {
         id: 21,
         content: "disminuye",
-        characteristicIdacteristicValue: -5
+        characteristicValue: -5
       }
     ]
   }
