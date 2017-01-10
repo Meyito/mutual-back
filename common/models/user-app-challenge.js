@@ -48,9 +48,12 @@ module.exports = function (_UserAppChallenge) {
       throw error;
     }
 
-    return Promise.all(_.map(characteristics, function (characteristic) {
-      return characteristic.updateAttributes({statusValue: characteristic.statusValue});
-    }));
+    return this.updateAttribute('isFinished', true)
+      .then(function () {
+        return Promise.all(_.map(characteristics, function (characteristic) {
+          return characteristic.updateAttributes({statusValue: characteristic.statusValue});
+        }));
+      });
   };
 
   function UserAppChallenge() {
