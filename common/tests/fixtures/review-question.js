@@ -21,7 +21,7 @@ module.exports = [
       {
         id: 3,
         content: "disminuye",
-        characteristicValue: -5
+        characteristicValue: -2.5
       }
     ]
   },
@@ -39,7 +39,7 @@ module.exports = [
       {
         id: 5,
         content: "aumenta",
-        characteristicValue: 5
+        characteristicValue: 2.5
       },
       {
         id: 6,
@@ -62,12 +62,12 @@ module.exports = [
       {
         id: 8,
         content: "aumenta",
-        characteristicValue: 5
+        characteristicValue: 2.5
       },
       {
         id: 9,
         content: "disminuye",
-        characteristicValue: -5
+        characteristicValue: -2.5
       }
     ]
   },
@@ -85,12 +85,12 @@ module.exports = [
       {
         id: 11,
         content: "aumenta",
-        characteristicValue: 5
+        characteristicValue: 2.5
       },
       {
         id: 12,
         content: "disminuye",
-        characteristicValue: -5
+        characteristicValue: -2.5
       }
     ]
   },
@@ -131,7 +131,7 @@ module.exports = [
       {
         id: 17,
         content: "aumenta",
-        characteristicValue: 5
+        characteristicValue: 2.5
       },
       {
         id: 18,

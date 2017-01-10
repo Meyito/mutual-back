@@ -148,7 +148,7 @@ describe('AppUserAccount', function () {
           let promises = _.map(children, function (child) {
             return BPromise.promisify(child.challenges)()
               .then(function () {
-                return BPromise.all([child.assignChallenge(), child.assignChallenge(), child.assignChallenge()])
+                return BPromise.all([child.assignChallenge()])
                   .then(function () {
                     return BPromise.resolve(child);
                   });
@@ -182,6 +182,7 @@ describe('AppUserAccount', function () {
           console.log(_.groupBy(characteristics,'childId'));
         })
         .catch(function (err) {
+          console.error(err);
           console.error(err.stack);
         });
     });

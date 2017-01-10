@@ -13,7 +13,10 @@
     },
     "characteristicValue": {
       "type": "number",
-      "default": 0
+      "default": 0,
+      "postgresql": {
+        "dataType": "REAL"
+      }
     }
   },
   "validations": [],

@@ -266,6 +266,7 @@ module.exports = function (_AppUserAccount) {
       await userChallenge.child().addMissingCharacteristics(requiredCharacteristics);
 
       await userChallenge.complete(responses);
+      //ToDo: Update parent experience, category experience and goals
       return ResponseHelper.successHandler({}, cb);
     } catch (err) {
       ResponseHelper.errorHandler(err, cb);
