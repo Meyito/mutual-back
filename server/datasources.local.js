@@ -16,7 +16,7 @@ let datasources = {
     name: 'files',
     connector: 'loopback-component-storage',
     provider: 'filesystem',
-    root: path.join(process.cwd(), 'storage'),
+    root: process.env.PATH_FILES || path.join(process.cwd(), 'storage'),
     getFilename: function (origFilename) {
       let origFilename = origFilename.name;
       let parts = origFilename.split('.');
