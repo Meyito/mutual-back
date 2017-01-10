@@ -15,7 +15,8 @@ module.exports = function (_Child) {
   let Alertmeter;
   let ResponseHelper;
   let ValidationHelper;
-  let Challenge
+  let ChildCharacteristic;
+  let Challenge;
 
   BuildHelper
     .build(Child, _Child)
@@ -24,6 +25,7 @@ module.exports = function (_Child) {
       Characteristic = app.models.Characteristic;
       Alertmeter = app.models.Alertmeter;
       Challenge = app.models.Challenge;
+      ChildCharacteristic = app.models.ChildCharacteristic;
 
       let oldCreate = _Child.create;
       _Child.create = function () {
@@ -143,6 +145,23 @@ module.exports = function (_Child) {
       path: '/assign-challenge'
     }
   });
+
+
+  Child.prototype.addMissingCharacteristics = async function (requiredCharacteristics) {
+    let currentCharacteristics = _.map(this.characteristics(), 'characteristicId');
+    let statusValue = await Alertmeter.calculate(this.characteristics());
+
+    let missingCharacteristicsIds = _.difference(requiredCharacteristics, currentCharacteristics);
+    if (missingCharacteristicsIds.length === 0) {
+      return [];
+    }
+    console.log(missingCharacteristicsIds.length);
+
+    let missingCharacteristics = _.map(missingCharacteristicsIds, function (characteristicId) {
+      return {characteristicId, statusValue};
+    });
+    return await this.characteristics.create(missingCharacteristics);
+  };
 
   function Child() {
   }

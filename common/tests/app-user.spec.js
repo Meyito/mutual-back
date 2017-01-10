@@ -7,7 +7,8 @@ const fixtures = {
   challenge: require('./fixtures/challenge'),
   child: require('./fixtures/child'),
   characteristic: require('./fixtures/characteristic'),
-  questions: require('./fixtures/review-question')
+  questions: require('./fixtures/review-question'),
+  challengesResponses: require('./fixtures/user-app-challenge')
 };
 
 describe('AppUserAccount', function () {
@@ -19,11 +20,22 @@ describe('AppUserAccount', function () {
   const Characteristic = app.models.Characteristic;
 
   before(function () {
+
     return BPromise
       .all([
-        Category.create(_.toArray(fixtures.category)),
-        Characteristic.create(fixtures.characteristic.slice(0, fixtures.length - 1))
+        Category.destroyAll({}),
+        Characteristic.destroyAll({}),
+        Challenge.destroyAll({}),
+        ReviewQuestion.destroyAll({}),
+        ReviewAnswer.destroyAll({})
       ])
+      .then(function () {
+        return BPromise
+          .all([
+            Category.create(_.toArray(fixtures.category)),
+            Characteristic.create(fixtures.characteristic.slice(0, fixtures.characteristic.length - 1))
+          ]);
+      })
       .spread(function (categories, characteristics) {
         let challenges = fixtures.challenge;
         categories = _.keyBy(categories, 'slug');
@@ -120,7 +132,7 @@ describe('AppUserAccount', function () {
           return user.children.findById(fixtures.child.child1.id);
         })
         .then(function (children) {
-          console.log('alertmeterValue: ', children.toJSON().alertmeterValue);
+          //console.log('alertmeterValue: ', children.toJSON().alertmeterValue);
         });
     });
   });
@@ -142,9 +154,6 @@ describe('AppUserAccount', function () {
               });
           });
           return BPromise.all(promises);
-        })
-        .then(function (children) {
-          console.log(_.map(children, (child) => child.challenges()));
         });
     });
   });
@@ -156,9 +165,13 @@ describe('AppUserAccount', function () {
     });
 
     it('should mark a challenge as complete and modify the child-characteristic values', function () {
-      return AppUserAccount.findById(fixtures.appUser.normalUser.id)
+      return AppUserAccount.findById(fixtures.appUser.normalUser.id, {include: 'challenges'})
         .then(function (user) {
-
+          let promise = BPromise.resolve();
+          _.forEach(user.challenges(), function (challenge) {
+            promise = promise.then(() => user.completeChallenge(challenge.id, fixtures.challengesResponses[challenge.challengeId]));
+          });
+          return promise;
         });
     });
   });

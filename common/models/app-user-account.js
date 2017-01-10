@@ -19,6 +19,7 @@ module.exports = function (_AppUserAccount) {
   let Level;
   let ResponseHelper;
   let ValidationHelper;
+  let UserAppChallenge;
 
   BuildHelper
     .build(AppUserAccount, _AppUserAccount)
@@ -27,6 +28,8 @@ module.exports = function (_AppUserAccount) {
       AppUserData = app.models.AppUserData;
       ResponseHelper = app.models.ResponseHelper;
       ValidationHelper = app.models.ValidationHelper;
+      UserAppChallenge = app.models.UserAppChallenge;
+
       Level = app.models.Level;
 
       let oldCreate = _AppUserAccount.create;
@@ -43,7 +46,7 @@ module.exports = function (_AppUserAccount) {
 
             oldCreate.call(this, data, function (err, newInstance) {
               if (err) return callback(err);
-              if(_.isArray(newInstance)){
+              if (_.isArray(newInstance)) {
                 return callback(null, newInstance);
               }
               newInstance.data.create(userData, function (err, data) {
@@ -222,7 +225,7 @@ module.exports = function (_AppUserAccount) {
        *
        * @type {UserAppChallenge}
        */
-      let userChallenge = await this.challenges.findById(challengeId, {
+      let userChallenge = await UserAppChallenge.findById(challengeId, {
         include: [
           {
             relation: 'challenge',
@@ -231,12 +234,7 @@ module.exports = function (_AppUserAccount) {
                 'category',
                 {
                   relation: 'reviewQuestions',
-                  scope: {
-                    include: [
-                      'characteristic',
-                      'answers'
-                    ]
-                  }
+                  scope: {include: 'answers'}
                 }
               ]
             }
@@ -244,17 +242,28 @@ module.exports = function (_AppUserAccount) {
           {
             relation: 'child',
             scope: {
-              include: ['characteristics']
+              include: {
+                relation: 'characteristics',
+                scope: {include: 'characteristic'}
+              }
             }
           }
         ]
       });
+
       if (!userChallenge) {
         return ResponseHelper.errorHandler({
           status: 404,
           message: 'Challenge doesn\'t exists'
         }, cb);
       }
+
+      let requiredCharacteristics = _.chain(userChallenge.challenge().reviewQuestions())
+        .map((reviewQuestion) => reviewQuestion.characteristicId)
+        .uniq()
+        .value();
+
+      await userChallenge.child().addMissingCharacteristics(requiredCharacteristics);
 
       await userChallenge.complete(responses);
       return ResponseHelper.successHandler({}, cb);

@@ -98,7 +98,7 @@ module.exports = [
     id: 5,
     challengeId: 2,
     content: 'Pregunta comunicacion',
-    characteristicId: 2,
+    characteristicId: 3,
     answers: [
       {
         id: 13,
@@ -144,7 +144,7 @@ module.exports = [
     id: 7,
     challengeId: 3,
     content: 'Pregunta comunicacion',
-    characteristicId: 2,
+    characteristicId: 3,
     answers: [
       {
         id: 19,

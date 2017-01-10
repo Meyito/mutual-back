@@ -12,8 +12,7 @@ module.exports = [
     "expPoints": 100,
     "frequency": 15,
     "expireAt": 7,
-    "categoryId": 1,
-    "id": 1
+    "categoryId": 1
   },
   {
     "minAge": 4,
@@ -24,8 +23,7 @@ module.exports = [
     "icon": "http://lorempixel.com/128/128",
     "expPoints": 150,
     "expireAt": 3,
-    "categoryId": 2,
-    "id": 2
+    "categoryId": 2
   },
   {
     "minAge": 6,
@@ -37,7 +35,6 @@ module.exports = [
     "expPoints": 200,
     "frequency": 15,
     "expireAt": 3,
-    "categoryId": 3,
-    "id": 3
+    "categoryId": 3
   }
 ];

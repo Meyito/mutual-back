@@ -22,7 +22,7 @@ module.exports = function(_UserAppChallenge) {
 
     });
 
-  UserAppChallenge.prototype.complete = function () {
+  UserAppChallenge.prototype.complete = async function () {
 
   };
 

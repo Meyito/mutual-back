@@ -8,6 +8,7 @@ module.exports = {
     "title": "Juega a la gallinita ciega",
     "description": "Ponle una venda en los ojos a tu hijo y guialo para encontrar una recompensa.",
     "image": "http://fake.url/image.png",
+    "icon": "http://fake.url/image.png",
     "expPoints": 100,
     "frequency": 15,
     "expireAt": 7,
@@ -19,6 +20,7 @@ module.exports = {
     "title": "Coman un helado",
     "description": "Sal con tu hijo a una heladeria y permitele elegir un helado.",
     "image": "http://fake.url/image2.png",
+    "icon": "http://fake.url/image.png",
     "expPoints": 150,
     "expireAt": 3,
     "id":2
@@ -29,6 +31,7 @@ module.exports = {
     "title": "Vayan al parque",
     "description": "Lleva a tu hijo al parque",
     "image": "http://fake.url/image3.png",
+    "icon": "http://fake.url/image.png",
     "expPoints": 200,
     "frequency": 15,
     "expireAt": 3,
