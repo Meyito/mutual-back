@@ -2,10 +2,10 @@
   "name": "ReviewQuestion",
   "base": "PersistedModel",
   "idInjection": true,
-  "migrateOrder": 1,
   "options": {
     "validateUpsert": true
   },
+  "migrateOrder": 1,
   "properties": {
     "content": {
       "type": "string",

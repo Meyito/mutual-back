@@ -1,5 +1,7 @@
 'use strict';
 
+let path = require('path');
+
 let datasources = {
   'database': {
     'host': process.env.DATABASE_HOST,
@@ -9,6 +11,19 @@ let datasources = {
     'max': Number(process.env.DATABASE_POOL_MAX),
     'name': 'database',
     'connector': 'postgresql'
+  },
+  'files': {
+    name: 'files',
+    connector: 'loopback-component-storage',
+    provider: 'filesystem',
+    root: path.join(process.cwd(), 'storage'),
+    getFilename: function (origFilename) {
+      let origFilename = origFilename.name;
+      let parts = origFilename.split('.');
+      let extension = parts[parts.length - 1];
+
+      return Date.now() + '_' + parts[parts.length - 2] + '.' + extension;
+    }
   }
 };
 module.exports = datasources;

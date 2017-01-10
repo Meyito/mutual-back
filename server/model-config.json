@@ -149,5 +149,9 @@
   "Alertmeter": {
     "dataSource": null,
     "public": false
+  },
+  "File": {
+    "dataSource": "files",
+    "public": true
   }
 }

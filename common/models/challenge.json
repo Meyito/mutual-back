@@ -3,10 +3,10 @@
   "plural": "challenges",
   "base": "PersistedModel",
   "idInjection": true,
-  "migrateOrder": 0,
   "options": {
     "validateUpsert": true
   },
+  "migrateOrder": 0,
   "properties": {
     "minAge": {
       "type": "number",
