@@ -18,7 +18,7 @@ let datasources = {
     provider: 'filesystem',
     root: process.env.PATH_FILES || path.join(process.cwd(), 'storage'),
     getFilename: function (origFilename) {
-      let origFilename = origFilename.name;
+      origFilename = origFilename.name;
       let parts = origFilename.split('.');
       let extension = parts[parts.length - 1];
 
