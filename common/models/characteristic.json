@@ -18,6 +18,17 @@
     "weight": {
       "type": "number",
       "required": true
+    },
+    "minValueAlert": {
+      "type": "number",
+      "required": true,
+      "postgresql": {
+        "dataType": "REAL"
+      }
+    },
+    "alertMessage": {
+      "type": "string",
+      "required": true
     }
   },
   "validations": [],

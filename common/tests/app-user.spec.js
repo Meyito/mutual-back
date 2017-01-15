@@ -48,11 +48,10 @@ describe('AppUserAccount', function () {
         return BPromise
           .all([
             categories,
-            characteristics,
             Challenge.create(_.toArray(challenges))
           ])
       })
-      .spread(function (categories, characteristics, challenges) {
+      .spread(function (categories, challenges) {
         challenges = _.keyBy(challenges, 'id');
 
         let promises = _.map(fixtures.questions, function (question) {
@@ -179,7 +178,7 @@ describe('AppUserAccount', function () {
           return ChildCharacteristic.find();
         })
         .then(function (characteristics) {
-          console.log(_.groupBy(characteristics,'childId'));
+          //console.log(_.groupBy(characteristics,'childId'));
         })
         .catch(function (err) {
           console.error(err);

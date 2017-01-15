@@ -153,5 +153,9 @@
   "File": {
     "dataSource": "files",
     "public": true
+  },
+  "Notification": {
+    "dataSource": null,
+    "public": true
   }
 }

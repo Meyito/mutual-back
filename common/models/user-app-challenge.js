@@ -23,7 +23,7 @@ module.exports = function (_UserAppChallenge) {
 
     });
 
-  UserAppChallenge.prototype.complete = async function (response) {
+  UserAppChallenge.prototype.complete = async function (response, transaction) {
 
     let questions = this.challenge().reviewQuestions();
     let error;
@@ -48,10 +48,10 @@ module.exports = function (_UserAppChallenge) {
       throw error;
     }
 
-    return this.updateAttribute('isFinished', true)
+    return this.updateAttribute('isFinished', true, {transaction})
       .then(function () {
         return Promise.all(_.map(characteristics, function (characteristic) {
-          return characteristic.updateAttributes({statusValue: characteristic.statusValue});
+          return characteristic.updateAttributes({statusValue: characteristic.statusValue}, {transaction});
         }));
       });
   };

@@ -14,12 +14,14 @@ module.exports = function (_AppUserAccount) {
   const BuildHelper = require('../../server/build-helper');
   const app = require('../../server/server');
 
+
   let AppConstant;
   let AppUserData;
   let Level;
   let ResponseHelper;
   let ValidationHelper;
   let UserAppChallenge;
+  let UserCategoryScore;
 
   BuildHelper
     .build(AppUserAccount, _AppUserAccount)
@@ -29,6 +31,7 @@ module.exports = function (_AppUserAccount) {
       ResponseHelper = app.models.ResponseHelper;
       ValidationHelper = app.models.ValidationHelper;
       UserAppChallenge = app.models.UserAppChallenge;
+      UserCategoryScore = app.models.UserCategoryScore;
 
       Level = app.models.Level;
 
@@ -209,6 +212,31 @@ module.exports = function (_AppUserAccount) {
     ]
   });
 
+  AppUserAccount.prototype.checkGoals = async function (exp, categoryId) {
+    console.log('ExperienceCategory: ', exp);
+  };
+
+  AppUserAccount.prototype.checkLowCharacteristicLevel = async function () {
+
+  };
+
+  AppUserAccount.prototype.updateExperience = async function (userChallenge, transaction) {
+    let challenge = userChallenge.challenge();
+    let userData = this.data();
+    let categoryId = challenge.categoryId;
+
+    let categoryScore = await UserCategoryScore.findOrCreate({where: {userId: this.id, categoryId: categoryId}},
+      {userId: this.id, categoryId: categoryId, expInCategory: 0},
+      {transaction});
+
+    categoryScore.expInCategory += challenge.expPoints;
+    await categoryScore.updateAttribute('expInCategory', categoryScore.expInCategory, {transaction});
+
+    await this.checkGoals(categoryScore.expInCategory, categoryId);
+
+    await userData.updateAttribute('experience', userData.experience + challenge.expPoints, {transaction});
+  };
+
 
   /**
    *
@@ -219,8 +247,10 @@ module.exports = function (_AppUserAccount) {
    * @return {Promise}
    */
   AppUserAccount.prototype.completeChallenge = async function (challengeId, responses, cb) {
-    try {
+    let beginTransaction = Promise.promisify(_AppUserAccount.beginTransaction, {context: _AppUserAccount});
+    let transaction;
 
+    try {
       /**
        *
        * @type {UserAppChallenge}
@@ -265,10 +295,19 @@ module.exports = function (_AppUserAccount) {
 
       await userChallenge.child().addMissingCharacteristics(requiredCharacteristics);
 
-      await userChallenge.complete(responses);
+      transaction = await beginTransaction({timeout: 60000});
+      await userChallenge.complete(responses, transaction);
+      await this.updateExperience(userChallenge, transaction);
+
       //ToDo: Update parent experience, category experience and goals
+      await Promise.promisify(transaction.commit, {context: transaction})();
+
       return ResponseHelper.successHandler({}, cb);
     } catch (err) {
+      if (transaction) {
+        transaction.rollback(function () {
+        });
+      }
       ResponseHelper.errorHandler(err, cb);
     }
   };
