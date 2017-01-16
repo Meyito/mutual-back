@@ -8,7 +8,8 @@ const fixtures = {
   child: require('./fixtures/child'),
   characteristic: require('./fixtures/characteristic'),
   questions: require('./fixtures/review-question'),
-  challengesResponses: require('./fixtures/user-app-challenge')
+  challengesResponses: require('./fixtures/user-app-challenge'),
+  goals: require('./fixtures/goal')
 };
 
 describe('AppUserAccount', function () {
@@ -19,6 +20,7 @@ describe('AppUserAccount', function () {
   const ReviewAnswer = app.models.ReviewAnswer;
   const Characteristic = app.models.Characteristic;
   const ChildCharacteristic = app.models.ChildCharacteristic;
+  const Goal = app.models.Goal;
 
   before(function () {
 
@@ -28,7 +30,8 @@ describe('AppUserAccount', function () {
         Characteristic.destroyAll({}),
         Challenge.destroyAll({}),
         ReviewQuestion.destroyAll({}),
-        ReviewAnswer.destroyAll({})
+        ReviewAnswer.destroyAll({}),
+        Goal.destroyAll({})
       ])
       .then(function () {
         return BPromise
@@ -48,7 +51,8 @@ describe('AppUserAccount', function () {
         return BPromise
           .all([
             categories,
-            Challenge.create(_.toArray(challenges))
+            Challenge.create(_.toArray(challenges)),
+            Goal.create(fixtures.goals)
           ])
       })
       .spread(function (categories, challenges) {
