@@ -16,7 +16,7 @@ module.exports = [
     label: 'Confianza Familiar',
     weight: 3,
     minValueAlert: -10,
-    alertMessage: 'Ojo: Bajo nivel en Confianza en la familia :('
+    alertMessage: 'Ojo: Bajo nivel en Confianza en la Familia :('
   },
   {
     id: 3,
