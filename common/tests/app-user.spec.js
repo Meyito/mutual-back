@@ -151,7 +151,7 @@ describe('AppUserAccount', function () {
           let promises = _.map(children, function (child) {
             return BPromise.promisify(child.challenges)()
               .then(function () {
-                return BPromise.all([child.assignChallenge(), child.assignChallenge(), child.assignChallenge()])
+                return BPromise.all([child.assignChallenge(), child.assignChallenge()])
                   .then(function () {
                     return BPromise.resolve(child);
                   });
@@ -169,7 +169,7 @@ describe('AppUserAccount', function () {
     });
 
     it('should mark a challenge as complete and modify the child-characteristic values', function () {
-      this.timeout(50000);
+      this.timeout(120000);
       return AppUserAccount.findById(fixtures.appUser.normalUser.id, {include: 'challenges'})
         .then(function (user) {
           let promise = BPromise.resolve();

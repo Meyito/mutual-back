@@ -219,7 +219,6 @@ module.exports = function (_AppUserAccount) {
 
     let goals = await UserGoal.find({where: {userId: this.id}, fields: {goalId: true}});
     let goalsIds = _.map(goals, 'goalId');
-    console.log('CategoryId: ', categoryId, ' - ExperienceCategory: ', exp);
 
     let medalsWon = await Goal.find({
       where: {
@@ -230,8 +229,6 @@ module.exports = function (_AppUserAccount) {
     medalsWon = _.map(medalsWon, function (goal) {
       return {goalId: goal.id};
     });
-
-    console.log(medalsWon);
 
     await this.goals.create(medalsWon);
   };
