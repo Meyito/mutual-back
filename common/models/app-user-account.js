@@ -221,7 +221,12 @@ module.exports = function (_AppUserAccount) {
     let goalsIds = _.map(goals, 'goalId');
     console.log('CategoryId: ', categoryId, ' - ExperienceCategory: ', exp);
 
-    let medalsWon = await Goal.find({where: {minCategoryExp: {lte: exp}, id: {nin: goalsIds}}, fields: {id: true}});
+    let medalsWon = await Goal.find({
+      where: {
+        minCategoryExp: {lte: exp}, id: {nin: goalsIds}, categoryId
+      },
+      fields: {id: true}
+    });
     medalsWon = _.map(medalsWon, function (goal) {
       return {goalId: goal.id};
     });
