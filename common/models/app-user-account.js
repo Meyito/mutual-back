@@ -22,6 +22,8 @@ module.exports = function (_AppUserAccount) {
   let ValidationHelper;
   let UserAppChallenge;
   let UserCategoryScore;
+  let UserGoal;
+  let Goal;
 
   BuildHelper
     .build(AppUserAccount, _AppUserAccount)
@@ -32,7 +34,8 @@ module.exports = function (_AppUserAccount) {
       ValidationHelper = app.models.ValidationHelper;
       UserAppChallenge = app.models.UserAppChallenge;
       UserCategoryScore = app.models.UserCategoryScore;
-
+      UserGoal = app.models.AppUserGoal;
+      Goal = app.models.Goal;
       Level = app.models.Level;
 
       let oldCreate = _AppUserAccount.create;
@@ -212,8 +215,20 @@ module.exports = function (_AppUserAccount) {
     ]
   });
 
-  AppUserAccount.prototype.checkGoals = async function (exp, categoryId) {
+  AppUserAccount.prototype.checkGoals = async function (exp, categoryId, transaction) {
+
+    let goals = await UserGoal.find({where: {userId: this.id}, fields: {goalId: true}});
+    let goalsIds = _.map(goals, 'goalId');
     console.log('CategoryId: ', categoryId, ' - ExperienceCategory: ', exp);
+
+    let medalsWon = await Goal.find({where: {minCategoryExp: {lte: exp}, id: {nin: goalsIds}}, fields: {id: true}});
+    medalsWon = _.map(medalsWon, function (goal) {
+      return {goalId: goal.id};
+    });
+
+    console.log(medalsWon);
+
+    await this.goals.create(medalsWon);
   };
 
   AppUserAccount.prototype.checkLowCharacteristicLevel = async function () {
@@ -232,7 +247,7 @@ module.exports = function (_AppUserAccount) {
     categoryScore.expInCategory += challenge.expPoints;
     await categoryScore.updateAttribute('expInCategory', categoryScore.expInCategory, {transaction});
 
-    await this.checkGoals(categoryScore.expInCategory, categoryId);
+    await this.checkGoals(categoryScore.expInCategory, categoryId, transaction);
 
     await userData.updateAttribute('experience', userData.experience + challenge.expPoints, {transaction});
   };

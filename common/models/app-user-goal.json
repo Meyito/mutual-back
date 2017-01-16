@@ -15,6 +15,11 @@
       "type": "belongsTo",
       "model": "AppUserAccount",
       "foreignKey": "userId"
+    },
+    "goal": {
+      "type": "belongsTo",
+      "model": "Goal",
+      "foreignKey": "goalId"
     }
   },
   "acls": [
