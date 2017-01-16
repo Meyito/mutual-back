@@ -213,7 +213,7 @@ module.exports = function (_AppUserAccount) {
   });
 
   AppUserAccount.prototype.checkGoals = async function (exp, categoryId) {
-    console.log('ExperienceCategory: ', exp);
+    console.log('CategoryId: ', categoryId, ' - ExperienceCategory: ', exp);
   };
 
   AppUserAccount.prototype.checkLowCharacteristicLevel = async function () {

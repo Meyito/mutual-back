@@ -147,7 +147,7 @@ describe('AppUserAccount', function () {
           let promises = _.map(children, function (child) {
             return BPromise.promisify(child.challenges)()
               .then(function () {
-                return BPromise.all([child.assignChallenge()])
+                return BPromise.all([child.assignChallenge(), child.assignChallenge(), child.assignChallenge()])
                   .then(function () {
                     return BPromise.resolve(child);
                   });
