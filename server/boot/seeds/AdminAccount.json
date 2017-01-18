@@ -5,5 +5,12 @@
     "password":"Mutu@lR00t",
     "name": "Mutual",
     "surname": "Superuser"
+  },
+  {
+    "username":"bastosjavier",
+    "email":"bastosjavierf@gmail.com",
+    "password":"123456",
+    "name": "Francisco Javier",
+    "surname": "Bastos"
   }
 ]

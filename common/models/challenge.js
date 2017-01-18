@@ -19,8 +19,7 @@ module.exports = function (_Challenge) {
   BuildHelper
     .build(Challenge, _Challenge)
     .then(function () {
-
-
+      _Challenge.nestRemoting('reviewQuestions');
     });
 
   Challenge.assingOneTo = async function (child) {
