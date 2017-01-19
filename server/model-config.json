@@ -157,5 +157,9 @@
   "Notification": {
     "dataSource": null,
     "public": true
+  },
+  "New": {
+    "dataSource": null,
+    "public": true
   }
 }

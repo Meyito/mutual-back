@@ -3,10 +3,10 @@
   "plural": "goals",
   "base": "PersistedModel",
   "idInjection": true,
-  "migrateOrder": 0,
   "options": {
     "validateUpsert": true
   },
+  "migrateOrder": 0,
   "properties": {
     "name": {
       "type": "string",

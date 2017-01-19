@@ -56,6 +56,11 @@
       "type": "belongsTo",
       "model": "Category",
       "foreignKey": "categoryId"
+    },
+    "gender": {
+      "type": "belongsTo",
+      "model": "Gender",
+      "foreingKey": "genderId"
     }
   },
   "acls": [
