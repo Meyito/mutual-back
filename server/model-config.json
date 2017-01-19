@@ -161,5 +161,21 @@
   "New": {
     "dataSource": null,
     "public": true
+  },
+  "Push": {
+    "dataSource": "push",
+    "public": true
+  },
+  "InstallationApp": {
+    "dataSource": "database",
+    "public": true
+  },
+  "NotificationApp": {
+    "dataSource": "database",
+    "public": true
+  },
+  "ApplicationApp": {
+    "dataSource": "database",
+    "public": true
   }
 }

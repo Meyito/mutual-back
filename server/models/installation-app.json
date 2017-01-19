@@ -1,0 +1,14 @@
+{
+  "name": "InstallationApp",
+  "base": "Installation",
+  "plural": "installations",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

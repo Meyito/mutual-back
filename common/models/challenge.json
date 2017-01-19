@@ -33,8 +33,7 @@
       "required": true
     },
     "attached": {
-      "type": "string",
-      "default": null
+      "type": "string"
     },
     "expPoints": {
       "type": "number",
