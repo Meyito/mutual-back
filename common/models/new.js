@@ -53,7 +53,7 @@ module.exports = function (_New) {
   New.getLastest = async function (cb) {
     let sources = await RSSResource.find({});
     let newsInResources = await New.collectRSSResources(sources);
-    newsInResources = _.chain(newsInResources).flatten().sortBy().values();
+    newsInResources = _.chain(newsInResources).flatten().sortBy((entry) => -(new Date(entry.updated).getTime())).values();
 
     try {
       return ResponseHelper.successHandler(newsInResources, cb);
