@@ -6,12 +6,5 @@
   "database": {
     "name": "database",
     "connector": "postgresql"
-  },
-  "push": {
-    "name": "push",
-    "connector": "loopback-component-push",
-    "installation": "InstallationApp",
-    "notification": "NotificationApp",
-    "application": "ApplicationApp"
   }
 }
