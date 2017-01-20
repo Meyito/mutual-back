@@ -154,28 +154,12 @@
     "dataSource": "files",
     "public": true
   },
-  "Notification": {
-    "dataSource": null,
-    "public": true
-  },
   "New": {
     "dataSource": null,
     "public": true
   },
   "Push": {
-    "dataSource": "push",
-    "public": true
-  },
-  "InstallationApp": {
-    "dataSource": "database",
-    "public": true
-  },
-  "NotificationApp": {
-    "dataSource": "database",
-    "public": true
-  },
-  "ApplicationApp": {
-    "dataSource": "database",
+    "dataSource": null,
     "public": true
   }
 }
