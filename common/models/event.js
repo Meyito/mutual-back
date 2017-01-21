@@ -8,14 +8,14 @@ module.exports = function (Event) {
     lte: 'lte',
     gte: 'gte',
     eq: 'eq',
-    uniq: 'uniq'
+    neq: 'neq'
   }
   let co = commonOperators
 
   const dataType = {
-    date: {name: 'date', operators: [co.eq, co.gt, co.lt, co.gte, co.lte]},
-    number: {name: 'number', operators: [co.eq, co.gt, co.lt, co.gte, co.lte]},
-    reference: {name: 'reference', operators: [co.eq]},
+    date: {name: 'date', operators: [co.eq, co.neq, co.gt, co.lt, co.gte, co.lte]},
+    number: {name: 'number', operators: [co.eq, co.neq, co.gt, co.lt, co.gte, co.lte]},
+    reference: {name: 'reference', operators: [co.eq, co.neq]},
     noop_reference: {name: 'reference', operators: []}
   };
 
