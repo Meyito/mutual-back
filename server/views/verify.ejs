@@ -1,15 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Bienvenido a Mutual</title>
-</head>
-<body>
-<h2>Bienvenido a Mutual</h2>
-<p>
-  <b>Tu codigo de activacion es</b>: <em><%= token %></em>
-<br>
-  <b>Tu UID</b>: <em><%= uid %></em>
-</p>
-</body>
-</html>
+<div style=" width : 100%;  height : 100%;  margin : 0;  padding: 2rem 0;  border : 0;  tex-align:center;  background : #ecf0f1;">
+  <div style="width : 680px;  margin : 0 auto; overflow :hidden;">
+    <header style="background-color : #5fc0ed; height : 145px; width : 100%; position : relative; z-index : 1;">
+      <div style="background-image : url('http://kubesoft.com/mutual/mini-icon.png'); height : 100%; width :100%; opacity : .1; background-position : 0 12px;">
+      </div>
+    </header>
+
+    <div style="padding :  0rem .5rem .5rem 2rem; height : 700px; position : relative; z-index : 3; padding-top: 3rem;">
+      <img style="position : absolute; top: -60px; left: 0;" src="http://kubesoft.com/mutual/bck-children-2.png" />
+      <div>
+        <img src="http://kubesoft.com/mutual/text-welcome.png" alt="Welcome" style="margin-top : 2rem; position :relative;" />
+        <img src="http://kubesoft.com/mutual/logo.png" style="float: right; position : relative; margin-top : -3rem;"/>
+      </div>
+
+      <div style="margin-top :7rem;color :#36578A;">
+
+        <span style="font-weight : lighter;position: relative;">
+          <span style="font-size : 20px; width :100%; font-weight: bold; width: 240px;">
+            Tu código de activación es:
+          </span>
+          <em><%= token %></em>
+        </span>
+        <br />
+        <span style="font-weight : lighter; position: relative;">
+          <span style="font-size : 20px; width :100%; font-weight: bold; width: 240px;">
+            Tu UID:
+          </span>
+          <em><%= uid %></em>
+        </span>
+      </div>
+
+      <img src="http://kubesoft.com/mutual/app-device.png" style="position: absolute; bottom : -25px; left : 0;" />
+
+      <div style="position : absolute; right: 0 ; bottom: 65px; color: #36578A; font-size: 22px; transform: rotate(270deg) translateY(75px) translateX(65px);">
+        KUBESOFT© 2017
+      </div>
+    </div>
+
+    <footer style="height : 80px; background-color : #5fc0ed; margin-top: -70px; position : relative; z-index: 1;">
+      <div style="background-image : url('http://kubesoft.com/mutual/mini-icon.png');  height : 100%; width :100%; opacity : .1;  background-position : 10px 30px;">
+      </div>
+    </footer>
+  </div>
+</div>
