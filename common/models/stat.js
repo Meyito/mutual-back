@@ -21,12 +21,14 @@ module.exports = function (_Stat) {
 
   let Event;
   let ResponseHelper;
+  let DH;
 
   BuildHelper
     .build(Stat, _Stat)
     .then(function () {
       Event = app.models.Event
       ResponseHelper = app.models.ResponseHelper
+      DH = app.models.DebugHelper;
     })
 
   /**
@@ -52,7 +54,7 @@ module.exports = function (_Stat) {
           }, cb)
         }
 
-        if (!_.contains(field.type.operators, condition.operator)) {
+        if (!_.includes(field.type.operators, condition.operator)) {
           return ResponseHelper.errorHandler({
             status: 406,
             message: `The ${condition.operator} operator is not able to use for ${condition.field} field in ${eventName} event`
@@ -63,10 +65,10 @@ module.exports = function (_Stat) {
 
         let formatedCondition = {}
         if (condition.operator === 'eq') {
-          formatedCondition[field] = condition.value
+          formatedCondition[condition.field] = condition.value
         } else {
-          formatedCondition[field] = {}
-          formatedCondition[field][condition.operator] = condition.value
+          formatedCondition[condition.field] = {}
+          formatedCondition[condition.field][condition.operator] = condition.value
         }
         andCondition.push(formatedCondition);
       }

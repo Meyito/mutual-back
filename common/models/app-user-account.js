@@ -44,6 +44,7 @@ module.exports = function (_AppUserAccount) {
 
       let oldCreate = _AppUserAccount.create;
       _AppUserAccount.create = function (data) {
+        data = _.clone(data);
         let callback = arguments[arguments.length - 1];
         callback = _.isFunction(callback) ? callback : utils.createPromiseCallback();
 
