@@ -23,6 +23,13 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "getEventTypes"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW",
+      "property": "execQuery"
     }
   ],
   "methods": {}

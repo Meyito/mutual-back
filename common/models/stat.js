@@ -19,73 +19,45 @@ module.exports = function (_Stat) {
     return _.toNumber(str)
   }
 
-  const commonOperators = {
-    lt: 'lt',
-    gt: 'gt',
-    lte: 'lte',
-    gte: 'gte',
-    eq: 'eq',
-    uniq: 'uniq'
-  }
-  let co = commonOperators
-
-  const dataType = {
-    date: {name: 'date', operators: [co.eq, co.gt, co.lt, co.gte, co.lte]},
-    number: {name: 'number', operators: [co.eq, co.gt, co.lt, co.gte, co.lte]},
-    reference: {name: 'reference', operators: [co.eq]},
-    noop_reference: {name: 'reference', operators: []}
-  };
-
-  const commonFields = {
-    created: {
-      name: 'created',
-      label: 'creado',
-      type: dataType.date,
-      grupable: false
-    },
-    municipalityId: {
-      name: 'municipalityId',
-      label: 'municipio',
-      type: dataType.reference,
-      grupable: false
-    },
-    genderId: {
-      name: 'genderId',
-      label: 'genero',
-      type: dataType.reference,
-      grupable: false
-    },
-    userId: {
-      name: 'userId',
-      label: 'usuario',
-      type: dataType.noop_reference,
-      grupable: false
-    }
-  }
-  let cf = commonFields
-
-  const eventTypes = {
-    signup: {
-      name: 'signup',
-      fields: [cf.created, cf.municipalityId, cf.genderId]
-    }
-  };
+  let Event;
 
   BuildHelper
     .build(Stat, _Stat)
     .then(function () {
+      Event = app.models.Event;
+
     });
+
+  Stat.execQuery = function (cb) {
+    cb(null, Event.EVENT_TYPES);
+  };
+  _Stat.remoteMethod('execQuery', {
+    http: {
+      verb: 'post',
+      path: '/exec-query'
+    },
+    accepts: [
+      {arg: 'eventName', type: 'string', required: true},
+      {arg: 'filter', type: 'array', required: true}
+    ],
+    returns: [{
+      root: true, type: 'object'
+    }]
+  });
 
 
   Stat.getEventTypes = function (cb) {
-    cb(eventTypes);
+    cb(null, Event.EVENT_TYPES);
   };
   _Stat.remoteMethod('getEventTypes', {
     http: {
       verb: 'get',
-      path: 'event-types'
+      path: '/event-types'
     },
-    accepts: []
+    accepts: [],
+    returns: [{
+      root: true, type: 'object'
+    }]
   });
 
 

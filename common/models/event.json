@@ -3,16 +3,24 @@
   "plural": "events",
   "base": "PersistedModel",
   "idInjection": true,
+  "mixins": {
+    "Timestamp": {}
+  },
   "options": {
     "validateUpsert": true
   },
-  "properties": {},
+  "properties": {
+    "type":{
+      "type": "string",
+      "default": "undetermined"
+    }
+  },
   "validations": [],
   "relations": {
     "userAccount": {
       "type": "belongsTo",
       "model": "AppUserAccount",
-      "foreignKey": "appuserId"
+      "foreignKey": "userId"
     },
     "gender": {
       "type": "belongsTo",

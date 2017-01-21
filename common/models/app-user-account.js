@@ -24,6 +24,8 @@ module.exports = function (_AppUserAccount) {
   let UserCategoryScore;
   let UserGoal;
   let Goal;
+  let Event;
+  let DH;
 
   BuildHelper
     .build(AppUserAccount, _AppUserAccount)
@@ -37,6 +39,8 @@ module.exports = function (_AppUserAccount) {
       UserGoal = app.models.AppUserGoal;
       Goal = app.models.Goal;
       Level = app.models.Level;
+      Event = app.models.Event;
+      DH = app.models.DebugHelper;
 
       let oldCreate = _AppUserAccount.create;
       _AppUserAccount.create = function (data) {
@@ -56,6 +60,12 @@ module.exports = function (_AppUserAccount) {
                 return callback(null, newInstance);
               }
               newInstance.data.create(userData, function (err, data) {
+                Event.create({
+                  type: Event.EVENT_TYPES.signup.name,
+                  userId: newInstance.id,
+                  genderId: data.genderId,
+                  municipalityId: data.municipalityId
+                }).catch((err) => DH.debug.error(err));
                 callback(err, newInstance);
               });
             });
