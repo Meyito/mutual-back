@@ -63,9 +63,9 @@ module.exports = function (_AppUserAccount) {
               newInstance.data.create(userData, function (err, data) {
                 Event.create({
                   type: Event.EVENT_TYPES.signup.name,
-                  userId: newInstance.id,
-                  genderId: data.genderId,
-                  municipalityId: data.municipalityId
+                  userid: newInstance.id,
+                  genderid: data.genderId,
+                  municipalityid: data.municipalityId
                 }).catch((err) => DH.debug.error(err));
                 callback(err, newInstance);
               });

@@ -22,6 +22,7 @@ if (process.env.NODE_ENV === 'production') {
 function startWorker() {
   const loopback = require('loopback');
   const boot = require('loopback-boot');
+  const knex = require('knex');
 
   require('./children-model-setup')(loopback);
 
@@ -44,6 +45,7 @@ function startWorker() {
   boot(app, __dirname, function (err) {
     if (err) throw err;
 
+    app.knex = knex(app.get('knex'))
     // start the server if `$ node server.js`
     if (require.main === module || process.env.NODE_ENV === 'test')
       app.currentServer = app.start();

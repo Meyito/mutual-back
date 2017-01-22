@@ -19,6 +19,7 @@ module.exports = function (_Stat) {
     return _.toNumber(str)
   }
 
+  let knex;
   let Event;
   let ResponseHelper;
   let DH;
@@ -26,6 +27,8 @@ module.exports = function (_Stat) {
   BuildHelper
     .build(Stat, _Stat)
     .then(function () {
+      knex = app.knex
+
       Event = app.models.Event
       ResponseHelper = app.models.ResponseHelper
       DH = app.models.DebugHelper;
@@ -41,7 +44,7 @@ module.exports = function (_Stat) {
   Stat.execQuery = async function (eventName, filter, cb) {
     try {
       let event = Event.EVENT_TYPES[eventName]
-      let andCondition = []
+      let query = knex('event')
 
       for (let i = 0, length = filter.length, condition, field; i < length; i++) {
         condition = filter[i]
@@ -63,18 +66,14 @@ module.exports = function (_Stat) {
 
         condition.value = parsers[field.type.name](condition.value, condition.operator)
 
-        let formatedCondition = {}
-        if (condition.operator === 'eq') {
-          formatedCondition[condition.field] = condition.value
-        } else {
-          formatedCondition[condition.field] = {}
-          formatedCondition[condition.field][condition.operator] = condition.value
+        query.where(condition.field, condition.operator, condition.value)
+        if (field.grupable && condition.group) {
+          query.groupBy(condition.field)
         }
-        andCondition.push(formatedCondition);
       }
 
-      let count = await Event.count({and: andCondition})
-      return ResponseHelper.successHandler(count, cb)
+      let result = await knex.count('*').from(query.as('conditions'))
+      return ResponseHelper.successHandler(result.count, cb)
     } catch (err) {
       ResponseHelper.errorHandler(err, cb)
     }

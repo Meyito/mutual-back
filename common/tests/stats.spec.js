@@ -53,54 +53,60 @@ describe('Stats', function () {
 
     it(`should count all registered user from start migration until end migration`, function () {
       return Stat.execQuery('signup', [
-        {field: 'created', operator: 'gte', value: startMigrationTime},
-        {field: 'created', operator: 'lte', value: endMigrationTime}
+        {field: 'created', operator: '>=', value: startMigrationTime},
+        {field: 'created', operator: '<=', value: endMigrationTime}
       ])
         .then(function (count) {
+          console.log(count)
         });
     });
 
 
     it(`should count all registered user from start migration until middle migration`, function () {
       return Stat.execQuery('signup', [
-        {field: 'created', operator: 'gte', value: startMigrationTime},
-        {field: 'created', operator: 'lte', value: midTime}
+        {field: 'created', operator: '>=', value: startMigrationTime},
+        {field: 'created', operator: '<=', value: midTime}
       ])
         .then(function (count) {
+          console.log(count)
         });
     });
 
     it(`should count all registered user before start migration`, function () {
       return Stat.execQuery('signup', [
-        {field: 'created', operator: 'lte', value: startMigrationTime}
+        {field: 'created', operator: '<=', value: startMigrationTime}
       ])
         .then(function (count) {
+          console.log(count)
         });
     });
 
     it(`should count all registered user before middle migration`, function () {
       return Stat.execQuery('signup', [
-        {field: 'created', operator: 'lte', value: midTime}
+        {field: 'created', operator: '<=', value: midTime}
       ])
         .then(function (count) {
+          console.log(count)
         });
     });
 
     it(`should count all registered user before end migration from municipalityId 5`, function () {
       return Stat.execQuery('signup', [
-        {field: 'created', operator: 'lte', value: endMigrationTime},
-        {field: 'municipalityId', operator: 'eq', value: 5}
+        {field: 'created', operator: '<=', value: endMigrationTime},
+        {field: 'municipalityid', operator: '=', value: 5}
       ])
         .then(function (count) {
+          console.log(count)
         });
     });
 
     it(`should count all registered user before end migration from municipalityId neq 5`, function () {
       return Stat.execQuery('signup', [
-        {field: 'created', operator: 'lte', value: endMigrationTime},
-        {field: 'municipalityId', operator: 'neq', value: 5}
+        {field: 'created', operator: '<=', value: endMigrationTime},
+        {field: 'municipalityid', operator: '<>', value: 5}
       ])
         .then(function (count) {
+          console.log(count)
         });
     });
 

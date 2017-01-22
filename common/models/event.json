@@ -15,15 +15,15 @@
       "index": true,
       "default": "undetermined"
     },
-    "userId":{
+    "userid":{
       "type": "number",
       "index": true
     },
-    "genderId":{
+    "genderid":{
       "type": "number",
       "index": true
     },
-    "municipalityId":{
+    "municipalityid":{
       "type": "number",
       "index": true
     }
@@ -33,20 +33,17 @@
     "userAccount": {
       "type": "belongsTo",
       "model": "AppUserAccount",
-      "index": true,
-      "foreignKey": "userId"
+      "foreignKey": "userid"
     },
     "gender": {
       "type": "belongsTo",
       "model": "Gender",
-      "index": true,
-      "foreignKey": "genderId"
+      "foreignKey": "genderid"
     },
     "municipality": {
       "type": "belongsTo",
       "model": "Municipality",
-      "index": true,
-      "foreignKey": "municipalityId"
+      "foreignKey": "municipalityid"
     }
   },
   "acls": [

@@ -3,12 +3,12 @@
 module.exports = function (Event) {
 
   const commonOperators = {
-    lt: 'lt',
-    gt: 'gt',
-    lte: 'lte',
-    gte: 'gte',
-    eq: 'eq',
-    neq: 'neq'
+    lt: '<',
+    gt: '>',
+    lte: '<=',
+    gte: '>=',
+    eq: '=',
+    neq: '<>'
   }
   let co = commonOperators
 
@@ -27,19 +27,19 @@ module.exports = function (Event) {
       grupable: false
     },
     municipalityId: {
-      name: 'municipalityId',
+      name: 'municipalityid',
       label: 'municipio',
       type: dataType.reference,
       grupable: false
     },
     genderId: {
-      name: 'genderId',
+      name: 'genderid',
       label: 'genero',
       type: dataType.reference,
       grupable: false
     },
     userId: {
-      name: 'userId',
+      name: 'userid',
       label: 'usuario',
       type: dataType.noop_reference,
       grupable: false
