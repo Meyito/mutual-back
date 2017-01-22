@@ -14,3 +14,10 @@ exports.push = {
     }
   }
 }
+
+exports.knex = {
+  client: 'pg',
+  connection: `postgres://${process.env.DATABASE_USERNAME}:${process.env.DATABASE_PASSWORD}@${process.env.DATABASE_HOST}/${process.env.DATABASE_NAME}`,
+  searchPath: 'knex,public',
+  pool: {min: 0, max: Number(process.env.DATABASE_POOL_MAX) || 10}
+}

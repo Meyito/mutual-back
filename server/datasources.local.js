@@ -8,7 +8,7 @@ let datasources = {
     'database': process.env.DATABASE_NAME,
     'username': process.env.DATABASE_USERNAME,
     'password': process.env.DATABASE_PASSWORD,
-    'max': Number(process.env.DATABASE_POOL_MAX),
+    'max': Number(process.env.DATABASE_POOL_MAX) || 10,
     'name': 'database',
     'connector': 'postgresql'
   },
