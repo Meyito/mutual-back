@@ -5,7 +5,12 @@
   "options": {
     "validateUpsert": true
   },
-  "properties": {},
+  "properties": {
+    "registrationId": {
+      "type": "string",
+      "default": ""
+    }
+  },
   "validations": [],
   "relations": {
     "user": {

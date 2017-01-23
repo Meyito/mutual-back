@@ -147,6 +147,25 @@ module.exports = function (_AppUserAccount) {
         return callback.promise;
       };
 
+      let oldLogin = _AppUserAccount.login;
+      _AppUserAccount.login = function (credentials, include, cb) {
+        if (_.isFunction(cb)) {
+          cb = include
+          include = undefined
+        }
+        cb = cb || utils.createPromiseCallback()
+
+        let registrationId = credentials.registrationId;
+        oldLogin.call(this, credentials, include, cb)
+          .then(function (token) {
+            token.updateAttribute('registrationId', registrationId).catch((err) => DH.debug.error(err));
+            cb(null, token);
+          })
+          .catch(cb);
+
+        return cb.promise;
+      }
+
 
       _AppUserAccount.observe('after save', async function (ctx, next) {
         try {
