@@ -43,6 +43,10 @@
     "dataSource": "database",
     "public": true
   },
+  "CronAccount": {
+    "dataSource": "database",
+    "public": true
+  },
   "AppUserAccount": {
     "dataSource": "database",
     "emailVerificationRequired": true,

@@ -146,6 +146,33 @@ module.exports = function (_Child) {
     }
   });
 
+  /**
+   *
+   * @param [cb]
+   *
+   * @return {Promise}
+   */
+  Child.prototype.assignChallenge = function (cb) {
+    cb = cb || utils.createPromiseCallback();
+
+    Challenge.assingOneTo(this)
+      .then(function (resp) {
+        cb(null, resp);
+      })
+      .catch(cb);
+
+    return cb.promise;
+  };
+  _Child.remoteMethod('assignChallenge', {
+    isStatic: false,
+    http: {
+      verb: 'post',
+      path: '/assign-challenge'
+    }
+  });
+
+
+
 
   Child.prototype.addMissingCharacteristics = async function (requiredCharacteristics) {
     let currentCharacteristics = _.map(this.characteristics(), 'characteristicId');
