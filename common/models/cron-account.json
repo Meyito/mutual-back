@@ -37,6 +37,12 @@
       "principalId": "admin",
       "permission": "ALLOW",
       "property": "create"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "login"
     }
   ],
   "methods": {}
