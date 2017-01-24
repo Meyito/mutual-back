@@ -156,12 +156,14 @@ module.exports = function (_AppUserAccount) {
         cb = cb || utils.createPromiseCallback()
 
         let registrationId = credentials.registrationId;
-        oldLogin.call(this, credentials, include, cb)
-          .then(function (token) {
-            token.updateAttribute('registrationId', registrationId).catch((err) => DH.debug.error(err));
-            cb(null, token);
-          })
-          .catch(cb);
+        oldLogin.call(this, credentials, include, function (err,token) {
+          if(err){
+            return cb(err);
+          }
+
+          token.updateAttribute('registrationId', registrationId).catch((err) => DH.debug.error(err));
+          cb(null, token);
+        });
 
         return cb.promise;
       }
