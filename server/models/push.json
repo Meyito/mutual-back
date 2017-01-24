@@ -16,13 +16,6 @@
       "principalId": "$everyone",
       "permission": "DENY",
       "property": "*"
-    },
-    {
-      "accessType": "EXECUTE",
-      "principalType": "ROLE",
-      "principalId": "$everyone",
-      "permission": "ALLOW",
-      "property": "sendNotification"
     }
   ],
   "methods": {}
