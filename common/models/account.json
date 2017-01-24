@@ -17,6 +17,15 @@
     "surname": {
       "type": "string",
       "required": true
+    },
+    "fbId": {
+      "type": "string"
+    },
+    "googleId": {
+      "type": "string"
+    },
+    "twId": {
+      "type": "string"
     }
   },
   "validations": [],

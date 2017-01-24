@@ -1,6 +1,7 @@
 {
   "name": "AccessTokenAccount",
   "base": "AccessToken",
+  "plural": "access-token-accounts",
   "idInjection": true,
   "options": {
     "validateUpsert": true

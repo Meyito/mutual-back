@@ -156,14 +156,31 @@ module.exports = function (_AppUserAccount) {
         cb = cb || utils.createPromiseCallback()
 
         let registrationId = credentials.registrationId;
-        oldLogin.call(this, credentials, include, function (err,token) {
-          if(err){
+
+        let postCreateToken = function (err, token) {
+          if (err) {
             return cb(err);
           }
 
-          token.updateAttribute('registrationId', registrationId).catch((err) => DH.debug.error(err));
-          cb(null, token);
-        });
+          token.updateAttribute('registrationId', registrationId).catch((err) => DH.debug.error(err))
+          cb(null, token)
+        }
+
+        if (credentials.fbId) {
+          _AppUserAccount.findOne({where: {fbId: credentials.fbId}})
+            .then(function (user) {
+              if (!user) {
+                let error = new Error(g.f('login failed'))
+                error.statusCode = 401
+                error.code = 'LOGIN_FAILED'
+                return cb(error)
+              }
+              user.createAccessToken(null, postCreateToken)
+            })
+            .catch(cb);
+        } else {
+          oldLogin.call(this, credentials, include, postCreateToken);
+        }
 
         return cb.promise;
       }
