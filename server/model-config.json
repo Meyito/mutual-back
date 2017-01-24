@@ -56,7 +56,7 @@
   },
   "AccessTokenAccount": {
     "dataSource": "database",
-    "public": false
+    "public": true
   },
   "AccountCredential": {
     "dataSource": "database",

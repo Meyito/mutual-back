@@ -26,6 +26,13 @@
       "principalId": "$everyone",
       "permission": "DENY",
       "property": "*"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "updateRegistrationId"
     }
   ],
   "methods": {}
