@@ -149,7 +149,7 @@ module.exports = function (_AppUserAccount) {
 
       let oldLogin = _AppUserAccount.login;
       _AppUserAccount.login = function (credentials, include, cb) {
-        if (_.isFunction(cb)) {
+        if (!_.isFunction(cb)) {
           cb = include
           include = undefined
         }
