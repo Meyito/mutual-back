@@ -8,6 +8,7 @@ module.exports = function (_AppUserAccount) {
   const path = require('path');
   const crypto = require('crypto');
   const _ = require('lodash');
+  const g = require('strong-globalize')();
 
   const utils = require(`${process.cwd()}/node_modules/loopback/lib/utils`);
 

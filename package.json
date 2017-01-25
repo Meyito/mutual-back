@@ -50,6 +50,7 @@
     "run-sequence": "^1.2.2",
     "serve-favicon": "^2.0.1",
     "strong-cluster-control": "^2.2.3",
+    "strong-globalize": "^2.8.0",
     "xoauth2": "^1.2.0"
   },
   "devDependencies": {},
