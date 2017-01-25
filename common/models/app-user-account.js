@@ -45,6 +45,11 @@ module.exports = function (_AppUserAccount) {
       let oldCreate = _AppUserAccount.create;
       _AppUserAccount.create = function (data) {
         data = _.clone(data);
+        if(data.fbId){
+          data.emailVerified = true;
+          data.password = data.fbId;
+        }
+
         let callback = arguments[arguments.length - 1];
         callback = _.isFunction(callback) ? callback : utils.createPromiseCallback();
 
@@ -189,7 +194,7 @@ module.exports = function (_AppUserAccount) {
       _AppUserAccount.observe('after save', async function (ctx, next) {
         try {
           let instance = ctx.instance || ctx.data;
-          if (ctx.isNewInstance) {
+          if (ctx.isNewInstance && !instance.fbId) {
             AppUserAccount.requestVerificationEmail(instance.email, instance);
           }
           next();
