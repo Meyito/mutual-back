@@ -45,17 +45,19 @@ module.exports = function (_AppUserAccount) {
       let oldCreate = _AppUserAccount.create;
       _AppUserAccount.create = function (data) {
         data = _.clone(data);
-        if(data.fbId){
+        if (data.fbId) {
           data.emailVerified = true;
           data.password = data.fbId;
+          data.username = data.fbId;
         }
 
         let callback = arguments[arguments.length - 1];
         callback = _.isFunction(callback) ? callback : utils.createPromiseCallback();
 
         let modifiableData = AppUserData.getModifiableFiels();
-        ValidationHelper
-          .validatesPresenceOf('municipalityId', data.data, _AppUserAccount)
+
+        ValidationHelper.validatesPresenceOf('data', data, _AppUserAccount)
+          .then(() => ValidationHelper.validatesPresenceOf('municipalityId', data.data, _AppUserAccount))
           .then(() => {
             let userData = _.pick(data.data, modifiableData);
             delete data.data;
@@ -180,7 +182,7 @@ module.exports = function (_AppUserAccount) {
                 error.code = 'LOGIN_FAILED'
                 return cb(error)
               }
-              user.createAccessToken(null, postCreateToken)
+              user.createAccessToken({}, postCreateToken)
             })
             .catch(cb);
         } else {

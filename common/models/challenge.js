@@ -38,7 +38,7 @@ module.exports = function (_Challenge) {
       challengeId: challengeToAssing.id,
       userId: child.userId
     }, {transaction});
-    await child.updateAttribute('lastChallengeAssingnation', Date.now(), {transaction})
+    await child.updateAttribute('lastChallengeAssignment', Date.now(), {transaction})
 
     await Promise.promisify(transaction.commit, {context: transaction})();
 

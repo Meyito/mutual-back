@@ -178,7 +178,7 @@
     "dataSource": null,
     "public": false
   },
-  "BashHelper": {
+  "BatchHelper": {
     "dataSource": null,
     "public": false
   }

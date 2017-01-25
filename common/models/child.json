@@ -19,7 +19,7 @@
       "type": "date",
       "required": true
     },
-    "lastChallengeAssingnation": {
+    "lastChallengeAssignment": {
       "type": "date"
     }
   },

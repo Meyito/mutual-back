@@ -154,7 +154,7 @@ module.exports = function (_Child) {
   Child.assignChallenges = async function (cb) {
     try {
       let where = {
-        lastChallengeAssingnation: {
+        lastChallengeAssignment: {
           lte: moment().subtract(1, 'days').toDate()
         }
       };
