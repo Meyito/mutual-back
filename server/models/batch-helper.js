@@ -55,12 +55,12 @@ module.exports = function (_BashHelper) {
    * Exec eachCb for each item that match with filter in batch. This method call to Model.find method with skip filter
    * for get each batch so use it when the results size's list don't change in each call to Model.find.
    * @param Model
-   * @param filter
+   * @param where
    * @param options
    * @param batchSize
    * @param eachCb
    */
-  BashHelper.applyToRepetibleList = async function (Model, filter, options, batchSize, eachCb) {
+  BashHelper.applyToRepetibleList = async function (Model, where, options, batchSize, eachCb) {
     if(_.isFunction(options)){
       eachCb = options
       options = null
