@@ -177,5 +177,9 @@
   "DebugHelper": {
     "dataSource": null,
     "public": false
+  },
+  "BashHelper": {
+    "dataSource": null,
+    "public": false
   }
 }

@@ -18,6 +18,9 @@
     "birthday": {
       "type": "date",
       "required": true
+    },
+    "lastChallengeAssingnation": {
+      "type": "date"
     }
   },
   "validations": [],

@@ -29,11 +29,19 @@ module.exports = function (_Challenge) {
     let indexTarget = Math.ceil(Math.random() * count);
     let challengeToAssing = await _Challenge.findById(indexTarget);
 
+    let beginTransaction = Promise.promisify(_Challenge.beginTransaction, {context: _Challenge});
+    let transaction = await beginTransaction({timeout: 60000});
+
+
     let challenge = await child.challenges.create({
       expirationDate: moment().add(challengeToAssing.expireAt, 'days').toDate(),
       challengeId: challengeToAssing.id,
       userId: child.userId
-    });
+    }, {transaction});
+    await child.updateAttribute('lastChallengeAssingnation', Date.now(), {transaction})
+
+    await Promise.promisify(transaction.commit, {context: transaction})();
+
     return challenge;
   };
 

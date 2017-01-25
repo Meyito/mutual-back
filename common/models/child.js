@@ -4,19 +4,19 @@ module.exports = function (_Child) {
 
   const Promise = require('bluebird');
   const _ = require('lodash');
+  const moment = require('moment');
 
   const BuildHelper = require('../../server/build-helper');
   const app = require('../../server/server');
 
   const utils = require(`${process.cwd()}/node_modules/loopback/lib/utils`);
 
-  let AppConstant;
   let Characteristic;
   let Alertmeter;
-  let ResponseHelper;
-  let ValidationHelper;
   let ChildCharacteristic;
   let Challenge;
+  let BashHelper
+  let ResponseHelper
 
   BuildHelper
     .build(Child, _Child)
@@ -26,6 +26,8 @@ module.exports = function (_Child) {
       Alertmeter = app.models.Alertmeter;
       Challenge = app.models.Challenge;
       ChildCharacteristic = app.models.ChildCharacteristic;
+      BashHelper = app.models.BashHelper
+      ResponseHelper = app.models.ResponseHelper;
 
       let oldCreate = _Child.create;
       _Child.create = function () {
@@ -127,16 +129,13 @@ module.exports = function (_Child) {
    *
    * @return {Promise}
    */
-  Child.prototype.assignChallenge = function (cb) {
-    cb = cb || utils.createPromiseCallback();
-
-    Challenge.assingOneTo(this)
-      .then(function (resp) {
-        cb(null, resp);
-      })
-      .catch(cb);
-
-    return cb.promise;
+  Child.prototype.assignChallenge = async function (cb) {
+    try {
+      let resp = await Challenge.assingOneTo(this);
+      return ResponseHelper.successHandler(resp, cb);
+    } catch (err) {
+      ResponseHelper.errorHandler(err, cb);
+    }
   };
   _Child.remoteMethod('assignChallenge', {
     isStatic: false,
@@ -152,26 +151,27 @@ module.exports = function (_Child) {
    *
    * @return {Promise}
    */
-  Child.prototype.assignChallenge = function (cb) {
-    cb = cb || utils.createPromiseCallback();
+  Child.assignChallenges = async function (cb) {
+    try {
+      let where = {
+        lastChallengeAssingnation: {
+          lte: moment().subtract(1, 'days').toDate()
+        }
+      };
 
-    Challenge.assingOneTo(this)
-      .then(function (resp) {
-        cb(null, resp);
-      })
-      .catch(cb);
-
-    return cb.promise;
+      await BashHelper.applyToNoRepetibleList(_Child, where, (child) => Challenge.assingOneTo(child))
+      return ResponseHelper.successHandler({}, cb)
+    } catch (err) {
+      ResponseHelper.errorHandler(err, cb)
+    }
   };
-  _Child.remoteMethod('assignChallenge', {
+  _Child.remoteMethod('assignChallenges', {
     isStatic: false,
     http: {
-      verb: 'post',
-      path: '/assign-challenge'
+      verb: 'get',
+      path: '/assign-challenges'
     }
   });
-
-
 
 
   Child.prototype.addMissingCharacteristics = async function (requiredCharacteristics) {
