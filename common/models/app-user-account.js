@@ -4,6 +4,7 @@
  * @param {AppUserAccount} _AppUserAccount
  */
 module.exports = function (_AppUserAccount) {
+  const loopback = require('loopback')
   const Promise = require('bluebird');
   const path = require('path');
   const crypto = require('crypto');
@@ -14,6 +15,8 @@ module.exports = function (_AppUserAccount) {
 
   const BuildHelper = require('../../server/build-helper');
   const app = require('../../server/server');
+
+  const PASSWORD_RECOVERY_TEMPLATE = path.resolve(__dirname, '../../server/views/restore-password.ejs');
 
 
   let AppConstant;
@@ -26,6 +29,7 @@ module.exports = function (_AppUserAccount) {
   let UserGoal;
   let Goal;
   let Event;
+  let Mailer;
   let DH;
 
   BuildHelper
@@ -38,6 +42,7 @@ module.exports = function (_AppUserAccount) {
       UserAppChallenge = app.models.UserAppChallenge;
       UserCategoryScore = app.models.UserCategoryScore;
       UserGoal = app.models.AppUserGoal;
+      Mailer = app.models.Mailer
       Goal = app.models.Goal;
       Level = app.models.Level;
       Event = app.models.Event;
@@ -205,6 +210,26 @@ module.exports = function (_AppUserAccount) {
           next(err);
         }
       });
+
+      _AppUserAccount.on('resetPasswordRequest', function (info) {
+        let token = info.accessToken.id
+
+        let template = loopback.template(PASSWORD_RECOVERY_TEMPLATE);
+        template = template({token: token, uid: info.user.id})
+
+        let options = {
+          from: process.env.FROM_ACCOUNT_PASS_RECOVERY_EMAIL,
+          to: info.email,
+          subject: 'Recupera tu contraseña',
+          html: template
+        };
+
+        Mailer.send(options, function (err) {
+          if(err)
+            DH.debug.error(err)
+        })
+      })
+
     });
 
 
@@ -254,7 +279,7 @@ module.exports = function (_AppUserAccount) {
           uid: instance.id,
           template: path.resolve(__dirname, '../../server/views/verify.ejs'),
           user: instance,
-          mailer: app.models.Mailer
+          mailer: Mailer
         };
         await instance.verify(options);
       }

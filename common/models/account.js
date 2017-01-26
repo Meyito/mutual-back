@@ -1,8 +1,4 @@
 'use strict';
 
-module.exports = function (_Account) {
-
-
-
-
+module.exports = function (Account) {
 };
