@@ -6,7 +6,7 @@ module.exports = function (Mailer) {
   Mailer.createTransport = function () {
     if (process.env.USE_SMTP_XOAUTH2) {
       let generator = require('xoauth2').createXOAuth2Generator({
-        user: process.env.SMPT_USER,
+        user: process.env.SMTP_USER,
         clientId: process.env.XOAUTH2_CLIENT_ID,
         clientSecret: process.env.XOAUTH2_CLIENT_SECRET,
         refreshToken: process.env.XOAUTH2_REFRESH_TOKEN
@@ -25,8 +25,8 @@ module.exports = function (Mailer) {
       'secure': !!process.env.SMTP_USE_SSL,
       'port': process.env.SMTP_PORT,
       'auth': {
-        'user': process.env.SMPT_USER,
-        'pass': process.env.SMPT_PASSWORD
+        'user': process.env.SMTP_USER,
+        'pass': process.env.SMTP_PASSWORD
       }
     });
   };
