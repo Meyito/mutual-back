@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node .",
     "pretest": "gulp build && echo \"jshint . will disabled until ES7 is supported\"",
-    "test": "mocha ./dist/**/*.spec.js"
+    "test": "mocha ./dist/**/*.spec.js",
+    "cron:assignChallenges": "node scripts/triggerCron.js --cron=assignChallenges"
   },
   "dependencies": {
     "async": "^2.1.4",
@@ -51,7 +52,8 @@
     "serve-favicon": "^2.0.1",
     "strong-cluster-control": "^2.2.3",
     "strong-globalize": "^2.8.0",
-    "xoauth2": "^1.2.0"
+    "xoauth2": "^1.2.0",
+    "yargs": "^6.6.0"
   },
   "devDependencies": {},
   "repository": {
