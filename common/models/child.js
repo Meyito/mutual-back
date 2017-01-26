@@ -20,7 +20,7 @@ module.exports = function (_Child) {
 
   BuildHelper
     .build(Child, _Child)
-    .then(function () {
+    .then(function ()   {
 
       Characteristic = app.models.Characteristic;
       Alertmeter = app.models.Alertmeter;
@@ -108,6 +108,9 @@ module.exports = function (_Child) {
         oldFindOne
           .call(this, query, options)
           .then(function (instance) {
+            if(!instance){
+              return cb(null, null);
+            }
             return Alertmeter
               .calculate(instance.__data.characteristics)
               .then(function (value) {
