@@ -40,7 +40,14 @@ module.exports = function (_UserAppChallenge) {
         };
         return false;
       }
-      characteristics[question.characteristicId].statusValue += answer.characteristicValue;
+      let characteristic = characteristics[question.characteristicId];
+      characteristic.statusValue += answer.characteristicValue;
+      if (characteristic.statusValue > 50) {
+        characteristic.statusValue = 50;
+      }
+      if (characteristic.statusValue < -50) {
+        characteristic.statusValue = -50;
+      }
       return true;
     });
 
