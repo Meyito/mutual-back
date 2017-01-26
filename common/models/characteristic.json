@@ -8,8 +8,7 @@
   },
   "properties": {
     "name": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "label": {
       "type": "string",
@@ -17,11 +16,11 @@
     },
     "weight": {
       "type": "number",
-      "required": true
+      "default": 5
     },
     "minValueAlert": {
       "type": "number",
-      "required": true,
+      "default": -10,
       "postgresql": {
         "dataType": "REAL"
       }
