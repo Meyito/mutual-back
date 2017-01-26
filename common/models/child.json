@@ -72,6 +72,13 @@
       "principalType": "ROLE",
       "principalId": "$owner",
       "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "cron_executer",
+      "permission": "ALLOW",
+      "property": "assignChallenges"
     }
   ],
   "methods": {}
