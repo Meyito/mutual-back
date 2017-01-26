@@ -15,7 +15,7 @@ module.exports = function (_Child) {
   let Alertmeter;
   let ChildCharacteristic;
   let Challenge;
-  let BashHelper
+  let BatchHelper
   let ResponseHelper
 
   BuildHelper
@@ -26,7 +26,7 @@ module.exports = function (_Child) {
       Alertmeter = app.models.Alertmeter;
       Challenge = app.models.Challenge;
       ChildCharacteristic = app.models.ChildCharacteristic;
-      BashHelper = app.models.BashHelper
+      BatchHelper = app.models.BatchHelper
       ResponseHelper = app.models.ResponseHelper;
 
       let oldCreate = _Child.create;
@@ -162,14 +162,13 @@ module.exports = function (_Child) {
         }
       };
 
-      await BashHelper.applyToNoRepetibleList(_Child, where, (child) => Challenge.assingOneTo(child))
+      await BatchHelper.applyToNoRepetibleList(_Child, where, (child) => Challenge.assingOneTo(child))
       return ResponseHelper.successHandler({}, cb)
     } catch (err) {
       ResponseHelper.errorHandler(err, cb)
     }
   };
   _Child.remoteMethod('assignChallenges', {
-    isStatic: false,
     http: {
       verb: 'get',
       path: '/assign-challenges'

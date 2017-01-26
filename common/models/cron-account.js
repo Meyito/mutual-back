@@ -8,7 +8,7 @@ module.exports = function (CronAccount) {
     if (ctx.isNewInstance) {
       let RoleMapping = app.models.RoleMapping;
 
-      let role = await app.models.Role.findOne({name: 'cron_executer'});
+      let role = await app.models.Role.findOne({where: {name: 'cron_executer'}});
       await role.principals.create({
         principalType: RoleMapping.USER,
         principalId: ctx.instance.id

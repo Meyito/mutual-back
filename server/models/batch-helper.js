@@ -6,6 +6,7 @@ module.exports = function (_BashHelper) {
   const Promise = require('bluebird')
 
   const BuildHelper = require('../../server/build-helper');
+  const app = require('../../server/server');
 
   let DH;
 
