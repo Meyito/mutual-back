@@ -34,6 +34,10 @@
     "genderchildid":{
       "type": "number",
       "index": true
+    },
+    "childid":{
+      "type": "number",
+      "index": true
     }
   },
   "validations": [],
@@ -57,6 +61,11 @@
       "type": "belongsTo",
       "model": "Gender",
       "foreignKey": "genderchildid"
+    },
+    "child": {
+      "type": "belongsTo",
+      "model": "Child",
+      "foreignKey": "childid"
     }
   },
   "acls": [

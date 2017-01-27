@@ -116,7 +116,8 @@ module.exports = function (_Child) {
                         userid: children.userId,
                         genderchildid: children.genderId,
                         municipalityid: userData.municipalityId,
-                        birthday: children.birthday
+                        birthday: children.birthday,
+                        childid: children.id
                       }).catch((err) => DH.debug.error(err));
                     })
 
