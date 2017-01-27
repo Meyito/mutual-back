@@ -21,4 +21,5 @@ dist
 storage/**/*
 !storage
 !storage/*
+!storage/goals/*
 !.gitkeep
