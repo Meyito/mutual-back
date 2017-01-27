@@ -16,6 +16,7 @@ module.exports = function (_Challenge) {
   let Characteristic;
   let ResponseHelper;
   let UserAppChallenge;
+  let Push
   let Event
   let DH;
 
@@ -28,6 +29,7 @@ module.exports = function (_Challenge) {
       UserAppChallenge = app.models.UserAppChallenge
       AppUserData = app.models.AppUserData
       DH = app.models.DebugHelper
+      Push = app.models.Push
 
       _Challenge.nestRemoting('reviewQuestions');
 
@@ -117,6 +119,11 @@ module.exports = function (_Challenge) {
           categoryid: challengeToAssing.categoryId
         }).catch((err) => DH.debug.error(err));
       })
+
+    Push.send({id: child.userId}, {
+      title: '¡Haz recibido un nuevo reto!',
+      body: '¿Preparado para divertirte con tu Hijo?'
+    });
 
     return challenge;
   };
