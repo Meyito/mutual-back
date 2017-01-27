@@ -1,122 +1,130 @@
 module.exports = [
   {
-    name: '50 exp Entretenimiento',
-    image: 'http://lorempixel.com/128/128',
-    inactiveImage: 'http://lorempixel.com/128/128',
-    description: '50 exp Entretenimiento',
-    minCategoryExp: 50,
-    categoryId: 1
+    name: '',
+    image: '/files/goals/download/sin_t__tulo-1-01.png',
+    inactiveImage: '/files/goals/download/sin_t__tulo-1-01_2.png',
+    description: '',
+    minCategoryExp: 0,
+    categoryId: 'exploradores'
   },
   {
-    name: '100 exp Entretenimiento',
-    image: 'http://lorempixel.com/128/128',
-    inactiveImage: 'http://lorempixel.com/128/128',
-    description: '100 exp Entretenimiento',
+    name: 'Bronce',
+    image: '/files/goals/download/sin_t__tulo-2-01.png',
+    inactiveImage: '/files/goals/download/sin_t__tulo-2-01_2.png',
+    description: '',
+    minCategoryExp: 10,
+    categoryId: 'atletas'
+  },
+  {
+    name: 'Bronce',
+    image: '/files/goals/download/sin_t__tulo-3-01.png',
+    inactiveImage: '/files/goals/download/sin_t__tulo-3-01_2.png',
+    description: '',
+    minCategoryExp: 10,
+    categoryId: 'altruista'
+  },
+  {
+    name: 'Bronce',
+    image: '/files/goals/download/sin_t__tulo-4-01.png',
+    inactiveImage: '/files/goals/download/sin_t__tulo-4-01_2.png',
+    description: '',
+    minCategoryExp: 10,
+    categoryId: 'espirituales'
+  },
+  {
+    name: 'Bronce',
+    image: '/files/goals/download/sin_t__tulo-5-01.png',
+    inactiveImage: '/files/goals/download/sin_t__tulo-5-01_2.png',
+    description: '',
+    minCategoryExp: 10,
+    categoryId: 'ecologicos'
+  },
+  {
+    name: 'Bronce',
+    image: '/files/goals/download/sin_t__tulo-6-01.png',
+    inactiveImage: '/files/goals/download/sin_t__tulo-6-01_2.png',
+    description: '',
+    minCategoryExp: 10,
+    categoryId: 'psiquicos'
+  },
+  {
+    name: 'Plata',
+    image: '/files/goals/download/sin_t__tulo-7-01.png',
+    inactiveImage: '/files/goals/download/sin_t__tulo-7-01_2.png',
+    description: '',
     minCategoryExp: 100,
-    categoryId: 1
+    categoryId: 'atletas'
   },
   {
-    name: '200 exp Entretenimiento',
-    image: 'http://lorempixel.com/128/128',
-    inactiveImage: 'http://lorempixel.com/128/128',
-    description: '200 exp Entretenimiento',
-    minCategoryExp: 200,
-    categoryId: 1
-  },
-  {
-    name: '250 exp Entretenimiento',
-    image: 'http://lorempixel.com/128/128',
-    inactiveImage: 'http://lorempixel.com/128/128',
-    description: '250 exp Entretenimiento',
-    minCategoryExp: 250,
-    categoryId: 1
-  },
-  {
-    name: '300 exp Entretenimiento',
-    image: 'http://lorempixel.com/128/128',
-    inactiveImage: 'http://lorempixel.com/128/128',
-    description: '300 exp Entretenimiento',
-    minCategoryExp: 300,
-    categoryId: 1
-  },
-  {
-    name: '50 exp Afecto',
-    image: 'http://lorempixel.com/128/128',
-    inactiveImage: 'http://lorempixel.com/128/128',
-    description: '50 exp Afecto',
-    minCategoryExp: 50,
-    categoryId: 2
-  },
-  {
-    name: '200 exp Afecto',
-    image: 'http://lorempixel.com/128/128',
-    inactiveImage: 'http://lorempixel.com/128/128',
-    description: '200 exp Afecto',
-    minCategoryExp: 200,
-    categoryId: 2
-  },
-  {
-    name: '100 exp Afecto',
-    image: 'http://lorempixel.com/128/128',
-    inactiveImage: 'http://lorempixel.com/128/128',
-    description: '100 exp Afecto',
+    name: 'Plata',
+    image: '/files/goals/download/sin_t__tulo-8-01.png',
+    inactiveImage: '/files/goals/download/sin_t__tulo-8-01_2.png',
+    description: '',
     minCategoryExp: 100,
-    categoryId: 2
+    categoryId: 'altruista'
   },
   {
-    name: '250 exp Afecto',
-    image: 'http://lorempixel.com/128/128',
-    inactiveImage: 'http://lorempixel.com/128/128',
-    description: '250 exp Afecto',
-    minCategoryExp: 250,
-    categoryId: 2
-  },
-  {
-    name: '300 exp Afecto',
-    image: 'http://lorempixel.com/128/128',
-    inactiveImage: 'http://lorempixel.com/128/128',
-    description: '300 exp Afecto',
-    minCategoryExp: 300,
-    categoryId: 2
-  },
-  {
-    name: '50 exp Entretenimiento',
-    image: 'http://lorempixel.com/128/128',
-    inactiveImage: 'http://lorempixel.com/128/128',
-    description: '50 exp Entretenimiento',
-    minCategoryExp: 50,
-    categoryId: 3
-  },
-  {
-    name: '100 exp Entretenimiento',
-    image: 'http://lorempixel.com/128/128',
-    inactiveImage: 'http://lorempixel.com/128/128',
-    description: '100 exp Entretenimiento',
+    name: 'Plata',
+    image: '/files/goals/download/sin_t__tulo-9-01.png',
+    inactiveImage: '/files/goals/download/sin_t__tulo-9-01_2.png',
+    description: '',
     minCategoryExp: 100,
-    categoryId: 3
+    categoryId: 'espirituales'
   },
   {
-    name: '200 exp Entretenimiento',
-    image: 'http://lorempixel.com/128/128',
-    inactiveImage: 'http://lorempixel.com/128/128',
-    description: '200 exp Entretenimiento',
-    minCategoryExp: 200,
-    categoryId: 3
+    name: 'Plata',
+    image: '/files/goals/download/sin_t__tulo-10-01.png',
+    inactiveImage: '/files/goals/download/sin_t__tulo-10-01_2.png',
+    description: '',
+    minCategoryExp: 100,
+    categoryId: 'ecologicos'
   },
   {
-    name: '250 exp Entretenimiento',
-    image: 'http://lorempixel.com/128/128',
-    inactiveImage: 'http://lorempixel.com/128/128',
-    description: '250 exp Entretenimiento',
-    minCategoryExp: 250,
-    categoryId: 3
+    name: 'Plata',
+    image: '/files/goals/download/sin_t__tulo-11-01.png',
+    inactiveImage: '/files/goals/download/sin_t__tulo-11-01_2.png',
+    description: '',
+    minCategoryExp: 100,
+    categoryId: 'psiquicos'
   },
   {
-    name: '300 exp Entretenimiento',
-    image: 'http://lorempixel.com/128/128',
-    inactiveImage: 'http://lorempixel.com/128/128',
-    description: '300 exp Entretenimiento',
-    minCategoryExp: 300,
-    categoryId: 3
+    name: 'Oro',
+    image: '/files/goals/download/sin_t__tulo-12-01.png',
+    inactiveImage: '/files/goals/download/sin_t__tulo-12-01_2.png',
+    description: '',
+    minCategoryExp: 500,
+    categoryId: 'atletas'
+  },
+  {
+    name: 'Oro',
+    image: '/files/goals/download/sin_t__tulo-13-01.png',
+    inactiveImage: '/files/goals/download/sin_t__tulo-13-01_2.png',
+    description: '',
+    minCategoryExp: 500,
+    categoryId: 'altruista'
+  },
+  {
+    name: 'Oro',
+    image: '/files/goals/download/sin_t__tulo-14-01.png',
+    inactiveImage: '/files/goals/download/sin_t__tulo-14-01_2.png',
+    description: '',
+    minCategoryExp: 500,
+    categoryId: 'espirituales'
+  },
+  {
+    name: 'Oro',
+    image: '/files/goals/download/sin_t__tulo-15-01.png',
+    inactiveImage: '/files/goals/download/sin_t__tulo-15-01_2.png',
+    description: '',
+    minCategoryExp: 500,
+    categoryId: 'ecologicos'
+  },
+  {
+    name: 'Oro',
+    image: '/files/goals/download/sin_t__tulo-16-01.png',
+    inactiveImage: '/files/goals/download/sin_t__tulo-16-01_2.png',
+    description: '',
+    minCategoryExp: 500,
+    categoryId: 'psiquicos'
   }
 ];

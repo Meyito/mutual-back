@@ -2,10 +2,10 @@
  * Created by garusis on 08/12/16.
  */
 module.exports = [
-  {name: 'Padres Exploradores', slug: 'Padres Exploradores'},
-  {name: 'Padres Atletas', slug: 'Padres Atletas'},
-  {name: 'Padres Altruista', slug: 'Padres Altruista'},
-  {name: 'Padres Misticos', slug: 'Padres Misticos'},
-  {name: 'Padres Ecologicos', slug: 'Padres Ecologicos'},
-  {name: 'Padres Psiquicos', slug: 'Padres Psiquicos'}
+  {name: 'Padres Exploradores', slug: 'exploradores'},
+  {name: 'Padres Atletas', slug: 'atletas'},
+  {name: 'Padres Altruista', slug: 'altruista'},
+  {name: 'Padres Espirituales', slug: 'espirituales'},
+  {name: 'Padres Ecologicos', slug: 'ecologicos'},
+  {name: 'Padres Pilosos', slug: 'pilosos'}
 ];
