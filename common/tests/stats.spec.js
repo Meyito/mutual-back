@@ -5,9 +5,18 @@ const fixtures = {
   appUser: require('./fixtures/app-user')
 };
 
+function buildChild() {
+  return {
+    "name": "asdasdasd",
+    "birthday": moment().subtract(MathUtils.randomNumber(), 'years').toDate(),
+    "genderId": MathUtils.randomNumber(2, 1)
+  }
+}
+
 describe('Stats', function () {
   const AppUserAccount = app.models.AppUserAccount;
   const Stat = app.models.Stat;
+  const Child = app.models.Child;
   const DH = app.models.DebugHelper;
   const Category = app.models.Category;
   const Challenge = app.models.Challenge;
@@ -22,10 +31,12 @@ describe('Stats', function () {
   let midTime;
 
   before(function () {
-    this.timeout(15000);
+    this.timeout(30000);
     startMigrationTime = Date.now();
     return BPromise
-      .all([])
+      .all([
+        Child.destroyAll({})
+      ])
       .then(function () {
         let delay = 0;
         return BPromise
@@ -34,6 +45,7 @@ describe('Stats', function () {
             return BPromise
               .delay(delay)
               .then(() => AppUserAccount.create(user))
+              .then((user) => user.children.create(buildChild()))
           }));
       });
   });
@@ -110,6 +122,36 @@ describe('Stats', function () {
         });
     });
 
+    it(`should count all registered user's children before end migration from municipalityId neq 5`, function () {
+      return Stat.execQuery('childRegistry', [
+        {field: 'created', operator: '<=', value: endMigrationTime},
+        {field: 'municipalityid', operator: '<>', value: 5}
+      ])
+        .then(function (count) {
+          console.log(count)
+        });
+    });
+
+    it(`should count all less 5 years old registered user's children before end migration`, function () {
+      return Stat.execQuery('childRegistry', [
+        {field: 'created', operator: '<=', value: endMigrationTime},
+        {field: 'birthday', operator: '>', value: moment().subtract(5, 'years').toDate()}
+      ])
+        .then(function (count) {
+          console.log(count)
+        });
+    });
+
+    it(`should count all less 5 years old registered user's female children before end migration`, function () {
+      return Stat.execQuery('childRegistry', [
+        {field: 'created', operator: '<=', value: endMigrationTime},
+        {field: 'birthday', operator: '>', value: moment().subtract(5, 'years').toDate()},
+        {field: 'genderchildid', operator: '=', value: 1}
+      ])
+        .then(function (count) {
+          console.log(count)
+        });
+    });
 
   });
 });

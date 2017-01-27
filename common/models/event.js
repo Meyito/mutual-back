@@ -50,9 +50,9 @@ module.exports = function (Event) {
       endpoint: '/genders',
       labelField: 'label'
     },
-    dateOfBirth: {
-      name: 'dateofbird',
-      label: 'fecha de nacimieto',
+    birthday: {
+      name: 'birthday',
+      label: 'fecha de nacimiento',
       type: dataType.date,
       grupable: false
     },
@@ -74,7 +74,7 @@ module.exports = function (Event) {
     childRegistry: {
       name: 'childRegistry',
       label: 'Niños Registrados',
-      fields: [cf.created, cf.municipalityId, cf.genderChildId, cf.userId, cf.dateOfBirth]
+      fields: [cf.created, cf.municipalityId, cf.genderChildId, cf.userId, cf.birthday]
     }
   }
   const EVENT_TYPES = Event.EVENT_TYPES;
