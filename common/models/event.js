@@ -15,6 +15,7 @@ module.exports = function (Event) {
   const dataType = {
     date: {name: 'date', operators: [co.eq, co.neq, co.gt, co.lt, co.gte, co.lte]},
     number: {name: 'number', operators: [co.eq, co.neq, co.gt, co.lt, co.gte, co.lte]},
+    string: {name: 'number', operators: [co.eq, co.neq]},
     reference: {name: 'reference', operators: [co.eq, co.neq]},
     noop_reference: {name: 'reference', operators: []}
   };
@@ -83,6 +84,26 @@ module.exports = function (Event) {
       grupable: false,
       endpoint: '/characteristics',
       labelField: 'label'
+    },
+    goalId: {
+      name: 'goalid',
+      label: 'logro',
+      type: dataType.reference,
+      grupable: false,
+      endpoint: '/goals',
+      labelField: 'name'
+    },
+    alermeterValue: {
+      name: 'alermeterValue',
+      label: 'nivel del alertometro',
+      type: dataType.number,
+      grupable: false
+    },
+    characteristicValue: {
+      name: 'characteristicValue',
+      label: 'nivel en caracteristica',
+      type: dataType.number,
+      grupable: false
     }
   }
   let cf = commonFields
