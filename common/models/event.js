@@ -30,13 +30,17 @@ module.exports = function (Event) {
       name: 'municipalityid',
       label: 'municipio',
       type: dataType.reference,
-      grupable: false
+      grupable: false,
+      endpoint: '/municipalities',
+      labelField: 'name'
     },
     genderId: {
       name: 'genderid',
       label: 'genero',
       type: dataType.reference,
-      grupable: false
+      grupable: false,
+      endpoint: '/genders',
+      labelField: 'label'
     },
     userId: {
       name: 'userid',
@@ -50,6 +54,7 @@ module.exports = function (Event) {
   Event.EVENT_TYPES = {
     signup: {
       name: 'signup',
+      label: 'Registro de Usuario',
       fields: [cf.created, cf.municipalityId, cf.genderId]
     }
   }
