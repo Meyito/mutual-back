@@ -195,5 +195,25 @@ describe('Stats', function () {
         });
     });
 
+    it(`should count all children with someone characterist below 0 but grouped`, function () {
+      return Stat.execQuery('characteristicValue', [
+        {field: 'characteristicvalue', operator: '<', value: 0},
+        {field: 'childid', group: true}
+      ])
+        .then(function (count) {
+          console.log(count)
+        });
+    });
+
+    it(`should count all children with someone characterist below 0 but grouped`, function () {
+      return Stat.execQuery('characteristicValue', [
+        {field: 'characteristicvalue', operator: '<', value: 0},
+        {field: 'childid', group: true}
+      ])
+        .then(function (count) {
+          console.log(count)
+        });
+    });
+
   });
 });

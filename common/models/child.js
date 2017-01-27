@@ -265,7 +265,17 @@ module.exports = function (_Child) {
     let missingCharacteristics = _.map(missingCharacteristicsIds, function (characteristicId) {
       return {characteristicId, statusValue};
     });
-    return await this.characteristics.create(missingCharacteristics);
+
+    let characteristics = await this.characteristics.create(missingCharacteristics)
+    await Promise.all(_.map(characteristics, function (childCharacteristic) {
+      return new Promise(function (resolve, reject) {
+        childCharacteristic.characteristic(function (err) {
+          if (err) return reject(err)
+          resolve()
+        });
+      });
+    }))
+    return characteristics
   };
 
   function Child() {

@@ -44,6 +44,14 @@ module.exports = function (_Stat) {
   Stat.execQuery = async function (eventName, filter, cb) {
     try {
       let event = Event.EVENT_TYPES[eventName]
+      if (!event) {
+        return ResponseHelper.errorHandler({
+          status: 406,
+          message: `The ${eventName} event is not able to use`
+        }, cb)
+      }
+
+
       let query = knex('event')
 
       let groupBy = [];

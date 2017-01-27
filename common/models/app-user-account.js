@@ -395,11 +395,12 @@ module.exports = function (_AppUserAccount) {
       await userChallenge.child().addMissingCharacteristics(requiredCharacteristics);
 
       transaction = await beginTransaction({timeout: 60000});
-      await userChallenge.complete(responses, transaction);
+      await userChallenge.complete(responses, transaction, this);
       await this.updateExperience(userChallenge, transaction);
 
       //ToDo: Update parent experience, category experience and goals
       await Promise.promisify(transaction.commit, {context: transaction})();
+
 
       return ResponseHelper.successHandler({}, cb);
     } catch (err) {

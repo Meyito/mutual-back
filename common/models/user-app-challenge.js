@@ -15,20 +15,25 @@ module.exports = function (_UserAppChallenge) {
   let ResponseHelper;
   let ValidationHelper;
   let ChildCharacteristic;
+  let Event;
+  let DH;
 
   BuildHelper
     .build(UserAppChallenge, _UserAppChallenge)
     .then(function () {
       ChildCharacteristic = app.models.ChildCharacteristic;
+      Event = app.models.Event;
+      DH = app.models.DebugHelper;
 
     });
 
-  UserAppChallenge.prototype.complete = async function (response, transaction) {
+  UserAppChallenge.prototype.complete = async function (response, transaction, user) {
 
     let questions = this.challenge().reviewQuestions();
+    let child = this.child()
     let error;
 
-    let characteristics = await ChildCharacteristic.find({where: {childId: this.childId}});
+    let characteristics = child.characteristics();
     characteristics = _.keyBy(characteristics, 'characteristicId');
 
     _.every(questions, function (question) {
@@ -58,6 +63,16 @@ module.exports = function (_UserAppChallenge) {
     return this.updateAttribute('isFinished', true, {transaction})
       .then(function () {
         return Promise.all(_.map(characteristics, function (characteristic) {
+          Event.create({
+            type: Event.EVENT_TYPES.characteristicValue,
+            userid: user.id,
+            genderchildid: child.genderId,
+            municipalityid: user.data().municipalityId,
+            birthday: child.birthday,
+            childid: child.id,
+            characteristicid: characteristic.id,
+            characteristicvalue: characteristic.statusValue
+          }).catch((err) => DH.debug.error(err));
           return characteristic.updateAttributes({statusValue: characteristic.statusValue}, {transaction});
         }));
       });

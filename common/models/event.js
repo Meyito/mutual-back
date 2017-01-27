@@ -124,6 +124,16 @@ module.exports = function (Event) {
       name: 'assignmentOfChallenge',
       label: 'Retos Assignados',
       fields: [cf.created, cf.municipalityId, cf.genderChildId, cf.userId, cf.childId, cf.birthday, cf.categoryId]
+    },
+    characteristicValue: {
+      name: 'characteristicValue',
+      label: 'Valor de Caracteristica',
+      fields: [cf.created, cf.municipalityId, cf.genderChildId, cf.childId, cf.birthday, cf.characteristicId, cf.characteristicValue]
+    },
+    finishedChallenge: {
+      name: 'finishedChallenge',
+      label: 'Retos Finalizados',
+      fields: [cf.created, cf.municipalityId, cf.genderChildId, cf.userId, cf.childId, cf.birthday, cf.categoryId]
     }
   }
   const EVENT_TYPES = Event.EVENT_TYPES;
