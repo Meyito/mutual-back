@@ -134,7 +134,7 @@ module.exports = function (_Child) {
         if (_.isArray(data)) {
           promise = postTransaction()
         } else {
-          promise = beginTransaction({timeout: 60000})
+          promise = beginTransaction({timeout: 120000})
             .then(postTransaction);
         }
         promise.catch(function (err) {
@@ -277,6 +277,46 @@ module.exports = function (_Child) {
     }))
     return characteristics
   };
+
+
+  Child.prototype.checkLowCharacteristicLevel = async function (parent) {
+    let characteristics = this.characteristics()
+
+    _.forEach(characteristics, (childCharacteristic) => {
+      if (childCharacteristic.statusValue < childCharacteristic.characteristic().minValueAlert) {
+        Event.create({
+          type: Event.EVENT_TYPES.lowCharacteristicValue,
+          genderchildid: this.genderId,
+          municipalityid: parent.data().municipalityId,
+          birthday: this.birthday,
+          childid: this.id,
+          characteristicid: childCharacteristic.characteristicId,
+          characteristicvalue: childCharacteristic.statusValue
+        }).catch((err) => DH.debug.error(err));
+      }
+    })
+
+    let alertmeterValue = Alertmeter.calculate(characteristics)
+    if (alertmeterValue < -10) {
+      Event.create({
+        type: Event.EVENT_TYPES.lowAlermeterValue,
+        genderchildid: this.genderId,
+        municipalityid: parent.data().municipalityId,
+        birthday: this.birthday,
+        childid: this.id,
+        alermetervalue: alertmeterValue
+      }).catch((err) => DH.debug.error(err));
+    }
+    Event.create({
+      type: Event.EVENT_TYPES.alermeterValue,
+      genderchildid: this.genderId,
+      municipalityid: parent.data().municipalityId,
+      birthday: this.birthday,
+      childid: this.id,
+      alermetervalue: alertmeterValue
+    }).catch((err) => DH.debug.error(err));
+
+  }
 
   function Child() {
   }

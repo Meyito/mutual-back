@@ -130,6 +130,26 @@ module.exports = function (Event) {
       label: 'Valor de Caracteristica',
       fields: [cf.created, cf.municipalityId, cf.genderChildId, cf.childId, cf.birthday, cf.characteristicId, cf.characteristicValue]
     },
+    lowCharacteristicValue: {
+      name: 'lowCharacteristicValue',
+      label: 'Caracteristicas en Riesgo',
+      fields: [cf.created, cf.municipalityId, cf.genderChildId, cf.childId, cf.birthday, cf.characteristicId, cf.characteristicValue]
+    },
+    lowAlermeterValue: {
+      name: 'lowAlermeterValue',
+      label: 'Caracteristicas en Riesgo',
+      fields: [cf.created, cf.municipalityId, cf.genderChildId, cf.childId, cf.birthday, cf.alermeterValue]
+    },
+    alermeterValue: {
+      name: 'lowAlermeterValue',
+      label: 'Caracteristicas en Riesgo',
+      fields: [cf.created, cf.municipalityId, cf.genderChildId, cf.childId, cf.birthday, cf.alermeterValue]
+    },
+    gotGoals: {
+      name: 'gotGoals',
+      label: 'Logros Conseguidos',
+      fields: [cf.created, cf.municipalityId, cf.userId, cf.categoryId]
+    },
     finishedChallenge: {
       name: 'finishedChallenge',
       label: 'Retos Finalizados',

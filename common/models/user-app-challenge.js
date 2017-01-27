@@ -33,8 +33,8 @@ module.exports = function (_UserAppChallenge) {
     let child = this.child()
     let error;
 
-    let characteristics = child.characteristics();
-    characteristics = _.keyBy(characteristics, 'characteristicId');
+    let childCharacteristics = child.characteristics();
+    childCharacteristics = _.keyBy(childCharacteristics, 'characteristicId');
 
     _.every(questions, function (question) {
       let answer = _.find(question.answers(), {id: response[question.id]});
@@ -45,7 +45,7 @@ module.exports = function (_UserAppChallenge) {
         };
         return false;
       }
-      let characteristic = characteristics[question.characteristicId];
+      let characteristic = childCharacteristics[question.characteristicId];
       characteristic.statusValue += answer.characteristicValue;
       if (characteristic.statusValue > 50) {
         characteristic.statusValue = 50;
@@ -62,7 +62,7 @@ module.exports = function (_UserAppChallenge) {
 
     return this.updateAttribute('isFinished', true, {transaction})
       .then(function () {
-        return Promise.all(_.map(characteristics, function (characteristic) {
+        return Promise.all(_.map(childCharacteristics, function (childCharacteristic) {
           Event.create({
             type: Event.EVENT_TYPES.characteristicValue,
             userid: user.id,
@@ -70,10 +70,10 @@ module.exports = function (_UserAppChallenge) {
             municipalityid: user.data().municipalityId,
             birthday: child.birthday,
             childid: child.id,
-            characteristicid: characteristic.id,
-            characteristicvalue: characteristic.statusValue
+            characteristicid: childCharacteristic.characteristicId,
+            characteristicvalue: childCharacteristic.statusValue
           }).catch((err) => DH.debug.error(err));
-          return characteristic.updateAttributes({statusValue: characteristic.statusValue}, {transaction});
+          return childCharacteristic.updateAttributes({statusValue: childCharacteristic.statusValue}, {transaction});
         }));
       });
   };

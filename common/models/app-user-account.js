@@ -225,7 +225,7 @@ module.exports = function (_AppUserAccount) {
         };
 
         Mailer.send(options, function (err) {
-          if(err)
+          if (err)
             DH.debug.error(err)
         })
       })
@@ -312,11 +312,18 @@ module.exports = function (_AppUserAccount) {
       return {goalId: goal.id};
     });
 
-    await this.goals.create(medalsWon, {transaction});
-  };
+    let newGoals = await this.goals.create(medalsWon, {transaction});
 
-  AppUserAccount.prototype.checkLowCharacteristicLevel = async function () {
+    _.forEach(newGoals, (goal) => {
+      Event.create({
+        type: Event.EVENT_TYPES.gotGoals,
+        userid: this.id,
+        municipalityid: this.data().municipalityId,
+        categoryid: categoryId
+      }).catch((err) => DH.debug.error(err));
+    })
 
+    return newGoals
   };
 
   AppUserAccount.prototype.updateExperience = async function (userChallenge, transaction) {
@@ -379,6 +386,7 @@ module.exports = function (_AppUserAccount) {
           }
         ]
       });
+      let child = userChallenge.child();
 
       if (!userChallenge) {
         return ResponseHelper.errorHandler({
@@ -394,13 +402,24 @@ module.exports = function (_AppUserAccount) {
 
       await userChallenge.child().addMissingCharacteristics(requiredCharacteristics);
 
-      transaction = await beginTransaction({timeout: 60000});
+      transaction = await beginTransaction({timeout: 120000});
       await userChallenge.complete(responses, transaction, this);
       await this.updateExperience(userChallenge, transaction);
 
       //ToDo: Update parent experience, category experience and goals
       await Promise.promisify(transaction.commit, {context: transaction})();
 
+      child.checkLowCharacteristicLevel(this);
+
+      Event.create({
+        type: Event.EVENT_TYPES.finishedChallenge,
+        userid: this.id,
+        genderchildid: child.genderId,
+        municipalityid: this.data().municipalityId,
+        birthday: child.birthday,
+        childid: child.id,
+        categoryid: userChallenge.challenge().categoryId
+      }).catch((err) => DH.debug.error(err));
 
       return ResponseHelper.successHandler({}, cb);
     } catch (err) {

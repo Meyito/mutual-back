@@ -88,7 +88,7 @@ module.exports = function (_Challenge) {
     let transaction
     if (!callerTransaction) {
       let beginTransaction = Promise.promisify(_Challenge.beginTransaction, {context: _Challenge});
-      transaction = await beginTransaction({timeout: 60000});
+      transaction = await beginTransaction({timeout: 120000});
     } else {
       transaction = callerTransaction
     }

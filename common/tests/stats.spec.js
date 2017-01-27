@@ -205,9 +205,43 @@ describe('Stats', function () {
         });
     });
 
-    it(`should count all children with someone characterist below 0 but grouped`, function () {
-      return Stat.execQuery('characteristicValue', [
-        {field: 'characteristicvalue', operator: '<', value: 0},
+    it(`should count all children's characteristics below its allowed minValue`, function () {
+      return Stat.execQuery('lowCharacteristicValue', [])
+        .then(function (count) {
+          console.log(count)
+        });
+    });
+
+    it(`should count all Achievements fron category 2`, function () {
+      return Stat.execQuery('gotGoals', [
+        {field: 'categoryid', operator: '=', value: 2}
+      ])
+        .then(function (count) {
+          console.log(count)
+        });
+    });
+
+    it(`should count finished Challenges from category 2`, function () {
+      return Stat.execQuery('finishedChallenge', [
+        {field: 'categoryid', operator: '=', value: 2}
+      ])
+        .then(function (count) {
+          console.log(count)
+        });
+    });
+
+    it(`should count all childs with low alertmeter value`, function () {
+      return Stat.execQuery('lowAlermeterValue', [
+        {field: 'childid', group: true}
+      ])
+        .then(function (count) {
+          console.log(count)
+        });
+    });
+
+    it(`should count all childs with alertmeter value over 0`, function () {
+      return Stat.execQuery('lowAlermeterValue', [
+        {field: 'alermetervalue', operator: '>', value: 0},
         {field: 'childid', group: true}
       ])
         .then(function (count) {
