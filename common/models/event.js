@@ -94,14 +94,14 @@ module.exports = function (Event) {
       labelField: 'name'
     },
     alermeterValue: {
-      name: 'alermeterValue',
+      name: 'alermetervalue',
       label: 'nivel del alertometro',
       type: dataType.number,
       grupable: false
     },
     characteristicValue: {
-      name: 'characteristicValue',
-      label: 'nivel en caracteristica',
+      name: 'characteristicvalue',
+      label: 'nivel de la caracteristica',
       type: dataType.number,
       grupable: false
     }

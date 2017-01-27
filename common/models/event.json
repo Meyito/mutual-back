@@ -51,14 +51,14 @@
       "type": "number",
       "index": true
     },
-    "alermeterValue":{
+    "alermetervalue":{
       "type": "number",
       "index": true,
       "postgresql": {
         "dataType": "REAL"
       }
     },
-    "characteristicValue":{
+    "characteristicvalue":{
       "type": "number",
       "index": true,
       "postgresql": {
