@@ -18,8 +18,8 @@ coverage
 node_modules
 npm-debug.log
 dist
-storage/**/*
-!storage
-!storage/*
-!storage/goals/*
+/storage/**/*
+!/storage
+!/storage/*
+!/storage/goals/*
 !.gitkeep

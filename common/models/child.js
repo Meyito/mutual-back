@@ -45,6 +45,7 @@ module.exports = function (_Child) {
             if (_.isArray(children)) {
               return callback(null, children);
             }
+
             return Characteristic
               .find({fields: ['id']})
               .then(function (characteristics) {

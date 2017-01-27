@@ -2,15 +2,17 @@
  * Created by garusis on 19/01/17.
  */
 
+const path = require('path')
+
 exports.push = {
   gcm: {
     id: process.env.PUSH_GCM_API_KEY
   },
   apn: {
     token: {
-      key: './certs/key.p8',
-      keyId: 'ABCD',
-      teamId: 'EFGH',
+      key: path.join(process.cwd(), 'certs/key.p8'),
+      keyId: process.env.APN_KEY_ID,
+      teamId: process.env.APN_TEAM_ID
     }
   }
 }
