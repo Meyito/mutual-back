@@ -57,16 +57,18 @@ module.exports = function (_Stat) {
           }, cb)
         }
 
-        if (!_.includes(field.type.operators, condition.operator)) {
-          return ResponseHelper.errorHandler({
-            status: 406,
-            message: `The ${condition.operator} operator is not able to use for ${condition.field} field in ${eventName} event`
-          }, cb)
+        if (condition.operator) {
+          if (!_.includes(field.type.operators, condition.operator)) {
+            return ResponseHelper.errorHandler({
+              status: 406,
+              message: `The ${condition.operator} operator is not able to use for ${condition.field} field in ${eventName} event`
+            }, cb)
+          }
+
+          condition.value = parsers[field.type.name](condition.value, condition.operator)
+          query.where(condition.field, condition.operator, condition.value)
         }
 
-        condition.value = parsers[field.type.name](condition.value, condition.operator)
-
-        query.where(condition.field, condition.operator, condition.value)
         if (field.grupable && condition.group) {
           query.groupBy(condition.field)
         }
