@@ -15,6 +15,7 @@ module.exports = function (_UserAppChallenge) {
   let ResponseHelper;
   let ValidationHelper;
   let ChildCharacteristic;
+  let Push
   let Event;
   let DH;
 
@@ -23,6 +24,7 @@ module.exports = function (_UserAppChallenge) {
     .then(function () {
       ChildCharacteristic = app.models.ChildCharacteristic;
       Event = app.models.Event;
+      Push = app.models.Push;
       DH = app.models.DebugHelper;
 
     });

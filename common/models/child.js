@@ -21,6 +21,7 @@ module.exports = function (_Child) {
   let AppUserData
   let Event
   let Goal
+  let Push
   let DH
 
   BuildHelper
@@ -37,6 +38,7 @@ module.exports = function (_Child) {
       AppUserData = app.models.AppUserData
       Event = app.models.Event
       Goal = app.models.Goal
+      Push = app.models.Push
       DH = app.models.DebugHelper
 
 
@@ -293,6 +295,11 @@ module.exports = function (_Child) {
           characteristicid: childCharacteristic.characteristicId,
           characteristicvalue: childCharacteristic.statusValue
         }).catch((err) => DH.debug.error(err));
+
+        Push.send(parent, {
+          title: '¡Tu hijo podría estar en riesgo!',
+          body: childCharacteristic.characteristic().alertMessage
+        });
       }
     })
 
@@ -306,6 +313,10 @@ module.exports = function (_Child) {
         childid: this.id,
         alermetervalue: alertmeterValue
       }).catch((err) => DH.debug.error(err));
+      Push.send(parent, {
+        title: '¡Tu hijo podría estar en riesgo!',
+        body: 'El Alertometro de tu hijo se encuentra por debajo de los niveles normales.'
+      });
     }
     Event.create({
       type: Event.EVENT_TYPES.alermeterValue,
