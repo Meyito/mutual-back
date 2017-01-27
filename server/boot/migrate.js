@@ -36,7 +36,7 @@ module.exports = async function (app) {
 
   async function seedModel(Model, data) {
     console.log(`Seeding ${Model.definition.name} model.`);
-    let dataToSeed = data || loadSeedData(Model);
+    let dataToSeed = data || await loadSeedData(Model);
     if (_.isArray(dataToSeed) && dataToSeed.length > 0) {
       try {
         await Model.create(dataToSeed);
@@ -65,7 +65,11 @@ module.exports = async function (app) {
 
     modelsInDS = _.sortBy(modelsInDS, (Model) => _.isNil(Model.definition.settings.migrateOrder) ? -1 : Model.definition.settings.migrateOrder);
     for (let i = 0, length = modelsInDS.length; i < length; i++) {
-      await seedModel(modelsInDS[i]);
+      try {
+        await seedModel(modelsInDS[i]);
+      } catch (err) {
+        console.error(err)
+      }
     }
   }
 
