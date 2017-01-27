@@ -312,7 +312,7 @@ module.exports = function (_AppUserAccount) {
       return {goalId: goal.id};
     });
 
-    await this.goals.create(medalsWon);
+    await this.goals.create(medalsWon, {transaction});
   };
 
   AppUserAccount.prototype.checkLowCharacteristicLevel = async function () {

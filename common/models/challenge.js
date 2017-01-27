@@ -77,14 +77,17 @@ module.exports = function (_Challenge) {
     return await _Challenge.findById(indexTarget);
   }
 
-  Challenge.assingOneTo = async function (child) {
+  Challenge.assingOneTo = async function (child, callerTransaction) {
 
     let challengeToAssing = await Challenge.getAssignableChallenge(child)
 
-
-    let beginTransaction = Promise.promisify(_Challenge.beginTransaction, {context: _Challenge});
-    let transaction = await beginTransaction({timeout: 60000});
-
+    let transaction
+    if (!callerTransaction) {
+      let beginTransaction = Promise.promisify(_Challenge.beginTransaction, {context: _Challenge});
+      transaction = await beginTransaction({timeout: 60000});
+    } else {
+      transaction = callerTransaction
+    }
 
     let challenge = await child.challenges.create({
       expirationDate: moment().add(challengeToAssing.expireAt, 'days').toDate(),
@@ -93,7 +96,9 @@ module.exports = function (_Challenge) {
     }, {transaction});
     await child.updateAttribute('lastChallengeAssignment', Date.now(), {transaction})
 
-    await Promise.promisify(transaction.commit, {context: transaction})();
+    if (!callerTransaction){
+      await Promise.promisify(transaction.commit, {context: transaction})();
+    }
 
     return challenge;
   };

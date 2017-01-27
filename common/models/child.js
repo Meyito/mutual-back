@@ -17,6 +17,9 @@ module.exports = function (_Child) {
   let Challenge;
   let BatchHelper
   let ResponseHelper
+  let AppUserGoal
+  let Goal
+  let DH
 
   BuildHelper
     .build(Child, _Child)
@@ -28,6 +31,10 @@ module.exports = function (_Child) {
       ChildCharacteristic = app.models.ChildCharacteristic;
       BatchHelper = app.models.BatchHelper
       ResponseHelper = app.models.ResponseHelper;
+      AppUserGoal = app.models.AppUserGoal
+      Goal = app.models.Goal
+      DH = app.models.DebugHelper
+
 
       let beginTransaction = Promise.promisify(_Child.beginTransaction, {context: _Child});
 
@@ -63,7 +70,7 @@ module.exports = function (_Child) {
                 return cb(null, children);
               }
 
-              return Characteristic
+              let characteristicPromise = Characteristic
                 .find({fields: ['id']})
                 .then(function (characteristics) {
                   if (characteristics.length === 0) {
@@ -77,11 +84,26 @@ module.exports = function (_Child) {
                   });
 
                   return Promise.all([
-                    children.characteristics.create(childCharacteristics),
-                    Challenge.assingOneTo(children)
+                    children.characteristics.create(childCharacteristics, {transaction}),
+                    Challenge.assingOneTo(children, transaction)
                   ]);
                 })
-                .then(function () {
+
+              let goalPromise = Goal.findOne({slug: 'exploradores'})
+                .then(function (goal) {
+                  let goalId = goal.id
+                  return AppUserGoal.findOne({userId: children.userId, goalId: goalId})
+                    .then(function (appUserGoal) {
+                      if (appUserGoal) return Promise.resolve(appUserGoal);
+                      return AppUserGoal.create({userId: children.userId, goalId: goalId}, {transaction})
+                    })
+                })
+
+              Promise.all([
+                characteristicPromise,
+                goalPromise
+              ])
+                .then(function (res) {
                   if (!transaction) {
                     return cb(null, children);
                   }

@@ -12,6 +12,10 @@
       "type": "string",
       "default": ""
     },
+    "slug": {
+      "type": "string",
+      "default": ""
+    },
     "image": {
       "type": "string",
       "required": true

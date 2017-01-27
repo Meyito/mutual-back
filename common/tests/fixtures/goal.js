@@ -3,6 +3,15 @@
  */
 module.exports = [
   {
+    name: 'exploradores',
+    slug: 'exploradores',
+    image: 'http://lorempixel.com/128/128',
+    inactiveImage: '/files/goals/download/sin_t__tulo-16-01_2.png',
+    description: '50 exp autoconfianza',
+    minCategoryExp: 50,
+    categoryId: 1
+  },
+  {
     name: '50 exp autoconfianza',
     image: 'http://lorempixel.com/128/128',
     inactiveImage: '/files/goals/download/sin_t__tulo-16-01_2.png',

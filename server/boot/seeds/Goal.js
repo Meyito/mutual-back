@@ -7,6 +7,7 @@ const _ = require('lodash')
 let goals = [
   {
     name: '',
+    slug: 'exploradores',
     image: '/files/goals/download/sin_t__tulo-1-01.png',
     inactiveImage: '/files/goals/download/sin_t__tulo-1-01_2.png',
     description: '',
