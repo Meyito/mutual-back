@@ -22,7 +22,7 @@ module.exports = function (Event) {
   const commonFields = {
     created: {
       name: 'created',
-      label: 'creado',
+      label: 'fecha',
       type: dataType.date,
       grupable: false
     },
@@ -42,6 +42,20 @@ module.exports = function (Event) {
       endpoint: '/genders',
       labelField: 'label'
     },
+    genderChildId: {
+      name: 'genderchildid',
+      label: 'genero del niño',
+      type: dataType.reference,
+      grupable: false,
+      endpoint: '/genders',
+      labelField: 'label'
+    },
+    dateOfBirth: {
+      name: 'dateofbird',
+      label: 'fecha de nacimieto',
+      type: dataType.date,
+      grupable: false
+    },
     userId: {
       name: 'userid',
       label: 'usuario',
@@ -54,8 +68,13 @@ module.exports = function (Event) {
   Event.EVENT_TYPES = {
     signup: {
       name: 'signup',
-      label: 'Registro de Usuario',
+      label: 'Usuarios Registrados',
       fields: [cf.created, cf.municipalityId, cf.genderId]
+    },
+    childRegistry: {
+      name: 'childRegistry',
+      label: 'Niños Registrados',
+      fields: [cf.created, cf.municipalityId, cf.genderChildId, cf.userId, cf.dateOfBirth]
     }
   }
   const EVENT_TYPES = Event.EVENT_TYPES;

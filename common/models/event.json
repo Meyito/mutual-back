@@ -15,6 +15,10 @@
       "index": true,
       "default": "undetermined"
     },
+    "birthday": {
+      "type": "date",
+      "index": true
+    },
     "userid":{
       "type": "number",
       "index": true
@@ -24,6 +28,10 @@
       "index": true
     },
     "municipalityid":{
+      "type": "number",
+      "index": true
+    },
+    "genderchildid":{
       "type": "number",
       "index": true
     }
@@ -44,6 +52,11 @@
       "type": "belongsTo",
       "model": "Municipality",
       "foreignKey": "municipalityid"
+    },
+    "genderChild": {
+      "type": "belongsTo",
+      "model": "Gender",
+      "foreignKey": "genderchildid"
     }
   },
   "acls": [

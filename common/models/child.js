@@ -18,6 +18,8 @@ module.exports = function (_Child) {
   let BatchHelper
   let ResponseHelper
   let AppUserGoal
+  let AppUserData
+  let Event
   let Goal
   let DH
 
@@ -32,6 +34,8 @@ module.exports = function (_Child) {
       BatchHelper = app.models.BatchHelper
       ResponseHelper = app.models.ResponseHelper;
       AppUserGoal = app.models.AppUserGoal
+      AppUserData = app.models.AppUserData
+      Event = app.models.Event
       Goal = app.models.Goal
       DH = app.models.DebugHelper
 
@@ -104,6 +108,18 @@ module.exports = function (_Child) {
                 goalPromise
               ])
                 .then(function (res) {
+                  AppUserData
+                    .findOne({appuserId: children.userId})
+                    .then(function (userData) {
+                      Event.create({
+                        type: Event.EVENT_TYPES.childRegistry,
+                        userid: children.userId,
+                        genderchildid: children.genderId,
+                        municipalityid: userData.municipalityId,
+                        birthday: children.birthday
+                      }).catch((err) => DH.debug.error(err));
+                    })
+
                   if (!transaction) {
                     return cb(null, children);
                   }
