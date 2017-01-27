@@ -153,5 +153,47 @@ describe('Stats', function () {
         });
     });
 
+
+    it(`should count all challenges assigned to children before end migration from municipalityId neq 5`, function () {
+      return Stat.execQuery('assignmentOfChallenge', [
+        {field: 'created', operator: '<=', value: endMigrationTime},
+        {field: 'municipalityid', operator: '<>', value: 5}
+      ])
+        .then(function (count) {
+          console.log(count)
+        });
+    });
+
+    it(`should count all challenges assigned with different category to 2 before end migration`, function () {
+      return Stat.execQuery('assignmentOfChallenge', [
+        {field: 'created', operator: '<=', value: endMigrationTime},
+        {field: 'categoryid', operator: '<>', value: 2}
+      ])
+        .then(function (count) {
+          console.log(count)
+        });
+    });
+
+    it(`should count all challenges assigned to less 5 years old children before end migration`, function () {
+      return Stat.execQuery('assignmentOfChallenge', [
+        {field: 'created', operator: '<=', value: endMigrationTime},
+        {field: 'birthday', operator: '>', value: moment().subtract(5, 'years').toDate()}
+      ])
+        .then(function (count) {
+          console.log(count)
+        });
+    });
+
+    it(`should count all challenges assigned to less 5 years old female children but grouped before end migration`, function () {
+      return Stat.execQuery('assignmentOfChallenge', [
+        {field: 'created', operator: '<=', value: endMigrationTime},
+        {field: 'birthday', operator: '>', value: moment().subtract(5, 'years').toDate()},
+        {field: 'childid', group: true}
+      ])
+        .then(function (count) {
+          console.log(count)
+        });
+    });
+
   });
 });

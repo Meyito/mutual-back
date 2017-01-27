@@ -46,6 +46,7 @@ module.exports = function (_Stat) {
       let event = Event.EVENT_TYPES[eventName]
       let query = knex('event')
 
+      let groupBy = [];
       for (let i = 0, length = filter.length, condition, field; i < length; i++) {
         condition = filter[i]
 
@@ -71,8 +72,17 @@ module.exports = function (_Stat) {
 
         if (field.grupable && condition.group) {
           query.groupBy(condition.field)
+          groupBy.push(condition.field);
         }
       }
+      if (groupBy.length > 0) {
+        _.forEach(Event.COMMON_FIELDS, function (field) {
+          if (!_.includes(groupBy, field.name)) {
+            query.max(field.name);
+          }
+        })
+      }
+
 
       let result = await knex.count('*').from(query.as('conditions'))
       result = result[0]

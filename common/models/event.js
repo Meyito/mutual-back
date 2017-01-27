@@ -60,10 +60,33 @@ module.exports = function (Event) {
       name: 'userid',
       label: 'usuario',
       type: dataType.noop_reference,
-      grupable: false
+      grupable: true
+    },
+    childId: {
+      name: 'childid',
+      label: 'niño',
+      type: dataType.noop_reference,
+      grupable: true
+    },
+    categoryId: {
+      name: 'categoryid',
+      label: 'categoria',
+      type: dataType.reference,
+      grupable: false,
+      endpoint: '/categories',
+      labelField: 'name'
+    },
+    characteristicId: {
+      name: 'characteristicid',
+      label: 'caracteristica',
+      type: dataType.reference,
+      grupable: false,
+      endpoint: '/characteristics',
+      labelField: 'label'
     }
   }
   let cf = commonFields
+  Event.COMMON_FIELDS = cf
 
   Event.EVENT_TYPES = {
     signup: {
@@ -75,6 +98,11 @@ module.exports = function (Event) {
       name: 'childRegistry',
       label: 'Niños Registrados',
       fields: [cf.created, cf.municipalityId, cf.genderChildId, cf.userId, cf.birthday]
+    },
+    assignmentOfChallenge: {
+      name: 'assignmentOfChallenge',
+      label: 'Retos Assignados',
+      fields: [cf.created, cf.municipalityId, cf.genderChildId, cf.userId, cf.childId, cf.birthday, cf.categoryId]
     }
   }
   const EVENT_TYPES = Event.EVENT_TYPES;

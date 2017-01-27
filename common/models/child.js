@@ -120,7 +120,6 @@ module.exports = function (_Child) {
                         childid: children.id
                       }).catch((err) => DH.debug.error(err));
                     })
-
                   if (!transaction) {
                     return cb(null, children);
                   }

@@ -11,10 +11,12 @@ module.exports = function (_Challenge) {
 
   const utils = require(`${process.cwd()}/node_modules/loopback/lib/utils`);
 
+  let AppUserData
   let AppConstant;
   let Characteristic;
   let ResponseHelper;
   let UserAppChallenge;
+  let Event
   let DH;
 
   let challengeCount = 0
@@ -22,7 +24,9 @@ module.exports = function (_Challenge) {
   BuildHelper
     .build(Challenge, _Challenge)
     .then(function () {
+      Event = app.models.Event
       UserAppChallenge = app.models.UserAppChallenge
+      AppUserData = app.models.AppUserData
       DH = app.models.DebugHelper
 
       _Challenge.nestRemoting('reviewQuestions');
@@ -61,7 +65,7 @@ module.exports = function (_Challenge) {
         maxAge: {gte: childAge},
         id: {nin: activeChallenges}
       },
-      fields: {id: true, expireAt: true}
+      fields: {id: true, expireAt: true, categoryId: true}
     })
 
     DH.debug.info('There are %d assignableChallenges', assignableChallenges.length);
@@ -96,9 +100,23 @@ module.exports = function (_Challenge) {
     }, {transaction});
     await child.updateAttribute('lastChallengeAssignment', Date.now(), {transaction})
 
-    if (!callerTransaction){
+    if (!callerTransaction) {
       await Promise.promisify(transaction.commit, {context: transaction})();
     }
+
+    AppUserData
+      .findOne({appuserId: child.userId})
+      .then(function (userData) {
+        Event.create({
+          type: Event.EVENT_TYPES.assignmentOfChallenge,
+          userid: child.userId,
+          genderchildid: child.genderId,
+          municipalityid: userData.municipalityId,
+          birthday: child.birthday,
+          childid: child.id,
+          categoryid: challengeToAssing.categoryId
+        }).catch((err) => DH.debug.error(err));
+      })
 
     return challenge;
   };

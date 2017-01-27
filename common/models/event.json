@@ -38,6 +38,32 @@
     "childid":{
       "type": "number",
       "index": true
+    },
+    "categoryid":{
+      "type": "number",
+      "index": true
+    },
+    "characteristicid":{
+      "type": "number",
+      "index": true
+    },
+    "goalid":{
+      "type": "number",
+      "index": true
+    },
+    "alermeterValue":{
+      "type": "number",
+      "index": true,
+      "postgresql": {
+        "dataType": "REAL"
+      }
+    },
+    "characteristicValue":{
+      "type": "number",
+      "index": true,
+      "postgresql": {
+        "dataType": "REAL"
+      }
     }
   },
   "validations": [],
@@ -66,6 +92,21 @@
       "type": "belongsTo",
       "model": "Child",
       "foreignKey": "childid"
+    },
+    "category": {
+      "type": "belongsTo",
+      "model": "Category",
+      "foreignKey": "categoryid"
+    },
+    "characteristic": {
+      "type": "belongsTo",
+      "model": "Characteristic",
+      "foreignKey": "characteristicid"
+    },
+    "goal": {
+      "type": "belongsTo",
+      "model": "Goal",
+      "foreignKey": "goalid"
     }
   },
   "acls": [
