@@ -73,6 +73,7 @@ module.exports = function (_Stat) {
       }
 
       let result = await knex.count('*').from(query.as('conditions'))
+      result = result[0]
       return ResponseHelper.successHandler(result.count, cb)
     } catch (err) {
       ResponseHelper.errorHandler(err, cb)

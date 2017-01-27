@@ -20,7 +20,7 @@ module.exports = function (_Child) {
 
   BuildHelper
     .build(Child, _Child)
-    .then(function ()   {
+    .then(function () {
 
       Characteristic = app.models.Characteristic;
       Alertmeter = app.models.Alertmeter;
@@ -29,47 +29,85 @@ module.exports = function (_Child) {
       BatchHelper = app.models.BatchHelper
       ResponseHelper = app.models.ResponseHelper;
 
+      let beginTransaction = Promise.promisify(_Child.beginTransaction, {context: _Child});
+
       let oldCreate = _Child.create;
-      _Child.create = function () {
-        let args = _.slice(arguments);
-        let callback = args[args.length - 1];
-        if (_.isFunction(callback)) {
-          args.pop();
-        } else {
-          callback = utils.createPromiseCallback();
+      _Child.create = function (data, options, cb) {
+        if (!options && !cb) {
+          if (_.isFunction(data)) {
+            cb = data;
+            data = {};
+          }
+        } else if (cb === undefined) {
+          if (_.isFunction(options)) {
+            // create(data, cb);
+            cb = options;
+          }
         }
 
-        oldCreate
-          .apply(this, args)
-          .then(function (children) {
-            if (_.isArray(children)) {
-              return callback(null, children);
-            }
+        if (!options) {
+          options = {};
+        }
+        if (!_.isFunction(cb)) {
+          cb = utils.createPromiseCallback();
+        }
 
-            return Characteristic
-              .find({fields: ['id']})
-              .then(function (characteristics) {
-                if (characteristics.length === 0) {
-                  return Promise.resolve();
-                }
+        let transaction
 
-                let childCharacteristics = _.map(characteristics, function (characteristic) {
-                  return {
-                    characteristicId: characteristic.id
-                  };
+        let postTransaction = (trans) => {
+          transaction = options.transaction = trans
+
+          return oldCreate.call(this, data, options)
+            .then(function (children) {
+              if (_.isArray(children)) {
+                return cb(null, children);
+              }
+
+              return Characteristic
+                .find({fields: ['id']})
+                .then(function (characteristics) {
+                  if (characteristics.length === 0) {
+                    return Promise.resolve();
+                  }
+
+                  let childCharacteristics = _.map(characteristics, function (characteristic) {
+                    return {
+                      characteristicId: characteristic.id
+                    };
+                  });
+
+                  return Promise.all([
+                    children.characteristics.create(childCharacteristics),
+                    Challenge.assingOneTo(children)
+                  ]);
+                })
+                .then(function () {
+                  if (!transaction) {
+                    return cb(null, children);
+                  }
+                  transaction.commit(function (err) {
+                    cb(err, children)
+                  })
                 });
+            })
+        }
 
-                return Promise.all([
-                  children.characteristics.create(childCharacteristics),
-                  Challenge.assingOneTo(children)
-                ]);
-              })
-              .then(function () {
-                callback(null, children);
-              });
+        let promise
+        if (_.isArray(data)) {
+          promise = postTransaction()
+        } else {
+          promise = beginTransaction({timeout: 60000})
+            .then(postTransaction);
+        }
+        promise.catch(function (err) {
+          if (!transaction) {
+            return cb(err)
+          }
+          transaction.rollback(function () {
+            cb(err);
           })
-          .catch(callback);
-        return callback.promise;
+        })
+        return cb.promise;
       };
 
 
@@ -109,7 +147,7 @@ module.exports = function (_Child) {
         oldFindOne
           .call(this, query, options)
           .then(function (instance) {
-            if(!instance){
+            if (!instance) {
               return cb(null, null);
             }
             return Alertmeter
