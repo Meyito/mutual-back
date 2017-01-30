@@ -141,7 +141,7 @@ module.exports = function (Event) {
       fields: [cf.created, cf.municipalityId, cf.genderChildId, cf.childId, cf.birthday, cf.alermeterValue]
     },
     alermeterValue: {
-      name: 'lowAlermeterValue',
+      name: 'alermeterValue',
       label: 'Caracteristicas en Riesgo',
       fields: [cf.created, cf.municipalityId, cf.genderChildId, cf.childId, cf.birthday, cf.alermeterValue]
     },
