@@ -95,10 +95,10 @@ module.exports = function (_Child) {
                   ]);
                 })
 
-              let goalPromise = Goal.findOne({slug: 'exploradores'})
+              let goalPromise = Goal.findOne({where: {slug: 'exploradores'}})
                 .then(function (goal) {
                   let goalId = goal.id
-                  return AppUserGoal.findOne({userId: children.userId, goalId: goalId})
+                  return AppUserGoal.findOne({where: {userId: children.userId, goalId: goalId}})
                     .then(function (appUserGoal) {
                       if (appUserGoal) return Promise.resolve(appUserGoal);
                       return AppUserGoal.create({userId: children.userId, goalId: goalId}, {transaction})

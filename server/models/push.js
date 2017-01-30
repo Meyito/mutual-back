@@ -10,24 +10,32 @@ module.exports = function (_Push) {
   const pn = new PushNotifications(app.get('push'));
 
   let AccessTokenAccount;
+  let DH
   BuildHelper
     .build(Push, _Push)
     .then(function () {
       AccessTokenAccount = app.models.AccessTokenAccount
+      DH = app.models.DebugHelper
     });
 
   Push.send = async function (userTarget, notification) {
-    let registrationIds
-    if (_.isString(userTarget)) {
-      registrationIds = [userTarget]
-    } else {
-      registrationIds = await AccessTokenAccount({
-        where: {userId: userTarget.id, registrationIds: {neq: ''}},
-        fields: {registrationId: true}
-      })
-      registrationIds = _.map(registrationIds, 'registrationId')
+    try {
+      let registrationIds
+      if (_.isString(userTarget)) {
+        registrationIds = [userTarget]
+      } else {
+        registrationIds = await AccessTokenAccount.find({
+          where: {userId: userTarget.id, registrationId: {neq: ''}},
+          fields: {registrationId: true}
+        })
+        registrationIds = _.map(registrationIds, 'registrationId')
+      }
+      return await pn.send(registrationIds, notification)
+    } catch (err) {
+      DH.debug.error("Notification can't be sent")
+      DH.debug.error(notification)
+      DH.debug.error(err)
     }
-    return await pn.send(registrationIds, notification)
   }
 
   Push.sendNotification = function (registrationId, notification, cb) {
