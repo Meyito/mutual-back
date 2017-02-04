@@ -54,6 +54,8 @@ module.exports = function (_Stat) {
 
       let query = knex('event')
 
+      query.where("type", "=", eventName)
+
       let groupBy = [];
       for (let i = 0, length = filter.length, condition, field; i < length; i++) {
         condition = filter[i]
