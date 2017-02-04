@@ -107,10 +107,10 @@ module.exports = function (_Challenge) {
     }
 
     AppUserData
-      .findOne({appuserId: child.userId})
+      .findOne({where:{appuserId: child.userId}})
       .then(function (userData) {
         Event.create({
-          type: Event.EVENT_TYPES.assignmentOfChallenge,
+          type: Event.EVENT_TYPES.assignmentOfChallenge.name,
           userid: child.userId,
           genderchildid: child.genderId,
           municipalityid: userData.municipalityId,

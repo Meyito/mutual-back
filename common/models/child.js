@@ -113,9 +113,8 @@ module.exports = function (_Child) {
                   AppUserData
                     .findOne({where: {appuserId: children.userId}})
                     .then(function (userData) {
-                      DH.debug.development(userData)
                       Event.create({
-                        type: Event.EVENT_TYPES.childRegistry,
+                        type: Event.EVENT_TYPES.childRegistry.name,
                         userid: children.userId,
                         genderchildid: children.genderId,
                         municipalityid: userData.municipalityId,
@@ -288,7 +287,7 @@ module.exports = function (_Child) {
     _.forEach(characteristics, (childCharacteristic) => {
       if (childCharacteristic.statusValue < childCharacteristic.characteristic().minValueAlert) {
         Event.create({
-          type: Event.EVENT_TYPES.lowCharacteristicValue,
+          type: Event.EVENT_TYPES.lowCharacteristicValue.name,
           genderchildid: this.genderId,
           municipalityid: parent.data().municipalityId,
           birthday: this.birthday,
@@ -307,7 +306,7 @@ module.exports = function (_Child) {
     let alertmeterValue = Alertmeter.calculate(characteristics)
     if (alertmeterValue < -10) {
       Event.create({
-        type: Event.EVENT_TYPES.lowAlermeterValue,
+        type: Event.EVENT_TYPES.lowAlermeterValue.name,
         genderchildid: this.genderId,
         municipalityid: parent.data().municipalityId,
         birthday: this.birthday,
@@ -320,7 +319,7 @@ module.exports = function (_Child) {
       });
     }
     Event.create({
-      type: Event.EVENT_TYPES.alermeterValue,
+      type: Event.EVENT_TYPES.alermeterValue.name,
       genderchildid: this.genderId,
       municipalityid: parent.data().municipalityId,
       birthday: this.birthday,

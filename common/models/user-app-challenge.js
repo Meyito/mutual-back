@@ -66,7 +66,7 @@ module.exports = function (_UserAppChallenge) {
       .then(function () {
         return Promise.all(_.map(childCharacteristics, function (childCharacteristic) {
           Event.create({
-            type: Event.EVENT_TYPES.characteristicValue,
+            type: Event.EVENT_TYPES.characteristicValue.name,
             userid: user.id,
             genderchildid: child.genderId,
             municipalityid: user.data().municipalityId,

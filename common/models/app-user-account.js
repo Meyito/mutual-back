@@ -316,7 +316,7 @@ module.exports = function (_AppUserAccount) {
 
     _.forEach(newGoals, (goal) => {
       Event.create({
-        type: Event.EVENT_TYPES.gotGoals,
+        type: Event.EVENT_TYPES.gotGoals.name,
         userid: this.id,
         municipalityid: this.data().municipalityId,
         categoryid: categoryId
@@ -412,7 +412,7 @@ module.exports = function (_AppUserAccount) {
       child.checkLowCharacteristicLevel(this);
 
       Event.create({
-        type: Event.EVENT_TYPES.finishedChallenge,
+        type: Event.EVENT_TYPES.finishedChallenge.name,
         userid: this.id,
         genderchildid: child.genderId,
         municipalityid: this.data().municipalityId,
