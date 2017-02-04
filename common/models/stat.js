@@ -92,6 +92,7 @@ module.exports = function (_Stat) {
       }
 
 
+      DH.debug.development(knex.count('*').from(query.as('conditions')).toString())
       let result = await knex.count('*').from(query.as('conditions'))
       result = result[0]
       return ResponseHelper.successHandler(result.count, cb)

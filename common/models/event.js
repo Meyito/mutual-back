@@ -122,7 +122,7 @@ module.exports = function (Event) {
     },
     assignmentOfChallenge: {
       name: 'assignmentOfChallenge',
-      label: 'Retos Assignados',
+      label: 'Retos Asignados',
       fields: [cf.created, cf.municipalityId, cf.genderChildId, cf.userId, cf.childId, cf.birthday, cf.categoryId]
     },
     characteristicValue: {
