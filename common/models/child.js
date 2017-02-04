@@ -111,7 +111,7 @@ module.exports = function (_Child) {
               ])
                 .then(function (res) {
                   AppUserData
-                    .findOne({appuserId: children.userId})
+                    .findOne({where: {appuserId: children.userId}})
                     .then(function (userData) {
                       Event.create({
                         type: Event.EVENT_TYPES.childRegistry,
