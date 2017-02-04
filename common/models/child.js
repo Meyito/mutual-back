@@ -113,6 +113,7 @@ module.exports = function (_Child) {
                   AppUserData
                     .findOne({where: {appuserId: children.userId}})
                     .then(function (userData) {
+                      DH.debug.development(userData)
                       Event.create({
                         type: Event.EVENT_TYPES.childRegistry,
                         userid: children.userId,
@@ -121,7 +122,7 @@ module.exports = function (_Child) {
                         birthday: children.birthday,
                         childid: children.id
                       }).catch((err) => DH.debug.error(err));
-                    })
+                    }).catch((err) => DH.debug.error(err))
                   if (!transaction) {
                     return cb(null, children);
                   }
