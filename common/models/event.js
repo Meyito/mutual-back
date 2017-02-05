@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = function (Event) {
+  const _ = require("lodash")
 
   const commonOperators = {
     lt: '<',
@@ -157,5 +158,18 @@ module.exports = function (Event) {
     }
   }
   const EVENT_TYPES = Event.EVENT_TYPES;
+
+  Event.pretty = function (event) {
+    let eventDescriptor = EVENT_TYPES[event.eventName]
+    let prettier = {}
+
+    prettier.eventName = eventDescriptor.label
+    prettier.filter = _.chain(event.filter).map(function (condition) {
+      let field = _.find(eventDescriptor.fields, {name: condition.field})
+      return `${field.label} ${condition.operator} ${condition.label_value}`
+    }).join("\n").value()
+    prettier.count = event.count
+    return prettier
+  }
 
 };

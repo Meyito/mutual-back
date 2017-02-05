@@ -4,6 +4,11 @@ module.exports = function (_Stat) {
 
   const Promise = require('bluebird')
   const _ = require('lodash')
+  const fs = require("fs")
+  const path = require("path")
+  const xlsx = require("node-xlsx")
+  const moment = require("moment")
+  const XlsxTemplate = require('xlsx-template');
 
   const utils = require(`${process.cwd()}/node_modules/loopback/lib/utils`)
 
@@ -33,6 +38,56 @@ module.exports = function (_Stat) {
       ResponseHelper = app.models.ResponseHelper
       DH = app.models.DebugHelper;
     })
+
+  /**
+   *
+   * @param {Object} res
+   * @param {Array} events
+   * @return {Promise}
+   */
+  Stat.execQueriesToFile = function (events, res, cb) {
+    let promises = _.map(events, function (event) {
+      let eventName = event.eventName
+      let filter = event.filter
+
+      return Stat.execQuery(eventName, filter)
+        .then(function (count) {
+          event.count = count
+          return Event.pretty(event)
+        })
+    })
+
+    Promise.all(promises)
+      .then(function (queries) {
+        fs.readFile(path.join(__dirname, '..', "..", "server", "views", 'stats.xlsx'), function (err, data) {
+          if (err) return cb(err)
+
+          let template = new XlsxTemplate(data);
+          let sheetNumber = 1;
+
+          let values = {
+            extractDate: moment().format("ll"),
+            queries: queries
+          };
+
+          template.substitute(sheetNumber, values);
+
+          data = template.generate({type: 'nodebuffer'});
+          res.writeHead(200, {'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+          res.end(data, 'binary');
+        })
+      })
+  }
+  _Stat.remoteMethod('execQueriesToFile', {
+    accepts: [
+      {arg: 'events', type: 'array'},
+      {arg: 'res', type: 'object', http: {source: 'res'}}
+    ],
+    http: {
+      verb: 'get',
+      path: '/exec-queries-to-file'
+    }
+  })
 
   /**
    *

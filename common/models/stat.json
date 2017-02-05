@@ -30,6 +30,13 @@
       "principalId": "admin",
       "permission": "ALLOW",
       "property": "execQuery"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW",
+      "property": "execQueriesToFile"
     }
   ],
   "methods": {}

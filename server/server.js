@@ -23,6 +23,9 @@ function startWorker() {
   const loopback = require('loopback');
   const boot = require('loopback-boot');
   const knex = require('knex');
+  const moment = require("moment")
+  moment.locale("es");
+
 
   require('./children-model-setup')(loopback);
 
