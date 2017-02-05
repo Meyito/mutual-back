@@ -1,16 +1,24 @@
 [
   {
-    "username":"somosadmin",
-    "email":"somosmutual@adminmutual.com",
-    "password":"Mutu@lR00t",
+    "username": "somosadmin",
+    "email": "somosmutual@adminmutual.com",
+    "password": "Mutu@lR00t",
     "name": "Mutual",
     "surname": "Superuser"
   },
   {
-    "username":"bastosjavier",
-    "email":"bastosjavierf@gmail.com",
-    "password":"123456",
+    "username": "bastosjavier",
+    "email": "bastosjavierf@gmail.com",
+    "password": "123456",
     "name": "Francisco Javier",
     "surname": "Bastos"
+  },
+  {
+    "username": "ccomerciocucuta",
+    "email": "ccomerciocucuta@ccomerciocucuta.com",
+    "onlyStats": true,
+    "password": "ccomerciocucuta",
+    "name": "Camara de Comercio",
+    "surname": "Cúcuta"
   }
 ]

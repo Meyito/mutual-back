@@ -37,6 +37,20 @@
       "principalId": "admin",
       "permission": "ALLOW",
       "property": "execQueriesToFile"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "stats",
+      "permission": "ALLOW",
+      "property": "execQuery"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "stats",
+      "permission": "ALLOW",
+      "property": "execQueriesToFile"
     }
   ],
   "methods": {}

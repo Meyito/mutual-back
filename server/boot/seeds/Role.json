@@ -10,5 +10,9 @@
   {
     "id": 3,
     "name": "cron_executer"
+  },
+  {
+    "id": 4,
+    "name": "stats"
   }
 ]

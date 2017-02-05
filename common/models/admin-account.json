@@ -9,7 +9,12 @@
   "postgresql": {
     "table": "account"
   },
-  "properties": {},
+  "properties": {
+    "onlyStats": {
+      "type": "boolean",
+      "default": false
+    }
+  },
   "validations": [],
   "relations": {},
   "acls": [

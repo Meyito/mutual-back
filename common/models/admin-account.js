@@ -8,7 +8,12 @@ module.exports = function (AdminAccount) {
     if (ctx.isNewInstance) {
       let RoleMapping = app.models.RoleMapping;
 
-      let role = await app.models.Role.findOne({where:{name: 'admin'}});
+      let role;
+      if (ctx.instance.onlyStats) {
+        role = await app.models.Role.findOne({where: {name: 'stats'}});
+      } else {
+        role = await app.models.Role.findOne({where: {name: 'admin'}});
+      }
       await role.principals.create({
         principalType: RoleMapping.USER,
         principalId: ctx.instance.id
