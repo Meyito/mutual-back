@@ -26,6 +26,10 @@
     },
     "twId": {
       "type": "string"
+    },
+    "onlyStats": {
+      "type": "boolean",
+      "default": false
     }
   },
   "validations": [],
