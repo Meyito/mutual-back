@@ -4,7 +4,7 @@ module.exports = function (DebugHelper) {
   const debug = require('debug')
 
   DebugHelper.create = function (namespace) {
-    namespace = 'string' === typeof namespace ? namespace : Model.definition.name
+    namespace = 'string' === typeof namespace ? namespace : namespace.definition.name
     return debug(`mutual:${namespace}`)
   }
 
