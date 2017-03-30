@@ -19,6 +19,7 @@ node_modules
 npm-debug.log
 dist
 /storage/**/*
+launcher.sh
 !/storage
 !/storage/*
 !/storage/goals/*
