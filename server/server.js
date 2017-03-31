@@ -19,13 +19,21 @@ if (process.env.NODE_ENV === 'production' && !process.env.MIGRATE_PERSISTENCE) {
   startWorker();
 }
 
-function startWorker() {
+function startWorker () {
+  const fs = require("fs")
+  if (process.env.NODE_ENV === 'production') {
+    let access = fs.createWriteStream(process.env.LOGDIR + '/access.log', {flags: 'a'})
+    let error = fs.createWriteStream(process.env.LOGDIR + '/error.log', {flags: 'a'});
+
+    process.stdout.pipe(access);
+    process.stderr.pipe(error);
+  }
+
   const loopback = require('loopback');
   const boot = require('loopback-boot');
   const knex = require('knex');
   const moment = require("moment")
   moment.locale("es");
-
 
   require('./children-model-setup')(loopback);
 
