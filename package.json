@@ -17,7 +17,7 @@
     "ps:exit": "npm run ps -- --filter \"status=exited\"",
     "bash": "docker exec -i -t $(npm run -s ps:run -- --latest) bash",
     "logs": "docker logs $(npm run -s ps -- --latest)",
-    "runc": "docker run -d -p 3000:3000 --restart=always --env-file ./env.list mutual/mutual:1.0"
+    "runc": "docker run -d -p 3000:3000 --link \"mutual-postgres:pg\" --restart=always --env-file ./env.list mutual/mutual:1.0"
   },
   "dependencies": {
     "async": "^2.1.4",
