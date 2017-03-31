@@ -2,7 +2,7 @@
 // Sub-apps like REST API are mounted via boot scripts.
 
 console.log('NODE_ENV', process.env.NODE_ENV);
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production' && !process.env.MIGRATE_PERSISTENCE) {
   let cluster = require('cluster');
   if (cluster.isWorker) {
     startWorker();
