@@ -10,7 +10,7 @@
     "findc":"docker ps -a -q --filter \"ancestor=mutual/mutual:1.0\"",
     "removec": "docker rm $(docker stop $(npm -s run findc))",
     "removei": "docker rmi --force mutual/mutual:1.0",
-    "buildc": "./launcher.sh && npm run removec 2>/dev/null || npm run removei 2>/dev/null || docker build -t mutual/mutual:1.0 .",
+    "buildc": "./launcher.sh & npm run removec 2>/dev/null & npm run removei 2>/dev/null & docker build -t mutual/mutual:1.0 .",
     "ps:run": "docker ps -q --filter \"ancestor=mutual/mutual:1.0\" --filter \"status=running\"",
     "ps:exit": "docker ps -aq --filter \"status=exited\" --filter=\"ancestor=mutual/mutual:1.0\"",
     "bash": "docker exec -i -t $(npm run -s ps:run --latest) bash",
