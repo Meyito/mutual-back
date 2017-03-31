@@ -6,7 +6,15 @@
     "start": "node .",
     "pretest": "gulp build && echo \"jshint . will disabled until ES7 is supported\"",
     "test": "mocha ./dist/**/*.spec.js",
-    "cron:assignChallenges": "node scripts/triggerCron.js --cron=assignChallenges"
+    "cron:assignChallenges": "node scripts/triggerCron.js --cron=assignChallenges",
+    "findc":"docker ps -a -q --filter \"ancestor=mutual/mutual:1.0\"",
+    "removec": "docker rm $(docker stop $(npm -s run findc))",
+    "removei": "docker rmi --force mutual/mutual:1.0",
+    "buildc": "./launcher.sh && npm run removec 2>/dev/null || npm run removei 2>/dev/null || docker build -t mutual/mutual:1.0 .",
+    "ps:run": "docker ps -q --filter \"ancestor=mutual/mutual:1.0\" --filter \"status=running\"",
+    "ps:exit": "docker ps -aq --filter \"status=exited\" --filter=\"ancestor=mutual/mutual:1.0\"",
+    "bash": "docker exec -i -t $(npm run -s ps:run --latest) bash",
+    "runc": "docker run -d -p 5687:3000 --hostname hostserver --restart=always --env-file ./env.list mutual/mutual:1.0"
   },
   "dependencies": {
     "async": "^2.1.4",

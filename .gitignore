@@ -20,6 +20,7 @@ npm-debug.log
 dist
 /storage/**/*
 launcher.sh
+env.list
 !/storage
 !/storage/*
 !/storage/goals/*
