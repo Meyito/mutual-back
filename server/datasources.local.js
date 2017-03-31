@@ -4,7 +4,7 @@ let path = require('path');
 
 let datasources = {
   'database': {
-    'host': process.env.DATABASE_HOST,
+    'host': process.env.DATABASE_HOST || process.env.HOSTNAME || "127.0.0.1",
     'database': process.env.DATABASE_NAME,
     'username': process.env.DATABASE_USERNAME,
     'password': process.env.DATABASE_PASSWORD,

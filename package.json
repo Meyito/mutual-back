@@ -15,7 +15,7 @@
     "ps:exit": "docker ps -aq --filter \"status=exited\" --filter=\"ancestor=mutual/mutual:1.0\"",
     "bash": "docker exec -i -t $(npm run -s ps:run --latest) bash",
     "logs": "docker logs $(npm run -s ps:run --latest)",
-    "runc": "docker run -d -p 3000:3000 --hostname hostserver --restart=always --env-file ./env.list mutual/mutual:1.0"
+    "runc": "docker run -d -p 3000:3000 --restart=always --env-file ./env.list mutual/mutual:1.0"
   },
   "dependencies": {
     "async": "^2.1.4",
