@@ -15,9 +15,9 @@
     "ps": "docker ps -q --filter \"ancestor=garusis/mutual\"",
     "ps:run": "npm run ps -- --filter \"status=running\"",
     "ps:exit": "npm run ps -- --filter \"status=exited\"",
-    "bash": "docker exec -i -t $(npm run -s ps:run -- --latest) bash",
+    "bash": "docker exec -i -t mutualapp bash",
     "bashdb": "docker exec -i -t mutual-postgres bash",
-    "logs": "docker logs $(npm run -s ps -- --latest)",
+    "logs": "docker logs mutualapp",
     "runc": "docker run -d -p 3000:3000 --link \"mutual-postgres:pg\" --name mutualapp --restart=always --env-file ./env.list garusis/mutual:latest"
   },
   "dependencies": {
