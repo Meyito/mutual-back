@@ -25,3 +25,4 @@ env.list
 !/storage/*
 !/storage/goals/*
 !.gitkeep
+tmp
